@@ -16,8 +16,8 @@
             position: fixed;
             z-index: 2;
             top: 272px;
-            left: 137px;
-            width: 150px;
+            left: 120px;
+            width: 185px;
             padding: 0 10px;
             border: 1px solid #ccc;
             background: #eee;

@@ -13,29 +13,24 @@
                 </div> --}}
                 <div id='external-events'>
                     <p>
-                        <strong>Draggable Events</strong>
+                        <strong>Create Your Events Here</strong>
                     </p>
 
                     <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>My Event 1</div>
+                        <div class='fc-event-main'>Meeting with Team</div>
                     </div>
                     <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>My Event 2</div>
+                        <div class='fc-event-main'>App Release</div>
                     </div>
                     <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>My Event 3</div>
+                        <div class='fc-event-main'>To do Task</div>
                     </div>
                     <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>My Event 4</div>
+                        <div class='fc-event-main'>Client Meeting</div>
                     </div>
                     <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>My Event 5</div>
+                        <div class='fc-event-main'>My Birthday</div>
                     </div>
-
-                    <p>
-                        <input type='checkbox' id='drop-remove' />
-                        <label for='drop-remove'>remove after drop</label>
-                    </p>
                 </div>
 
                 <div id='calendar-container'>
@@ -83,13 +78,6 @@
                     },
                     editable: true,
                     droppable: true, // this allows things to be dropped onto the calendar
-                    drop: function(info) {
-                        // is the "remove after drop" checkbox checked?
-                        if (checkbox.checked) {
-                            // if so, remove the element from the "Draggable Events" list
-                            info.draggedEl.parentNode.removeChild(info.draggedEl);
-                        }
-                    }
                 });
 
                 calendar.render();
