@@ -11,6 +11,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
     <style>
         #external-events {
             position: fixed;
@@ -43,7 +44,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased" x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="darkMode = JSON.parse(localStorage.getItem('darkMode'));
+$watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{ 'dark text-bodydark bg-boxdark-2': darkMode === true }">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
 
