@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Expense;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

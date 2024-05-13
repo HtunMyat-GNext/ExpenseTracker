@@ -23,64 +23,83 @@
                         <table class="min-w-full  ">
                             <thead>
                                 <tr>
-                                    <th class="px-6 py-3 text-left bg-slate-800">
+                                    <th class="px-6 py-3 text-center bg-slate-800">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">id</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('id') }}</span>
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-slate-800">
+                                    <th class="px-6 py-3 text-center bg-slate-800">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Name') }}</span>
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-slate-800">
+                                    <th class="px-6 py-3 text-center bg-slate-800">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Date</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Date') }}</span>
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-slate-800">
+                                    <th class="px-6 py-3 text-center bg-slate-800">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Category</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Category') }}</span>
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-slate-800">
+                                    <th class="px-6 py-3 text-center bg-slate-800">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Amount</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Amount') }}</span>
                                     </th>
-                                    <th class="px-6 py-3 text-left bg-slate-800">
+                                    <th class="px-6 py-3 text-center bg-slate-800">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Description</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Description') }}</span>
                                     </th>
 
+                                    <th class="px-6 py-3  bg-slate-800 text-center">
+                                        <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">{{ __('Action') }}</span>
+                                    </th>
                                 </tr>
                             </thead>
 
                             <tbody class="bg-gray divide-y divide-gray-200 divide-solid">
 
-                                @foreach($expenses as $expense)
-                                <tr class="bg-white">
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{ $expense->name }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{ $expense->email }}
-                                    </td>
-                                </tr>
+                                @foreach ($expenses as $expense)
+                                    <tr class="bg-white">
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            {{ $expense->name }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            {{ $expense->email }}
+                                        </td>
+                                    </tr>
                                 @endforeach
                                 <tr class="bg-slate-600">
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        {{2323 }}
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 text-center">
                                         {{ 2323 }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 text-center">
                                         {{ 2323 }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 text-center">
                                         {{ 2323 }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 text-center">
                                         {{ 2323 }}
                                     </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 text-center">
                                         {{ 2323 }}
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 text-center">
+                                        {{ 2323 }}
+                                    </td>
+                                    <td
+                                        class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900 text-center">
+                                        <form action="{{ route('expenses.edit', 1) }}">
+                                            <x-secondary-button :type="'submit'">Edit</x-secondary-button>
+                                        </form>
+                                        <form action="{{ route('expenses.destroy', 1) }}">
+                                            <x-danger-button>Delete</x-danger-button>
+                                        </form>
                                     </td>
                                 </tr>
                             </tbody>

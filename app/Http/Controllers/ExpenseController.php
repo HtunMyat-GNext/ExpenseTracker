@@ -26,5 +26,24 @@ class ExpenseController extends Controller
     public function store(StoreExpenseRequest $request)
     {
         dd($request->all());
+        Expense::create([
+            'name'  =>  $request->name,
+            'user_id'   => $request->user_id,
+        ]);
+    }
+
+    public function edit($id)
+    {
+        dd('edit', $id);
+    }
+
+    public function update()
+    {
+        dd('update');
+    }
+
+    public function destroy($id)
+    {
+        dd('delete');
     }
 }

@@ -22,13 +22,29 @@
                             </div>
                             {{-- @dd(Auth::user()->id) --}}
 
-                            <!-- Amount -->
+                            <!-- Category -->
                             <div class="mt-4">
                                 <x-input-label for="category" :value="__('Category')" />
-                                <x-select-input id="category" class="block mt-1 w-full" :placeholder="'Category'"
-                                    :disabled="'true'" />
+                                <x-select-input id="category" class="block mt-1 w-full" :placeholder="'Category'" />
 
-                                <x-input-error :messages=" $errors->get('category')" class="mt-2" />
+                                <x-input-error :messages="$errors->get('category')" class="mt-2" />
+                            </div>
+
+                            {{-- date picker --}}
+                            <div class="mt-4">
+                                <x-input-label for="date" :value="__('Date')" />
+                                <x-text-input id="flatpicker" class="block mt-1 w-full flatpicker" type="text"
+                                    name="date" :value="old('date')" />
+
+                                <x-input-error :messages="$errors->get('date')" class="mt-2" />
+                            </div>
+
+                            <!-- Img -->
+                            <div class="mt-4">
+                                <x-input-label for="img" :value="__('Image')" />
+                                <x-img-upload id="img" class="block mt-1 w-full" name="img" />
+
+                                <x-input-error :messages="$errors->get('img')" class="mt-2" />
                             </div>
 
                             <!-- Amount -->
@@ -43,14 +59,14 @@
 
                             <div class="mt-4">
                                 <x-input-label for="description" :value="__('Description')" />
-                                <x-text-input id="description" class="block mt-1 w-full" type="text" name="description"
-                                    :value="old('description')" />
+                                <x-textarea-input id="description" class="block mt-1 w-full" type="text"
+                                    name="description" :value="old('description')" />
                                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
                             </div>
 
 
 
-                            <div class="flex items-center justify-end mt-4">
+                            <div class="flex items-center justify-end flex-nowrap mt-4 ">
                                 <x-secondary-button class="" onclick="goBack()">
                                     {{ __('Cancel') }}
                                 </x-secondary-button>
@@ -70,7 +86,12 @@
 </x-app-layout>
 
 <script>
-    function goBack(){
+    function goBack() {
         window.history.back()
     }
+    $(document).ready(function() {
+        $(".flatpicker").flatpickr({
+            // "locale": "jp"
+        });
+    });
 </script>

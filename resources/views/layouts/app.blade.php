@@ -14,6 +14,21 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite('resources/css/style.css')
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Flatpickr CSS -->
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+
+    <!-- Flatpickr JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+    {{-- <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script> --}}
+
+
 </head>
 
 <body class="font-sans antialiased">
@@ -21,20 +36,20 @@
         @include('layouts.navigation')
 
         <!-- Page Heading -->
-        @if (isset($header ) )
-        <header class="bg-white dark:bg-gray-800 shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex items-center">
-                <div class="">
-                    {{ $header }}
+        @if (isset($header))
+            <header class="bg-white dark:bg-gray-800 shadow">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex items-center">
+                    <div class="">
+                        {{ $header }}
+                    </div>
+                    @if (isset($button))
+                        <div class="ms-auto me-5">
+                            {{ $button }}
+                        </div>
+                    @endif
                 </div>
-                @if (isset($button))
-                <div class="ms-auto me-5">
-                    {{ $button }}
-                </div>
-                @endif
-            </div>
 
-        </header>
+            </header>
         @endif
 
         <!-- Page Content -->
