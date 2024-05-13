@@ -24,7 +24,7 @@
                     <x-nav-link :href="route('dashboard')">
                         {{ __('Category') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')">
+                    <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                         {{ __('Calendar') }}
                     </x-nav-link>
 
