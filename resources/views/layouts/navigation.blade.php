@@ -18,13 +18,13 @@
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')">
                         {{ __('Expense') }}
-                    </x-nav-link><x-nav-link :href="route('dashboard')">
+                    </x-nav-link><x-nav-link :href="route('income.index')" :active="request()->routeIs('income.index')">
                         {{ __('Income') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')">
                         {{ __('Category') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')">
+                    <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                         {{ __('Calendar') }}
                     </x-nav-link>
 
@@ -63,36 +63,35 @@
                 </label>
                 <!-- dark mode -->
 
-                <!-- Language Switch -->
                 <div x-data="{ open: false }" @keydown.escape="open = false" class="relative">
-                    <button @click="open = !open"
-                        class="px-4 py-2">
+                    <button @click="open = !open" class="px-4 py-2">
                         <svg width="20" height="20" viewBox="0 0 24 24" role="img"
-                                    xmlns="http://www.w3.org/2000/svg" aria-labelledby="languageIconTitle"
-                                    stroke="#000000" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter"
-                                    fill="none" color="#000000">
-                                    <title id="languageIconTitle">Language</title>
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path stroke-linecap="round"
-                                        d="M12,22 C14.6666667,19.5757576 16,16.2424242 16,12 C16,7.75757576 14.6666667,4.42424242 12,2 C9.33333333,4.42424242 8,7.75757576 8,12 C8,16.2424242 9.33333333,19.5757576 12,22 Z" />
-                                    <path stroke-linecap="round" d="M2.5 9L21.5 9M2.5 15L21.5 15" />
-                                </svg>
+                            xmlns="http://www.w3.org/2000/svg" aria-labelledby="languageIconTitle" stroke="#000000"
+                            stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none"
+                            color="#000000">
+                            <title id="languageIconTitle">Language</title>
+                            <circle cx="12" cy="12" r="10" />
+                            <path stroke-linecap="round"
+                                d="M12,22 C14.6666667,19.5757576 16,16.2424242 16,12 C16,7.75757576 14.6666667,4.42424242 12,2 C9.33333333,4.42424242 8,7.75757576 8,12 C8,16.2424242 9.33333333,19.5757576 12,22 Z" />
+                            <path stroke-linecap="round" d="M2.5 9L21.5 9M2.5 15L21.5 15" />
+                        </svg>
                     </button>
                     <div x-show="open" @click.away="open = false"
                         class="absolute right-0 mt-2 w-30 bg-white rounded-md shadow-lg z-10">
                         <a href="{{ route('language.switch', ['locale' => 'en']) }}"
-                            class="block px-4 py-2 hover:bg-gray-100 text-sm font-md"> <img src="{{ asset('logo/en.png')}}" alt=""></a>
+                            class="block px-4 py-2 hover:bg-gray-100 text-sm font-md"> <img
+                                src="{{ asset('logo/en.png') }}" alt=""></a>
                         <a href="{{ route('language.switch', ['locale' => 'ja']) }}"
-                            class="block px-4 py-2 hover:bg-gray-100 text-sm font-md"> <img src="{{ asset('logo/jp.png')}}" alt=""></a>
+                            class="block px-4 py-2 hover:bg-gray-100 text-sm font-md"> <img
+                                src="{{ asset('logo/jp.png') }}" alt=""></a>
                         <!-- Add more language options as needed -->
                     </div>
                 </div>
                 <!-- Language switch -->
-
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">

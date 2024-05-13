@@ -12,6 +12,34 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    <style>
+        #external-events {
+            position: fixed;
+            z-index: 2;
+            top: 272px;
+            left: 120px;
+            width: 185px;
+            padding: 0 10px;
+            border: 1px solid #ccc;
+            background: #eee;
+        }
+
+        #external-events .fc-event {
+            cursor: move;
+            margin: 3px 0;
+        }
+
+        #calendar-container {
+            position: relative;
+            z-index: 1;
+            margin-left: 200px;
+        }
+
+        #calendar {
+            max-width: 1100px;
+            margin: 20px auto;
+        }
+    </style>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -36,6 +64,7 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
             {{ $slot }}
         </main>
     </div>
+    @stack('scripts')
 </body>
 
 </html>
