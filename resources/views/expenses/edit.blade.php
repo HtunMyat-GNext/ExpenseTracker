@@ -46,9 +46,13 @@
                                 <div class="mt-4">
                                     <x-input-label for="image" :value="__('Image')" />
 
-                                    <x-img-upload id="image" type="file" class="block mt-1 w-full" name="image"
-                                        db_image="{{ $expense->img ? asset($expense->img) : null }}" />
-
+                                    <x-img-upload type="file" class="block mt-1 w-full" name="image" />
+                                    @if ($expense->img)
+                                        <div class="mt-2">
+                                            <img src="{{ asset($expense->img) }}" alt="Current Image"
+                                                class="h-40 w-40 object-cover" id="output">
+                                        </div>
+                                    @endif
                                     <x-input-error :messages="$errors->get('image')" class="mt-2" />
                                 </div>
 
@@ -96,6 +100,20 @@
     $(document).ready(function() {
         $(".flatpicker").flatpickr({
             // "locale": "jp"
+        });
+    });
+
+    $(document).ready(function() {
+        $('#img-upload').on('change', function(event) {
+            if (event.target.files && event.target.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log(e.target.result);
+                    $('#output').attr('src', e.target.result);
+                };
+                let das = reader.readAsDataURL(event.target.files[0]);
+                console.FileReader(das);
+            }
         });
     });
 </script>
