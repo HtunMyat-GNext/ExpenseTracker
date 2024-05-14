@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreExpenseRequest;
+use App\Http\Requests\UpdateExpenseRequest;
 use App\Models\Expense;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {
@@ -25,25 +27,60 @@ class ExpenseController extends Controller
 
     public function store(StoreExpenseRequest $request)
     {
-        dd($request->all());
+        // dd($request->all());
+        $user_id = Auth::user()->id;
+        $imageName = '';
+        if ($request->has('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
+
         Expense::create([
             'name'  =>  $request->name,
-            'user_id'   => $request->user_id,
+            'user_id'   => $user_id,
+            'date'  => $request->date,
+            // 'category_id' => 2,
+            'img' =>  $imageName != '' ? 'images/' . $imageName : '',
+            'amount' => $request->amount,
+            'description' => $request->description,
         ]);
+        return redirect()->route('expenses.index');
     }
 
-    public function edit($id)
+    public function edit(Expense $expense)
     {
-        dd('edit', $id);
+        // dd('edit', $id);
+        return view('expenses.edit', compact('expense'));
     }
 
-    public function update()
+    public function update(UpdateExpenseRequest $request, Expense $expense)
     {
-        dd('update');
+
+        // dd($expense);
+        // dd($request->all());
+
+
+        $expense->update($request->except('image'));
+
+        if ($request->has('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $expense->update([
+                'img' => 'images/' . $imageName,
+            ]);
+        }
+        return redirect()->route('expenses.index');
     }
 
-    public function destroy($id)
+    // public function show()
+    // {
+    //     dd('show');
+    // }
+
+    public function destroy(Expense $expense)
     {
-        dd('delete');
+        // dd('delete');
+        $expense->delete();
+        return redirect()->route('expenses.index');
     }
 }

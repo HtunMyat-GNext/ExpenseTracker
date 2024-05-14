@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::table('expenses', function (Blueprint $table) {
             $table->date('date');
+            $table->string('name');
+            $table->string('img')->nullable();
         });
     }
 

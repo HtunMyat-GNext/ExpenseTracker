@@ -22,9 +22,10 @@ class StoreExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|min:6|max:16',
+            'name' => 'required',
             'amount' => 'required|numeric',
-            'description' => 'required|min:10',
+            'description' => 'required|min:8',
+            // 'image' => 'required|i   mage|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

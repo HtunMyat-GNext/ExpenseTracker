@@ -11,7 +11,7 @@
             <div class="bg-gray overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="overflow-hidden overflow-x-auto p-6 bg-gray  border-gray-200">
                     <div class="min-w-full align-middle">
-                        <form method="POST" action="{{ route('expenses.store') }}">
+                        <form action="{{ route('expenses.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <!-- Name -->
                             <div>
@@ -23,12 +23,12 @@
                             {{-- @dd(Auth::user()->id) --}}
 
                             <!-- Category -->
-                            <div class="mt-4">
+                            {{-- <div class="mt-4">
                                 <x-input-label for="category" :value="__('Category')" />
                                 <x-select-input id="category" class="block mt-1 w-full" :placeholder="'Category'" />
 
                                 <x-input-error :messages="$errors->get('category')" class="mt-2" />
-                            </div>
+                            </div> --}}
 
                             {{-- date picker --}}
                             <div class="mt-4">
@@ -42,7 +42,7 @@
                             <!-- Img -->
                             <div class="mt-4">
                                 <x-input-label for="img" :value="__('Image')" />
-                                <x-img-upload id="img" class="block mt-1 w-full" name="img" />
+                                <x-img-upload id="image" type="file" class="block mt-1 w-full" name="image" />
 
                                 <x-input-error :messages="$errors->get('img')" class="mt-2" />
                             </div>

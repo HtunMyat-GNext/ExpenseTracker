@@ -3,6 +3,9 @@ version: "4.29.0"
 services:
   expense_tracker:
     container_name: expense_tracker
+    environment:
+      - PHP_UPLOAD_MAX_FILESIZE = 64M
+      - PHP_POST_MAX_SIZE = 64M
     build:
       context: .
       dockerfile: Dockerfile
