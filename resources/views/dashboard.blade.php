@@ -11,7 +11,7 @@
                 {{-- <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                 </div> --}}
-                <div class="grid grid-cols-3 gap-3 p-6">
+                <div class="grid grid-cols-4 gap-4 p-6">
                     <div
                         class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl text-center">
                         <div>
@@ -30,7 +30,7 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                $150, 000, 00 KS
+                                150, 000, 00 KS
                             </h4>
                         </div>
                         {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
@@ -57,7 +57,7 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                $150, 000, 00 KS
+                                0
                             </h4>
                         </div>
                         {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
@@ -84,7 +84,7 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                $150, 000, 00 KS
+                                You have 12 Categories
                             </h4>
                         </div>
                         {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
@@ -93,14 +93,44 @@
                         </p> --}}
                     </div>
 
+                    <div
+                        class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl text-center">
+                        <div>
+                            <span class="inline-flex items-center justify-center p-2 rounded-md">
+                                <svg class="h-12 w-12" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
+                                    <path fill="#74C0FC"
+                                        d="M128 0c13.3 0 24 10.7 24 24V64H296V24c0-13.3 10.7-24 24-24s24 10.7 24 24V64h40c35.3 0 64 28.7 64 64v16 48V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V192 144 128C0 92.7 28.7 64 64 64h40V24c0-13.3 10.7-24 24-24zM400 192H48V448c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V192zM329 297L217 409c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47 95-95c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z" />
+                                </svg>
+                            </span>
+                        </div>
+                        <div>
+                            <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
+                                Events
+                            </h4>
+                        </div>
+                        <div>
+                            <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
+                                You can see your <a href="{{ route('calendar') }}">Events</a> here.
+                            </h4>
+                        </div>
+                        {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
+                            The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even
+                            works in outer space.
+                        </p> --}}
+                    </div>
+
+
+
                 </div>
 
-                <div class="relative flex flex-col rounded-xl bg-white dark:bg-gray-800 bg-clip-border text-gray-700 shadow-md">
+                <div
+                    class="relative flex flex-col rounded-xl bg-white dark:bg-gray-800 bg-clip-border text-gray-700 shadow-md">
                     <div
                         class="relative mx-4 mt-4 flex flex-col gap-4 overflow-hidden rounded-none bg-transparent bg-clip-border text-gray-700 shadow-none md:flex-row md:items-center">
                         <div class="w-max rounded-lg bg-gray-900 p-5 text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" aria-hidden="true" class="h-6 w-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-6 w-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3">
                                 </path>
@@ -121,35 +151,35 @@
                         <div id="pie-chart"></div>
                     </div>
 
-                <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-                <script>
-                    const chartConfig = {
-                        series: [44, 55, 13, 43, 22],
-                        chart: {
-                            type: "pie",
-                            width: 500,
-                            height: 500,
-                            toolbar: {
-                                show: true,
+                    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+                    <script>
+                        const chartConfig = {
+                            series: [44, 55, 13, 43, 22],
+                            chart: {
+                                type: "pie",
+                                width: 500,
+                                height: 500,
+                                toolbar: {
+                                    show: true,
+                                },
                             },
-                        },
-                        title: {
-                            show: "Expense",
-                        },
-                        dataLabels: {
-                            enabled: true,
-                        },
-                        colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
-                        legend: {
-                            show: false,
-                        },
-                    };
+                            title: {
+                                show: "Expense",
+                            },
+                            dataLabels: {
+                                enabled: true,
+                            },
+                            colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
+                            legend: {
+                                show: false,
+                            },
+                        };
 
-                    const chart = new ApexCharts(document.querySelector("#pie-chart"), chartConfig);
+                        const chart = new ApexCharts(document.querySelector("#pie-chart"), chartConfig);
 
-                    chart.render();
-                </script>
+                        chart.render();
+                    </script>
+                </div>
             </div>
         </div>
-    </div>
 </x-app-layout>
