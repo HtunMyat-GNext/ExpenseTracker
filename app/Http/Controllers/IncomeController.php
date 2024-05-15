@@ -13,4 +13,13 @@ class IncomeController extends Controller
     public function create() {
         return view('income.create');
     }
+
+    public function edit() {
+        return view('income.edit');
+    }
+
+    public function destroy($id) {
+        info($id);
+        return redirect()->route('income.index');
+    }
 }
