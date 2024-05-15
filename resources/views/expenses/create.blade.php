@@ -1,6 +1,6 @@
 <x-app-layout>
     @push('title')
-        ExpenseTrakcker | Expense
+    ExpenseTrakcker | Expense
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -15,7 +15,6 @@
 
                 <form class="max-w-sm mx-auto p-5" action="{{ route('expenses.store') }}" method="POST"
                     enctype="multipart/form-data">
-
                     @csrf
 
                     {{-- name --}}
@@ -24,14 +23,18 @@
                         <x-my-label :value="'Enter name'"></x-my-label>
                         <x-my-input :placeholder="'name'" name="name">
                         </x-my-input>
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
+
                     </div>
 
                     {{-- date picker --}}
 
                     <div class="mb-5">
                         <x-my-label :value="'Enter Date'"></x-my-label>
-                        <x-my-input id="flatpicker" name="date" type="text" name="date"
-                            :placeholder="'Date'"></x-my-input>
+                        <x-my-input id="flatpicker" name="date" type="text" name="date" :placeholder="'Date'">
+                        </x-my-input>
+                        <x-input-error :messages="$errors->get('date')" class="mt-2" />
+
                     </div>
 
 
@@ -56,6 +59,8 @@
                         <x-my-label :value="'Enter Amount'"></x-my-label>
                         <x-my-input type="number" :placeholder="'amount'" name="amount">
                         </x-my-input>
+                        <x-input-error :messages="$errors->get('amount')" class="mt-2" />
+
                     </div>
 
                     {{-- description --}}
@@ -64,6 +69,8 @@
                         <x-my-label :value="'Enter Description'"></x-my-label>
                         <x-my-textarea type="text" :placeholder="'description'" name="description">
                         </x-my-textarea>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
+
                     </div>
 
 
@@ -79,10 +86,7 @@
                                 Expense
                             </button>
                         </div>
-
-
                     </div>
-
                 </form>
 
             </div>

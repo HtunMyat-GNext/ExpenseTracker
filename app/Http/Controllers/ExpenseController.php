@@ -38,7 +38,7 @@ class ExpenseController extends Controller
             'name'  =>  $request->name,
             'user_id'   => $user_id,
             'date'  => $request->date,
-            // 'category_id' => 2,
+            // 'category_id' => 1,
             'img' =>  $imageName != '' ? 'images/' . $imageName : '',
             'amount' => $request->amount,
             'description' => $request->description,
@@ -79,7 +79,7 @@ class ExpenseController extends Controller
     public function destroy(Expense $expense)
     {
         // dd('delete');
-        dd('hello');
+        dd($expense);
         $expense->delete();
         return redirect()->route('expenses.index');
     }
