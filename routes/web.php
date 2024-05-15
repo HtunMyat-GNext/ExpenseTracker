@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('income', IncomeController::class);
+    Route::resource('income', IncomeController::class)->except('show');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 });
 
