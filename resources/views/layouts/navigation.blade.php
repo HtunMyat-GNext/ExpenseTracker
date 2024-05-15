@@ -21,7 +21,7 @@
                     </x-nav-link><x-nav-link :href="route('dashboard')">
                         {{ __('Income') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')">
+                    <x-nav-link :href="route('categories.master')" :active="request()->routeIs('categories.*')">
                         {{ __('Category') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')">
