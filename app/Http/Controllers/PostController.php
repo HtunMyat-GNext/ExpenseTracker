@@ -13,4 +13,10 @@ class PostController extends Controller
     public function master(){
         return view('categories.master');
     }
+
+    public function delete($id) {
+        info($id);
+        return redirect()->route('categories.delete');
+    }
+
 }
