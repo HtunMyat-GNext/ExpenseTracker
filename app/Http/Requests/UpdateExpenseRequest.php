@@ -23,8 +23,9 @@ class UpdateExpenseRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'amount' => 'required|numeric',
-            'description' => 'required|min:8',
+            'amount' => 'required',
+            'description' => 'required',
+            'date'  => 'required',
         ];
     }
 }

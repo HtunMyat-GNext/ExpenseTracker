@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Expense;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
-use App\Models\Expense;
-use Illuminate\Support\Facades\Auth;
 
 class ExpenseController extends Controller
 {
@@ -79,8 +81,28 @@ class ExpenseController extends Controller
     public function destroy(Expense $expense)
     {
         // dd('delete');
-        dd($expense);
+        // dd($expense);
         $expense->delete();
         return redirect()->route('expenses.index');
+    }
+
+    public function search(Request $request)
+    {
+        dd($request->all());
+        if ($request->ajax()) {
+            $output = "";
+            $expenses = DB::table('expenses')->where('name', 'LIKE', '%' . $request->search . "%")->get();
+            if ($expenses) {
+                foreach ($expenses as $key => $expense) {
+                    $output .= '<tr>' .
+                        '<td>' . $expense->id . '</td>' .
+                        '<td>' . $expense->title . '</td>' .
+                        '<td>' . $expense->description . '</td>' .
+                        '<td>' . $expense->price . '</td>' .
+                        '</tr>';
+                }
+                return Response($output);
+            }
+        }
     }
 }

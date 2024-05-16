@@ -39,16 +39,19 @@
                     <!-- Img -->
                     <div class="mb-5">
                         <x-my-label :value="'Choose your image'"></x-my-label>
-                        {{-- <x-my-img id="image" type="file" class="block mt-1 w-full" name="image" /> --}}
                         <x-my-img type="file" class="block mt-1 w-full" name="image" />
 
                         <div class="mt-2 flex items-center">
                             <img src="{{ $expense->img ? asset($expense->img) : '' }}" alt="Current Image"
-                                class="h-40 w-40 object-cover" id="output"
+                                class="h-50 w-60 object-cover" id="output"
                                 style="display: {{ $expense->img ? 'block' : 'none' }}">
                             <div class="">
                                 <button id="remove-btn" type="button"
-                                    class="ml-2 bg-red-500 text-white px-2 py-1 text-sm rounded"
+                                    class="text-green-700 hover:text-white
+                                    border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none
+                                    focus:ring-green-300 font-sm rounded-lg text-sm px-5 py-2 text-center ms-2
+                                    mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white
+                                    dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer"
                                     style="display: {{ $expense->img ? 'inline-block' : 'none' }}">Remove</button>
                             </div>
                         </div>
@@ -74,17 +77,12 @@
 
 
                     <div class="flex items-center justify-between  mt-4">
-                        <div>
-                            <a href="{{ route('income.index') }}"
-                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                Back</a>
-                        </div>
-                        <div>
-                            <button type="submit"
-                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create
-                                Expense
-                            </button>
-                        </div>
+                        <a onclick="window.history.back()"
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
+                            Back</a>
+                        <button type="submit"
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Save
+                        </button>
 
 
                     </div>
