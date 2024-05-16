@@ -1,7 +1,8 @@
 @props([
     'name',
     'show' => false,
-    'maxWidth' => '2xl'
+    'maxWidth' => '2xl',
+    'id' => null
 ])
 
 @php
@@ -17,6 +18,7 @@ $maxWidth = [
 <div
     x-data="{
         show: @js($show),
+        id: @js($id),
         focusables() {
             // All focusable element types...
             let selector = 'a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
@@ -39,7 +41,8 @@ $maxWidth = [
             document.body.classList.remove('overflow-y-hidden');
         }
     })"
-    x-on:open-modal.window="$event.detail == '{{ $name }}' ? show = true : null"
+    {{-- x-on:open-modal.window="$event.detail == '{{ $name }}' ? show = true; incomeId = $event.detail.incomeId;" --}}
+    x-on:open-modal.window="if ($event.detail.name === '{{ $name }}') { show = true; id = $event.detail.id; }"
     x-on:close-modal.window="$event.detail == '{{ $name }}' ? show = false : null"
     x-on:close.stop="show = false"
     x-on:keydown.escape.window="show = false"
