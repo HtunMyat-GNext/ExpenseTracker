@@ -15,8 +15,19 @@ class ExpenseController extends Controller
 
     public function index()
     {
-        $expenses = Expense::all();
+        $qry = Expense::query();
 
+        if (request()->has('search')) {
+            $search = request()->input('search');
+            $qry->where(function ($query) use ($search) {
+                // dd($query);
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhere('amount', 'like', '%' . $search . '%');
+            });
+        }
+
+        $expenses = $qry->paginate(10);
         return view('expenses.index', compact('expenses'));
     }
 
@@ -80,7 +91,7 @@ class ExpenseController extends Controller
     }
 
 
-    // live search 
+    // live search
     public function search(Request $request)
     {
         dd($request->all());

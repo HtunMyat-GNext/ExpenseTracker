@@ -20,9 +20,19 @@
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
-                    <input type="text" id="search" name="search"
-                        class="block p-2 ps-10 text-sm  border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search for Expense">
+                    <form class="flex items-center">
+                        <div class="mr-2">
+                            {{-- @dump(request()->input()['search']) --}}
+                            <x-my-input type="text" :value="request()['search']" :placeholder="'Search for Expense'" name="search"
+                                class="block p-2 ps-10 text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            </x-my-input>
+                        </div>
+                        <div>
+                            <button type="submit"
+                                class="text-teal-700 hover:text-white border border-teal-700 hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 font-sm rounded-lg text-sm px-5 py-2 text-center ms-2 mb-2 dark:border-teal-500 dark:text-teal-500 dark:hover:text-white dark:hover:bg-teal-600 dark:focus:ring-teal-800 cursor-pointer">Search</button>
+                        </div>
+                    </form>
+
                 </div>
 
                 <div>
@@ -135,7 +145,7 @@
 
                         @empty
                             <div class="flex bg-white dark:bg-gray-800 p-8 font-bold text-lg rounded-lg ">
-                                <h3 class="dark:text-gray-400 text-gray-400 mx-auto">There is no data yet!</h3>
+                                <h3 class="dark:text-gray-400 text-gray-400 mx-auto">There is no data!</h3>
                             </div>
                         @endforelse
 
