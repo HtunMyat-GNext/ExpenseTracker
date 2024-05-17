@@ -1,0 +1,103 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Expense;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreExpenseRequest;
+use App\Http\Requests\UpdateExpenseRequest;
+
+class ExpenseController extends Controller
+{
+
+
+    public function index()
+    {
+        $expenses = Expense::all();
+
+        return view('expenses.index', compact('expenses'));
+    }
+
+    public function create()
+    {
+        return view('expenses.create');
+    }
+
+    public function store(StoreExpenseRequest $request)
+    {
+        $user_id = Auth::user()->id;
+
+        // get image file and save in public/images dir
+        $imageName = '';
+
+        if ($request->has('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        }
+
+        Expense::create([
+            'name'  =>  $request->name,
+            'user_id'   => $user_id,
+            'date'  => $request->date,
+            // 'category_id' => 1,
+            'img' =>  $imageName != '' ? 'images/' . $imageName : '',
+            'amount' => $request->amount,
+            'description' => $request->description,
+        ]);
+        return redirect()->route('expenses.index');
+    }
+
+    public function edit(Expense $expense)
+    {
+        return view('expenses.edit', compact('expense'));
+    }
+
+    public function update(UpdateExpenseRequest $request, Expense $expense)
+    {
+        $expense->update($request->except('image'));
+
+        if ($request->has('image')) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+            $expense->update([
+                'img' => 'images/' . $imageName,
+            ]);
+        }
+        return redirect()->route('expenses.index');
+    }
+
+    // public function show()
+    // {
+    //     dd('show');
+    // }
+
+    public function destroy(Expense $expense)
+    {
+        $expense->delete();
+        return redirect()->route('expenses.index');
+    }
+
+
+    // live search 
+    public function search(Request $request)
+    {
+        dd($request->all());
+        if ($request->ajax()) {
+            $output = "";
+            $expenses = DB::table('expenses')->where('name', 'LIKE', '%' . $request->search . "%")->get();
+            if ($expenses) {
+                foreach ($expenses as $key => $expense) {
+                    $output .= '<tr>' .
+                        '<td>' . $expense->id . '</td>' .
+                        '<td>' . $expense->title . '</td>' .
+                        '<td>' . $expense->description . '</td>' .
+                        '<td>' . $expense->price . '</td>' .
+                        '</tr>';
+                }
+                return Response($output);
+            }
+        }
+    }
+}

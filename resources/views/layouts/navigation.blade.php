@@ -16,14 +16,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link>
+                    <x-nav-link :href="route('expenses.index')" :active="request()->routeIs('expenses.*')">
                         {{ __('Expense') }}
-                    </x-nav-link><x-nav-link :href="route('income.index')" :active="request()->routeIs('income.*')">
+                    </x-nav-link>
+                    <x-nav-link :href="route('income.index')" :active="request()->routeIs('income.*')">
                         {{ __('Income') }}
                     </x-nav-link>
-                    <x-nav-link>
-                        {{ __('Category') }}
-                    </x-nav-link>
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                        {{ __('Category') }}</x-nav-link>
                     <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                         {{ __('Calendar') }}
                     </x-nav-link>
