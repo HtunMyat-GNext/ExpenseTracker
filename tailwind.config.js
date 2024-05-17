@@ -8,12 +8,17 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
     ],
-
+    darkMode: 'class',
     theme: {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                primary: '#3C50E0',
+                secondary: '#80CAEE',
+                stroke: '#E2E8F0',
+            }
         },
     },
 
