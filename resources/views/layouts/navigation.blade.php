@@ -22,9 +22,8 @@
                     <x-nav-link :href="route('income.index')" :active="request()->routeIs('income.index')">
                         {{ __('Income') }}
                     </x-nav-link>
-                    <x-nav-link>
-                        {{ __('Category') }}
-                    </x-nav-link>
+                    <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
+                        {{ __('Category') }}</x-nav-link>
                     <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                         {{ __('Calendar') }}
                     </x-nav-link>
