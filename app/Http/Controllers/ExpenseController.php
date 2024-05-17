@@ -22,15 +22,16 @@ class ExpenseController extends Controller
 
     public function create()
     {
-        // dd('this is create');
         return view('expenses.create');
     }
 
     public function store(StoreExpenseRequest $request)
     {
-        // dd($request->all());
         $user_id = Auth::user()->id;
+
+        // get image file and save in public/images dir
         $imageName = '';
+
         if ($request->has('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
@@ -50,17 +51,11 @@ class ExpenseController extends Controller
 
     public function edit(Expense $expense)
     {
-        // dd('edit', $id);
         return view('expenses.edit', compact('expense'));
     }
 
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
-
-        // dd($expense);
-        // dd($request->all());
-
-
         $expense->update($request->except('image'));
 
         if ($request->has('image')) {
@@ -80,12 +75,12 @@ class ExpenseController extends Controller
 
     public function destroy(Expense $expense)
     {
-        // dd('delete');
-        // dd($expense);
         $expense->delete();
         return redirect()->route('expenses.index');
     }
 
+
+    // live search 
     public function search(Request $request)
     {
         dd($request->all());

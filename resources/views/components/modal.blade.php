@@ -32,7 +32,7 @@
     } else {
         document.body.classList.remove('overflow-y-hidden');
     }
-})"
+})" {{-- pass id fr --}}
     x-on:open-modal.window="if ($event.detail.name === '{{ $name }}') { show = true; id = $event.detail.id; }"
     x-on:close-modal.window="if ($event.detail.name === '{{ $name }}') { show = false }"
     x-on:close.stop="show = false" x-on:keydown.escape.window="show = false"
