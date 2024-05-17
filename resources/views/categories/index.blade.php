@@ -118,9 +118,7 @@
                 </table>
             </div>
         </div>
-        {{-- @include('categories.delete', [
-            'id' => '1',
-        ]) --}}
+
         <x-modal name="confirm-category-deletion" :show="$errors->expenseDeletion->isNotEmpty()" focusable>
             <form method="post" :action="`{{ route('categories.delete', '') }}/${id}`" class="p-6">
                 @csrf
