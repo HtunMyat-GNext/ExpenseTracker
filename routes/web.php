@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('income', IncomeController::class)->except('show');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+
+    Route::resource('expenses', ExpenseController::class);
 });
 
 require __DIR__ . '/auth.php';
