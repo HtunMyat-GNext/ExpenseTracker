@@ -46,6 +46,9 @@
                                 Category
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Image
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Date
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -70,7 +73,11 @@
                                     {{ $income->category->name }}
                                 </td>
                                 <td class="px-6 py-4">
-                                    {{ $income->created_at }}
+                                    <img src="{{ $income->image ? asset('images/' . $income->image) : asset('images/dummy.jpeg') }}"
+                                        alt="" class="w-10 h-10 object-cover">
+                                </td>
+                                <td class="px-6 py-4">
+                                    {{ $income->date ? $income->date : date('Y-m-d', strtotime($income->created_at)) }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex">

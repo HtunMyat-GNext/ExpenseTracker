@@ -7,11 +7,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@stack('title', 'ExpeseTracker')</title>
-    <link rel="icon" href="{{ asset('logo/logo.png')}}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('logo/logo.png') }}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Flatpickr CSS -->
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
 
+    <!-- Flatpickr JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
     <style>
         #external-events {
             position: fixed;

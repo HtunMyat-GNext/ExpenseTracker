@@ -19,6 +19,8 @@ class Income extends Model
         'category_id',
         'title',
         'amount',
+        'image',
+        'date'
     ];
 
     public function user()
