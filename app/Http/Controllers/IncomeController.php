@@ -60,21 +60,26 @@ class IncomeController extends Controller
     public function update(IncomeRequest $request, $id)
     {
         $income = Income::findOrFail($id);
-        
+        // when request array have image key
         if ($request->has('image')) {
-            $imageName = $income->image;
-            // get image file from local 
-            $oldImage = public_path('images/' . $imageName);
             // Delete the old image if it exists
-            if ($oldImage && File::exists(public_path('images/' . $oldImage))) {
-                File::delete(public_path('images/' . $oldImage));
+            if ($income->image) {
+                $this->removeImage($income->image);
             }
-
             // store new image
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
             $income->update([
                 'image' => $imageName
+            ]);
+        }
+
+        // when remove image in update
+        if ($request->input('remove_image') && $income->image) {
+            $this->removeImage($income->image);
+            // update image value to null
+            $income->update([
+                'image' => ""
             ]);
         }
 
@@ -106,8 +111,24 @@ class IncomeController extends Controller
      */
     public function destroy($id)
     {
-        $income = Income::find($id);
+        // find income data
+        $income = Income::findOrFail($id);
         $income->delete();
+        // when delete the icome, it's image also disappear
+        $this->removeImage($income->image);
         return redirect()->route('income.index');
+    }
+
+    /**
+     * delete old image
+     * 
+     * @param @string $image
+     */
+    private function removeImage($image)
+    {
+        $imagePath = 'images/' . $image;
+        if (File::exists($imagePath)) {
+            unlink(public_path($imagePath));
+        }
     }
 }

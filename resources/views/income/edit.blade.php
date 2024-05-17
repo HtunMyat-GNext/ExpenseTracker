@@ -55,6 +55,7 @@
                                     class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
                                     style="display: {{ $income->image ? 'inline-block' : 'none' }}">Remove</button>
                             </div>
+                            <input type="hidden" name="remove_image" value="" id="remove-image">
                         </div>
                     </div>
 
@@ -96,6 +97,7 @@
                 let output = $('#output');
                 let removeBtn = $('#remove-btn');
                 let imgUpload = $('#image');
+                let removeImage = $('#remove-image')
 
                 $("#flatpicker").flatpickr({
                     // "locale": "jp"
@@ -129,6 +131,7 @@
                     imgUpload.val(''); // Clear the file input value
                     output.attr('src', '').hide(); // Clear the src attribute and hide the image
                     removeBtn.hide(); // Hide the remove button
+                    removeImage.val('remove-image');
                 });
 
                 // Initially hide the image and remove button if no image exists
