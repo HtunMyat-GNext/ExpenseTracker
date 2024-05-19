@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,8 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
 
+    // get total income
+    Route::post('/total-income', [DashboardController::class, 'getTotalIncome'])->name("totalIncome");
     // langauge switch
     Route::get('/language/switch/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
