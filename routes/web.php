@@ -14,23 +14,19 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
-
     // get total income
-    Route::post('/total-income', [DashboardController::class, 'getTotalIncome'])->name("totalIncome");
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+    Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
     // langauge switch
     Route::get('/language/switch/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/categories/create', [CategoryController::class,'create'])->name('categories.create');
-    Route::get('categories', [CategoryController::class,'index'])->name('categories.index');
-    Route::delete('/categories/delete',[CategoryController::class,'delete'])->name('categories.delete');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::delete('/categories/delete', [CategoryController::class, 'delete'])->name('categories.delete');
 
     Route::resource('income', IncomeController::class)->except('show');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
