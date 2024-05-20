@@ -6,6 +6,7 @@ ExpenseTracker is a Laravel-based application designed to help you manage and tr
 
 -   User authentication
 -   Income management
+-   Social Login ( Facebook, Gmail )
 -   Expense management
 -   Category management
 -   Event management
