@@ -159,10 +159,7 @@
                             @csrf
 
                             <x-dropdown-link :href="route('logout')"
-<<<<<<< HEAD
-=======
                                 class="flex items-center gap-3.5 hover:bg-gray-100 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
->>>>>>> b5c6a8ad1df878e08b74fec8c22f0ab7b577b7fd
                                 onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                 <svg class="fill-current" width="22" height="22" viewBox="0 0 22 22"

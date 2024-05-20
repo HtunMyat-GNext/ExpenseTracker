@@ -11,9 +11,6 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                {{-- <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div> --}}
                 <div class="grid grid-cols-4 gap-4 p-6">
                     <div
                         class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl text-center">
@@ -90,10 +87,7 @@
                                 You have 12 Categories
                             </h4>
                         </div>
-                        {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
-                            The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even
-                            works in outer space.
-                        </p> --}}
+                       
                     </div>
 
                     <div
