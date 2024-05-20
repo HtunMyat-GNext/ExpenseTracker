@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Expense;
 use Dotenv\Parser\Entry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,8 +57,11 @@ class CategoryController extends Controller
      * 
      * @param $id
      */
-    public function delete($id)
+    public function destroy(Category $category)
     {
-        return redirect()->route('categories.delete');
+        // dd('delete');
+        $category->delete();
+
+        return redirect()->route('categories.index');
     }
 }
