@@ -14,18 +14,18 @@
                 {{-- <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                 </div> --}}
-                <form action="{{ route('totalIncome')}}" method="POST">
+                <form action="{{ route('dashboard') }}" method="POST">
                     @csrf
                     @method("POST")
                     <div date-rangepicker class="flex pt-6 pr-6 pl-6 items-center justify-end">
                         <div class="relative">
-                            <input type="date" name="start_date" value="{{ old('date') }}" type="text" name="date"
+                            <input type="date" name="start_date" value="{{ old('start_date') }}" type="text" name="date"
                                 :placeholder="'Select start date'"
                                 class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
                         </div>
                         <span class="mx-4 text-gray-500">To</span>
                         <div class="relative">
-                            <input type="date" name="end_date" value="{{ old('date') }}" type="text" name="date"
+                            <input type="date" name="end_date" value="{{ old('end_date') }}" type="text" name="date"
                                 :placeholder="'Select end date'"
                                 class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
                         </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                150, 000, 00 KS
+                                {{ $incomes }} Ks
                             </h4>
                         </div>
                         {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
