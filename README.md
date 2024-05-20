@@ -1,12 +1,12 @@
 # ExpenseTracker
 
-ExpenseTracker is a Laravel-based application designed to help you manage and track your expenses efficiently.
+The Expense Tracker application is designed to help individuals manage their finances efficiently by tracking income and expenses in a user-friendly interface. With its intuitive design and robust features, users can gain insights into their spending habits, set budgets, and achieve financial goals effectively.
 
 ## Features
 
 -   User authentication
--   Income management
 -   Social Login ( Facebook, Gmail )
+-   Income management
 -   Expense management
 -   Category management
 -   Event management
@@ -17,7 +17,7 @@ ExpenseTracker is a Laravel-based application designed to help you manage and tr
 ## Requirements
 
 -   Docker
--   Docker Compose
+-   Node JS (NPM)
 
 ## Installation
 
@@ -65,6 +65,16 @@ docker-compose exec expense_tracker php artisan migrate
 
 ```sh
 docker-compose exec expense_tracker php artisan db:seed
+```
+
+### Install NPM in project directory
+```sh
+npm install
+```
+
+### And then, run 
+```sh
+npm run dev
 ```
 
 ### Demo User Email and Password
