@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
+use Illuminate\Support\Facades\File;
 
 class ExpenseController extends Controller
 {
@@ -67,13 +68,27 @@ class ExpenseController extends Controller
 
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
+        // dd($request->all());
+        // dd($request->remove_image);
         $expense->update($request->except('image'));
 
+
+        // if image is updated
         if ($request->has('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
             $expense->update([
                 'img' => 'images/' . $imageName,
+            ]);
+        }
+
+        // when remove image in update
+        if ($request->remove_image  && $expense->img) {
+            // dd('here');
+            $this->removeImage($expense->img);
+            // update image value to null
+            $expense->update([
+                'img' => ""
             ]);
         }
         return redirect()->route('expenses.index');
@@ -92,23 +107,36 @@ class ExpenseController extends Controller
 
 
     // live search
-    public function search(Request $request)
+    // public function search(Request $request)
+    // {
+    //     // dd($request->all());
+    //     if ($request->ajax()) {
+    //         $output = "";
+    //         $expenses = DB::table('expenses')->where('name', 'LIKE', '%' . $request->search . "%")->get();
+    //         if ($expenses) {
+    //             foreach ($expenses as $key => $expense) {
+    //                 $output .= '<tr>' .
+    //                     '<td>' . $expense->id . '</td>' .
+    //                     '<td>' . $expense->title . '</td>' .
+    //                     '<td>' . $expense->description . '</td>' .
+    //                     '<td>' . $expense->price . '</td>' .
+    //                     '</tr>';
+    //             }
+    //             return Response($output);
+    //         }
+    //     }
+    // }
+    /**
+     * delete old image
+     *
+     * @param @string $image
+     */
+    private function removeImage($image)
     {
-        dd($request->all());
-        if ($request->ajax()) {
-            $output = "";
-            $expenses = DB::table('expenses')->where('name', 'LIKE', '%' . $request->search . "%")->get();
-            if ($expenses) {
-                foreach ($expenses as $key => $expense) {
-                    $output .= '<tr>' .
-                        '<td>' . $expense->id . '</td>' .
-                        '<td>' . $expense->title . '</td>' .
-                        '<td>' . $expense->description . '</td>' .
-                        '<td>' . $expense->price . '</td>' .
-                        '</tr>';
-                }
-                return Response($output);
-            }
+        // dd('hi');
+        $imagePath = 'images/' . $image;
+        if (File::exists($imagePath)) {
+            unlink(public_path($imagePath));
         }
     }
 }
