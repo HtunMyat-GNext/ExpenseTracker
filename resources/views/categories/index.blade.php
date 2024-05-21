@@ -49,6 +49,7 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @forelse ($categories as $category)
                         {{-- @dd($category) --}}
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -62,9 +63,9 @@
 
                                 <td class="px-6 py-4">
                                     <div class="flex">
-                                        <a href="#"
+                                        <a href="{{route('categories.edit',$category->id)}}"
                                             class="font-medium text-blue-600 dark:text-blue-500 hover:underline mr-4"
-                                            data-modal-target="default-modal" data-modal-toggle="default-modal">
+                                            data-modal-target="default-modal" data-modal-toggle="default-modal" >
                                             <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
                                                 viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
                                                 <path fill="#74C0FC"

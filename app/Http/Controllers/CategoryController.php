@@ -63,5 +63,39 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories.index');
+ 
+    }
+
+    /**
+     * show edit form
+     * 
+     * @param $id
+     */
+    public function edit($id)
+    {
+        $category = Category::find($id);
+        return view('categories.edit',compact('category'));
+    }
+
+    
+    /**
+     * update form
+     * 
+     * @param $id
+     */
+
+     public function update(Request $request, $id )   
+     {
+        //  dd($request);
+
+       $category = Category::findOrFail($id);
+      
+       $category->update($request->only('title', 'is_income'));
+
+       return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+
+        // return redirect()->route('categories.index');
+
+
     }
 }

@@ -55,19 +55,7 @@
                     </thead>
                     <tbody>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Salary (Setember)
-                            </th>
-                            <td class="px-6 py-4">
-                                1000000
-                            </td>
-                            <td class="px-6 py-4">
-                                Work
-                            </td>
-                            <td class="px-6 py-4">
-                                12/10/2024
-                            </td>
+                            
                             <td class="px-6 py-4">
                                 <div class="flex">
                                     <a href="{{ route('income.edit', '1') }}"
@@ -91,19 +79,6 @@
                             </td>
                         </tr>
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row"
-                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Farm Profit
-                            </th>
-                            <td class="px-6 py-4">
-                                1200000
-                            </td>
-                            <td class="px-6 py-4">
-                                Farm
-                            </td>
-                            <td class="px-6 py-4">
-                                12/11/2024
-                            </td>
                             <td class="px-6 py-4">
                                 <div class="flex">
                                     <a href="{{ route('income.edit', '1') }}"
@@ -124,6 +99,7 @@
                                 </div>
 
                             </td>
+                            
                         </tr>
                     </tbody>
                 </table>
