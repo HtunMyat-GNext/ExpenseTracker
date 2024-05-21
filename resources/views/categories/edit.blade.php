@@ -27,6 +27,13 @@
                             placeholder="Enter Category" value="{{$category->title}}" name="title"/>
                     </div>
 
+                     {{-- color picker --}}
+                    {{-- @dd($cat) --}}
+                     <div class="color_picker grid grid-cols-2 gap-1">
+                        <label for="hs-color-input" class="block text-sm font-medium mb-3 mt-2 dark:text-white">Choose Your Color</label>
+                            <input type="color" class="p-1 h-10 w-full block bg-white border border-gray-300 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-100 dark:border-neutral-100" id="hs-color-input" value="{{$category->color}}" title="Choose your color" name="color">
+                    </div>
+
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
                         Option</label>
                     <div class="flex gap-10">

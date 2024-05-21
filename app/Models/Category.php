@@ -18,6 +18,7 @@ class Category extends Model
         'user_id',
         'title',
         'is_income',
+        'color',
     ];
 
     public function user()

@@ -26,9 +26,11 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
+        // dd($request->all());
         $validatedData = $request->validate([
             'title' => 'required',
             'is_income' => 'required',
+            'color' => 'required',
         ]);
 
 
@@ -37,6 +39,7 @@ class CategoryController extends Controller
             'user_id' => Auth::user()->id,
             'title'     => $validatedData['title'],
             'is_income' => $validatedData['is_income'],
+            'color' => $validatedData ['color'],
         ]);
 
 
@@ -90,7 +93,7 @@ class CategoryController extends Controller
 
        $category = Category::findOrFail($id);
       
-       $category->update($request->only('title', 'is_income'));
+       $category->update($request->only('title', 'is_income','color'));
 
        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
 

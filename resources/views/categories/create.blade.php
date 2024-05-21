@@ -26,48 +26,59 @@
                             placeholder="Enter Category" />
                     </div>
 
-                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
-                        Option</label>
-                    <div class="flex gap-10">
-                        <div class="inline-flex items-center">
-                            <label class="relative flex items-center p-3 rounded-full cursor-pointer" htmlFor="green">
-                                <input name="is_income" type="radio" checked value="1"
-                                    class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10 "
-                                    id="green" />
-                                <span
-                                    class="absolute text-green-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16"
-                                        fill="currentColor">
-                                        <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                    </svg>
-                                </span>
-                            </label>
-                            <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html"
-                                for="income">
-                                Income
-                            </label>
+                    {{-- color picker --}}
 
-                        </div>
+                    <div class="color_picker grid grid-cols-2 gap-1">
+                        <label for="hs-color-input" class="block text-sm font-medium mb-3 mt-2 dark:text-white">Choose Your Color</label>
+                            <input type="color" class="p-1 h-10 w-full block bg-white border border-gray-300 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-100 dark:border-neutral-100" id="hs-color-input" value="#ecfeff" title="Choose your color" name="color">
+                    </div>
 
-                        <div class="inline-flex items-center">
-                            <label class="relative flex items-center p-3 rounded-full cursor-pointer" htmlFor="green">
-                                <input name="is_income" type="radio" value="0"
-                                    class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10"
-                                    id="green" />
-                                <span
-                                    class="absolute text-green-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16"
-                                        fill="currentColor">
-                                        <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                    </svg>
-                                </span>
-                            </label>
-                            <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html"
-                                for="expense">
-                                Expense
-                            </label>
+                    <div class="income_expense">
+                        <label for="countries" class="block mb-2 mt-3 text-sm font-medium text-gray-900 dark:text-white">Select
+                            Option</label>
+                        <div class="flex gap-10">
+                            <div class="inline-flex items-center">
+                                <label class="relative flex items-center p-3 rounded-full cursor-pointer" htmlFor="green">
+                                    <input name="is_income" type="radio" checked value="1"
+                                        class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10 "
+                                        id="green" />
+                                    <span
+                                        class="absolute text-green-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16"
+                                            fill="currentColor">
+                                            <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                        </svg>
+                                    </span>
+                                </label>
+                                <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html"
+                                    for="income">
+                                    Income
+                                </label>
+    
+                            </div>
+    
+                            <div class="inline-flex items-center">
+                                <label class="relative flex items-center p-3 rounded-full cursor-pointer" htmlFor="green">
+                                    <input name="is_income" type="radio" value="0"
+                                        class="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-full border border-blue-gray-200 text-green-500 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 checked:before:bg-green-500 hover:before:opacity-10"
+                                        id="green" />
+                                    <span
+                                        class="absolute text-green-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16"
+                                            fill="currentColor">
+                                            <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                        </svg>
+                                    </span>
+                                </label>
+                                <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html"
+                                    for="expense">
+                                    Expense
+                                </label>
+    
+                            </div>
 
-                        </div>
+                    </div>
+                   
 
                     </div>
                     <div class="flex items-center justify-between flex-column flex-wrap mt-4">
