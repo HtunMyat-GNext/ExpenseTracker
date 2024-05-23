@@ -32,7 +32,7 @@
                         <label for="hs-color-input" class="block text-sm font-medium mb-3 mt-2 dark:text-white">Choose Your Color</label>
                             <input type="color" class="p-1 h-10 w-full block bg-white border border-gray-300 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-100 dark:border-neutral-100" id="hs-color-input" value="#ecfeff" title="Choose your color" name="color">
                     </div>
-
+                    {{-- radio button  --}}
                     <div class="income_expense">
                         <label for="countries" class="block mb-2 mt-3 text-sm font-medium text-gray-900 dark:text-white">Select
                             Option</label>

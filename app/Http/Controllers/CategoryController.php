@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
-        // dd($request->all());
+        
         $validatedData = $request->validate([
             'title' => 'required',
             'is_income' => 'required',
@@ -58,7 +58,6 @@ class CategoryController extends Controller
     /**
      * delete category
      * 
-     * @param $id
      */
     public function destroy(Category $category)
     {
@@ -89,7 +88,7 @@ class CategoryController extends Controller
 
      public function update(Request $request, $id )   
      {
-        //  dd($request);
+        
 
        $category = Category::findOrFail($id);
       
@@ -97,7 +96,7 @@ class CategoryController extends Controller
 
        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
 
-        // return redirect()->route('categories.index');
+       
 
 
     }
