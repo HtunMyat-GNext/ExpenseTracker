@@ -61,10 +61,7 @@
                                 {{ $incomes }} Ks
                             </h4>
                         </div>
-                        {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
-                            The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even
-                            works in outer space.
-                        </p> --}}
+                        
                     </div>
 
                     <div
@@ -88,10 +85,7 @@
                                 {{ $expenses }}
                             </h4>
                         </div>
-                        {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
-                            The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even
-                            works in outer space.
-                        </p> --}}
+                        
                     </div>
 
                     <div
@@ -115,10 +109,7 @@
                                 You have 12 Categories
                             </h4>
                         </div>
-                        {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
-                            The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even
-                            works in outer space.
-                        </p> --}}
+                       
                     </div>
 
                     <div
@@ -142,10 +133,7 @@
                                 You can see your <a href="{{ route('calendar') }}">Events</a> here.
                             </h4>
                         </div>
-                        {{-- <p class="text-slate-500 dark:text-slate-400 mt-2 text-sm">
-                            The Zero Gravity Pen can be used to write in any orientation, including upside-down. It even
-                            works in outer space.
-                        </p> --}}
+                        
                     </div>
 
 

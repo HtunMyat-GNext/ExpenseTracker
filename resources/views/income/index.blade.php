@@ -57,9 +57,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @empty($incomes)
-                            hello
-                        @endempty
                         @foreach ($incomes as $income)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <th scope="row"
@@ -130,6 +127,5 @@
                 </div>
             </form>
         </x-modal>
-
     </div>
 </x-app-layout>

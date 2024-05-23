@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\IncomeRequest;
+use App\Models\Category;
 use App\Models\Income;
 use Illuminate\Support\Facades\File;
 
@@ -22,7 +23,8 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        return view('income.create');
+        $categories = Category::all();
+        return view('income.create', compact('categories'));
     }
 
     /**
@@ -101,7 +103,8 @@ class IncomeController extends Controller
     public function edit($id)
     {
         $income = Income::find($id);
-        return view('income.edit', compact('income'));
+        $categories = Category::all();
+        return view('income.edit', compact('income', 'categories'));
     }
 
     /**

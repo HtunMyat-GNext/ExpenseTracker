@@ -11,7 +11,8 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <form class="max-w-sm mx-auto p-5" action="{{ route('income.update', $income->id)}}" method="POST" enctype="multipart/form-data">
+                <form class="max-w-sm mx-auto p-5" action="{{ route('income.update', $income->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="mb-5">
@@ -64,11 +65,9 @@
                         your category</label>
                     <select id="cateogry" name="category_id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
-                        <option value="1">Salary</option>
-                        <option>Shop</option>
-                        <option>Farm</option>
-                        <option>Present</option>
+                        @foreach ($categories as $category)
+                            <option value={{ $category->id }}>{{ $category->title }}</option>
+                        @endforeach
                     </select>
                     <x-input-error class="mt-2" :messages="$errors->get('category_id')" />
                     <div class="flex items-center justify-between flex-column flex-wrap mt-4">
