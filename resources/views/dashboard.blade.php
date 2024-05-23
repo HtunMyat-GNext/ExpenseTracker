@@ -11,6 +11,32 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                {{-- <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{ __("You're logged in!") }}
+                </div> --}}
+                <form action="{{ route('dashboard') }}" method="POST">
+                    @csrf
+                    @method("POST")
+                    <div date-rangepicker class="flex pt-6 pr-6 pl-6 items-center justify-end">
+                        <div class="relative">
+                            <input type="date" name="start_date" value="{{ old('start_date') }}" type="text" name="date"
+                                :placeholder="'Select start date'"
+                                class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
+                        </div>
+                        <span class="mx-4 text-gray-500">To</span>
+                        <div class="relative">
+                            <input type="date" name="end_date" value="{{ old('end_date') }}" type="text" name="date"
+                                :placeholder="'Select end date'"
+                                class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
+                        </div>
+                        <div class="relative ml-2 mt-2">
+                            <button
+                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Filter</button>
+                        </div>
+                    </div>
+                </form>
+             
+
                 <div class="grid grid-cols-4 gap-4 p-6">
                     <div
                         class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl text-center">
@@ -30,7 +56,7 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                150, 000, 00 KS
+                                {{ $incomes }} Ks
                             </h4>
                         </div>
                         
@@ -141,6 +167,9 @@
 
                     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
                     <script>
+                        $(".flatpicker").flatpickr({
+                            // "locale": "jp"
+                        });
                         const chartConfig = {
                             series: [44, 55, 13, 43, 22],
                             chart: {
