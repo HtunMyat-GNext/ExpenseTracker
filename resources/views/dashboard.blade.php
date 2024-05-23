@@ -58,7 +58,7 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                {{ $incomes }} Ks
+                                {{ number_format($incomes, 0) }} Ks
                             </h4>
                         </div>
                         
@@ -82,7 +82,7 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                {{ $expenses }}
+                                {{ number_format($expenses, 0) }} Ks
                             </h4>
                         </div>
                         
@@ -106,7 +106,7 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                You have 12 Categories
+                                You have {{  $categories }} Categories
                             </h4>
                         </div>
                        

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Expense;
 use App\Models\Income;
 use Illuminate\Http\Request;
@@ -33,6 +34,7 @@ class DashboardController extends Controller
         $currentYear = Carbon::now()->year;
         $incomes = Income::where('user_id', $user_id)->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->sum('amount');
         $expenses = Expense::where('user_id', $user_id)->whereYear('created_at', $currentYear)->whereMonth('created_at', $currentMonth)->sum('amount');
-        return view('dashboard', compact('incomes', 'expenses'));
+        $categories = Category::count();
+        return view('dashboard', compact('incomes', 'expenses', 'categories'));
     }
 }
