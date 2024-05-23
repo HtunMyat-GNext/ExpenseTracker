@@ -100,4 +100,15 @@ class CategoryController extends Controller
 
 
     }
+
+    /**
+     * data searching
+     */
+    public function search(Request $request)
+    
+    {
+        
+       }
+
+    
 }
