@@ -16,6 +16,7 @@ class DashboardController extends Controller
         $user_id = Auth::user()->id;
         // If request have date filter with start and end date
         if ($request->start_date && $request->end_date) {
+            // dd($request->all());
             // Get income for a specific date range if start and end dates are provided
             $startDate = $request->input('start_date');
             $endDate = $request->input('end_date');
