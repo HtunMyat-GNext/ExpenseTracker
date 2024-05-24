@@ -10,19 +10,13 @@ use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('auth.login');
-// });
 Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
-    // get total income
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
-    // Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+    Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
     // langauge switch
     Route::get('/language/switch/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
