@@ -28,11 +28,13 @@
                     </div>
 
                     {{-- date picker --}}
-
+                    {{-- @dd($expense) --}}
                     <div class="mb-5">
                         <x-my-label :value="'Enter Date'"></x-my-label>
                         <x-my-input id="flatpicker" name="date" type="text" name="date" :placeholder="'Date'"
-                            :value="old('name', \Carbon\Carbon::parse($expense->date)->format('d-m-y'))"></x-my-input>
+                            :value="old('date', \Carbon\Carbon::parse($expense->date)->format('d-m-y'))"></x-my-input>
+
+                        <x-input-error :messages="$errors->get('date')" class="mt-2" />
                     </div>
 
 
@@ -60,11 +62,26 @@
                     </div>
 
                     {{-- amount --}}
-
+                    {{-- :value="old('name', $expense->name)" --}}
                     <div class="mb-5">
                         <x-my-label :value="'Enter Amount'"></x-my-label>
                         <x-my-input type="number" :placeholder="'amount'" name="amount" :value="$expense->amount">
                         </x-my-input>
+                    </div>
+
+                    {{-- category --}}
+
+                    <div class="mb-5">
+                        <x-my-label :value="'Enter Amount'"></x-my-label>
+                        <x-my-select name="category_id" :placeholder="'Select Category'">
+                            @foreach ($categories as $key => $category)
+                            <option value="{{ $key }}" {{ $expense->category_id == $key ? 'selected' : '' }}>
+                                {{ $category }}
+                            </option>
+                            @endforeach
+                        </x-my-select>
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+
                     </div>
 
                     {{-- description --}}
@@ -79,10 +96,10 @@
 
                     <div class="flex items-center justify-between  mt-4">
                         <a onclick="window.history.back()"
-                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
                             Back</a>
                         <button type="submit"
-                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Save
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Save
                         </button>
 
 
@@ -103,7 +120,7 @@
     }
     $(document).ready(function() {
         $("#flatpicker").flatpickr({
-            // "locale": "jp"
+            dateFormat: "d-m-Y"
         });
     });
 

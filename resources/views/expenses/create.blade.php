@@ -1,6 +1,6 @@
 <x-app-layout>
     @push('title')
-        ExpenseTrakcker | Expense
+    ExpenseTrakcker | Expense
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -42,13 +42,11 @@
                     <!-- Img -->
                     <div class="mb-5">
                         <x-my-label :value="'Choose your image'"></x-my-label>
-                        <x-my-img id="image" type="file" :value="old('img')" class="block mt-1 w-full"
-                            name="image" />
+                        <x-my-img id="image" type="file" :value="old('img')" class="block mt-1 w-full" name="image" />
                         <div class="mt-2 flex items-center justify-center">
                             <img src="" alt="Current Image" class="h-50 w-60 object-cover" id="output">
                             <div class="">
-                                <button id="remove-btn" type="button"
-                                    class="text-green-700 hover:text-white
+                                <button id="remove-btn" type="button" class="text-green-700 hover:text-white
                                     border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none
                                     focus:ring-green-300 font-sm rounded-lg text-sm px-5 py-2 text-center ms-2
                                     mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white
@@ -69,11 +67,25 @@
 
                     </div>
 
+                    {{-- category --}}
+
+                    <div class="mb-5">
+                        <x-my-label :value="'Enter Amount'"></x-my-label>
+                        <x-my-select name="category_id" :placeholder="'Category'">
+                            @foreach ($categories as $key => $category)
+                            <option value="{{ $key }}">{{ $category}}</option>
+                            @endforeach
+                        </x-my-select>
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+
+                    </div>
+
                     {{-- description --}}
 
                     <div class="mb-5">
                         <x-my-label :value="'Enter Description'"></x-my-label>
-                        <x-my-textarea type="text" :value="old('description')" :placeholder="'description'" name="description">
+                        <x-my-textarea type="text" :value="old('description')" :placeholder="'description'"
+                            name="description">
                         </x-my-textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
 
@@ -83,12 +95,12 @@
                     <div class="flex items-center justify-between  mt-4">
                         <div>
                             <a onclick="goBack()"
-                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
+                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
                                 Back</a>
                         </div>
                         <div>
                             <button type="submit"
-                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create
+                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create
                                 Expense
                             </button>
                         </div>
