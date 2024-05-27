@@ -25,7 +25,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
 
-        
+
         $validatedData = $request->validate([
             'title' => 'required',
             'is_income' => 'required',
@@ -38,7 +38,7 @@ class CategoryController extends Controller
             'user_id' => Auth::user()->id,
             'title'     => $validatedData['title'],
             'is_income' => $validatedData['is_income'],
-            'color' => $validatedData ['color'],
+            'color' => $validatedData['color'],
         ]);
 
 
@@ -64,7 +64,6 @@ class CategoryController extends Controller
 
         $categories = $qry->paginate(10);
         return view('categories.index', compact('categories'));
-    
     }
 
     /**
@@ -77,7 +76,6 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('categories.index');
- 
     }
 
     /**
@@ -88,29 +86,25 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        return view('categories.edit',compact('category'));
+        return view('categories.edit', compact('category'));
     }
 
-    
+
     /**
      * update form
      * 
      * @param $id
      */
 
-     public function update(Request $request, $id )   
-     {
-        
-
-       $category = Category::findOrFail($id);
-      
-       $category->update($request->only('title', 'is_income','color'));
-
-       return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
-
-       
+    public function update(Request $request, $id)
+    {
 
 
+        $category = Category::findOrFail($id);
+
+        $category->update($request->only('title', 'is_income', 'color'));
+
+        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
     /**
@@ -136,8 +130,4 @@ class CategoryController extends Controller
             }
         }
     }
-
-
-
-    
 }
