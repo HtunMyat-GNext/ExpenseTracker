@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Expense;
-use Dotenv\Parser\Entry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -49,10 +48,23 @@ class CategoryController extends Controller
     /**
      * show index page
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categories = Category::all();
+        $qry = Category::query();
+
+        if ($request->ajax()) {
+            $search = $request->input('search');
+            if ($search) {
+                $qry->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('is_income', 'like', '%' . $search . '%');
+            }
+            $categories = $qry->paginate(10);
+            return response()->json(['categories' => $categories]);
+        }
+
+        $categories = $qry->paginate(10);
         return view('categories.index', compact('categories'));
+    
     }
 
     /**
@@ -105,10 +117,27 @@ class CategoryController extends Controller
      * data searching
      */
     public function search(Request $request)
-    
     {
-        
-       }
+        if ($request->ajax()) {
+            $output = "";
+            $categories = DB::table('categories')->where('title', 'LIKE', '%' . $request->search . "%")->get();
+            dd($categories);
+            if ($categories) {
+                $iteration = 1; // Manual iteration counter
+                foreach ($categories as $category) {
+                    $output .= '<tr>' .
+                        '<td>' . $iteration . '</td>' .
+                        '<td>' . $category->title . '</td>' .
+                        '<td>' . $category->is_income . '</td>' .
+                        '</tr>';
+                    $iteration++; // Increment the counter
+                }
+                return response($output);
+            }
+        }
+    }
+
+
 
     
 }
