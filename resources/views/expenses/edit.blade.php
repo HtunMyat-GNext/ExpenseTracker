@@ -28,7 +28,7 @@
                     </div>
 
                     {{-- date picker --}}
-                    {{-- @dd($expense) --}}
+
                     <div class="mb-5">
                         <x-my-label :value="'Enter Date'"></x-my-label>
                         <x-my-input id="flatpicker" name="date" type="text" name="date" :placeholder="'Date'"
@@ -39,6 +39,7 @@
 
 
                     <!-- Img -->
+
                     <div class="mb-5">
                         <x-my-label :value="'Choose your image'"></x-my-label>
                         <x-my-img type="file" class="block mt-1 w-full" name="image" />
@@ -55,6 +56,7 @@
                                     dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer"
                                     style="display: {{ $expense->img ? 'inline-block' : 'none' }}">Remove</button>
                             </div>
+                            <span class="invisible text-red-500" id="imgErr"></span>
                             <input type="hidden" name="remove_image" value="" id="remove-image">
                         </div>
 
@@ -62,7 +64,7 @@
                     </div>
 
                     {{-- amount --}}
-                    {{-- :value="old('name', $expense->name)" --}}
+
                     <div class="mb-5">
                         <x-my-label :value="'Enter Amount'"></x-my-label>
                         <x-my-input type="number" :placeholder="'amount'" name="amount" :value="$expense->amount">
@@ -143,18 +145,24 @@
                     };
                     reader.readAsDataURL(file);
                 } else {
+
                     // Clear the src attribute and hide the image if the file is not an image
+
                     output.attr('src', '').hide();
+                    $('#imgErr').text("Please choose the correct file.").removeClass('invisible'); // Show the error message
                     removeBtn.hide();
                 }
             } else {
+
                 // Hide the image if no file is selected
+
                 output.attr('src', '').hide();
                 removeBtn.hide();
             }
         });
 
         // Remove button functionality
+
         removeBtn.on('click', function() {
             imgUpload.val(''); // Clear the file input value
             output.attr('src', '').hide(); // Clear the src attribute and hide the image
@@ -162,7 +170,7 @@
             removeImage.val(true); // remove image
         });
 
-        // Initially hide the image and remove button if no image exists
+        // On loading hide the image and remove button if no image exists
         if (!output.attr('src')) {
             output.hide();
             removeBtn.hide();

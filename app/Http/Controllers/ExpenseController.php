@@ -19,29 +19,20 @@ class ExpenseController extends Controller
     public function index(Request $request)
     {
         $qry = Expense::with('category', 'user');
-        // if (request()->has('search')) {
-        //     $search = request()->input('search');
-        //     $qry->where(function ($query) use ($search) {
-        //         // dd($query);
-        //         $query->where('name', 'like', '%' . $search . '%')
-        //             ->orWhere('description', 'like', '%' . $search . '%')
-        //             ->orWhere('amount', 'like', '%' . $search . '%');
-        //     });
-        // }
 
-        // ajax
-        // reutrn json
-
+        // search
         if ($request->ajax()) {
+
             $search = request()->input('search');
-            // dd($search);
+
             $qry->where(function ($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('description', 'like', '%' . $search . '%')
                     ->orWhere('amount', 'like', '%' . $search . '%');
             });
-            // dd($qry->get());
+
             $expenses = $qry->paginate(10);
+
             return response()->json(['expenses' => $expenses]);
         }
         $expenses = $qry->paginate(10);
@@ -59,11 +50,12 @@ class ExpenseController extends Controller
 
     public function store(StoreExpenseRequest $request)
     {
-        // dd($request->all());
+
         $user_id = Auth::user()->id;
 
-        // get image file and save in public/images dir
         $imageName = '';
+
+        // get image file and save in public/images dir
 
         if ($request->has('image')) {
             $imageName = time() . '.' . $request->image->extension();
@@ -90,7 +82,6 @@ class ExpenseController extends Controller
 
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
-        // dd($request->all());
 
         $user_id = Auth::user()->id;
         $date = Carbon::parse($request->date)->format('Y-m-d');
@@ -106,6 +97,7 @@ class ExpenseController extends Controller
 
 
         // if image is updated
+
         if ($request->has('image')) {
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images/expenses/'), $imageName);
@@ -116,7 +108,7 @@ class ExpenseController extends Controller
 
         // when remove image in update
         if ($request->remove_image  && $expense->img) {
-            // dd('here');
+
             $this->removeImage($expense->img);
             // update image value to null
             $expense->update([
@@ -139,27 +131,7 @@ class ExpenseController extends Controller
     }
 
 
-    // live search
-    public function search(Request $request)
-    {
-        if ($request->ajax()) {
-            $output = "";
-            $expenses = DB::table('expenses')->where('name', 'LIKE', '%' . $request->search . "%")->get();
 
-            if ($expenses) {
-                $iteration = 1; // Manual iteration counter
-                foreach ($expenses as $expense) {
-                    $output .= '<tr>' .
-                        '<td>' . $iteration . '</td>' .
-                        '<td>' . $expense->description . '</td>' .
-                        '<td>' . $expense->amount . '</td>' .
-                        '</tr>';
-                    $iteration++; // Increment the counter
-                }
-                return response($output);
-            }
-        }
-    }
 
 
 

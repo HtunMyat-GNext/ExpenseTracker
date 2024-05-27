@@ -156,9 +156,12 @@
                         </tr>
 
                         @empty
-                        <div class="flex bg-white dark:bg-gray-800 p-8 font-bold text-lg rounded-lg ">
-                            <h3 class="dark:text-gray-400 text-gray-400 mx-auto">There is no data!</h3>
-                        </div>
+                        <tr>
+                            <td class="bg-white dark:bg-gray-800 p-8 font-bold text-lg rounded-lg text-center"
+                                colspan="8">
+                                <h3 class="dark:text-gray-400 text-gray-400 mx-auto">There is no data!</h3>
+                            </td>
+                        </tr>
                         @endforelse
 
                     </tbody>
@@ -201,18 +204,12 @@
 
 </x-app-layout>
 <script>
-    $(document).ready(function() {
-    $('#search').keyup(delay(function(e) {
-        search();
-    }, 1000));
+    // search function
 
-    function delay(fn, ms) {
-        let timer = 0;
-        return function(...args) {
-            clearTimeout(timer);
-            timer = setTimeout(fn.bind(this, ...args), ms || 0);
-        }
-    }
+    $(document).ready(function() {
+    $('#search').keyup(function(){
+        search();
+    });
 
     function search() {
         var keyword = $('#search').val();
@@ -233,10 +230,11 @@
     }
 
     function row(expenses) {
-        // console.log(expenses.length);
         let htmlView = '';
         if (expenses.length == 0) {
+
             // incase no data found
+
             htmlView += `
                 <tr>
                     <td class="bg-white dark:bg-gray-800 p-8 font-bold text-lg rounded-lg text-center" colspan="8">
@@ -246,7 +244,9 @@
                         </div>
                 </tr>`;
         } else {
+
             // searched rows or matched rows
+
             for (let i = 0; i < expenses.length; i++) {
                 htmlView += `
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
