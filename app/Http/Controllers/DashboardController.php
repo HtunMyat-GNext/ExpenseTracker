@@ -35,6 +35,7 @@ class DashboardController extends Controller
         $incomes = Income::where('user_id', $user_id)->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->sum('amount');
         $expenses = Expense::where('user_id', $user_id)->whereYear('created_at', $currentYear)->whereMonth('created_at', $currentMonth)->sum('amount');
         $categories = Category::count();
-        return view('dashboard', compact('incomes', 'expenses', 'categories'));
+        $category = response()->json([12, 12, 12, 12, 12])->getData();
+        return view('dashboard', compact('incomes', 'expenses', 'categories', 'category'));
     }
 }
