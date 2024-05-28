@@ -14,6 +14,20 @@
                 
                 <form class="max-w-sm mx-auto p-5" method="POST" action="{{ route('categories.store') }}">
                     @csrf
+
+                    {{-- validation error for can't create same title, same income --}}
+                    
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error )
+                            {{-- <li>{{$error}}</li> --}}
+                                
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                    
                     <div class="mb-5">
 
                         {{-- title --}}
@@ -71,7 +85,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="currentColor">
                                             <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
                                         </svg>
-                                    </span>
+                                     </span>
                                 </label>
 
                                 <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html" for="income">

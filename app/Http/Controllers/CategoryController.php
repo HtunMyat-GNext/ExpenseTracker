@@ -23,27 +23,35 @@ class CategoryController extends Controller
      * store function & Validation
      */
     public function store(Request $request)
-    {
+{
+    $validatedData = $request->validate([
+        'title' => [
+            'required',
+            function ($attribute, $value, $fail) use ($request) {
+                $exists = \App\Models\Category::where('title', $value)
+                    ->where('is_income', $request->is_income)
+                    ->exists();
+                if ($exists) {
+                    $fail('This category with the same title and type already exist.');
+                }
+            },
+        ],
+        'is_income' => 'required|boolean',
+        'color' => 'required|string',
+    ]);
 
+     
 
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'is_income' => 'required',
-            'color' => 'required',
-        ]);
+    \App\Models\Category::create([
+       'user_id' => Auth::user()->id,
+        'title' => $validatedData['title'],
+        'is_income' => $validatedData['is_income'],
+        'color' => $validatedData['color'],
+    ]);
 
+    return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+}
 
-        $category = Category::query();
-        $category->create([
-            'user_id' => Auth::user()->id,
-            'title'     => $validatedData['title'],
-            'is_income' => $validatedData['is_income'],
-            'color' => $validatedData['color'],
-        ]);
-
-
-        return redirect()->route('categories.index');
-    }
 
     /**
      * show index page
