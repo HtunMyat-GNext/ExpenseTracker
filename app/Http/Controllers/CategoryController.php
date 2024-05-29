@@ -21,40 +21,41 @@ class CategoryController extends Controller
 
     /**
      * store function & Validation
+     * Store a newly created category in the database with validation.
      */
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'title' => [
-            'required',
-            function ($attribute, $value, $fail) use ($request) {
-                $exists = \App\Models\Category::where('title', $value)
-                    ->where('is_income', $request->is_income)
-                    ->exists();
-                if ($exists) {
-                    $fail('This category with the same title and type already exist.');
-                }
-            },
-        ],
-        'is_income' => 'required|boolean',
-        'color' => 'required|string',
-    ]);
+    {
+        $validatedData = $request->validate([
+            'title' => [
+                'required',
+                function ($attribute, $value, $fail) use ($request) {
+                    $exists = \App\Models\Category::where('title', $value)
+                        ->where('is_income', $request->is_income)
+                        ->exists();
+                    if ($exists) {
+                        $fail('This category with the same title and type already exist.');
+                    }
+                },
+            ],
+            'is_income' => 'required|boolean',
+            'color' => 'required|string',
+        ]);
 
-     
 
-    \App\Models\Category::create([
-       'user_id' => Auth::user()->id,
-        'title' => $validatedData['title'],
-        'is_income' => $validatedData['is_income'],
-        'color' => $validatedData['color'],
-    ]);
 
-    return redirect()->route('categories.index')->with('success', 'Category created successfully.');
-}
+        \App\Models\Category::create([
+            'user_id' => Auth::user()->id,
+            'title' => $validatedData['title'],
+            'is_income' => $validatedData['is_income'],
+            'color' => $validatedData['color'],
+        ]);
+
+        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+    }
 
 
     /**
-     * show index page
+     * Display the index page for categories.
      */
     public function index(Request $request)
     {
@@ -98,25 +99,44 @@ class CategoryController extends Controller
     }
 
 
-    /**
-     * update form
-     * 
+    /** 
+     * Update the specified category in the database.
      * @param $id
      */
-
     public function update(Request $request, $id)
     {
+        // Validate the incoming request data
+        $request->validate([
+            'title' => 'required|string',
+            'is_income' => [
+                'required',
+                'boolean',
+                function ($attribute, $value, $fail) use ($request, $id) {
 
+                    // Check for existing category
+                    $exists = Category::where('title', $request->title)
+                        ->where('is_income', $value)
+                        ->where('id', '<>', $id)
+                        ->exists();
+                    if ($exists) {
+                        $fail('This category with the same title and type already exists.Please create new category. ');
+                    }
+                },
+            ],
+            'color' => 'required',
+
+        ]);
 
         $category = Category::findOrFail($id);
 
-        $category->update($request->only('title', 'is_income', 'color'));
+        // Update the category with the validated data
+        $category->update($request->all());
 
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
 
     /**
-     * data searching
+     *  Search for categories based on the title.
      */
     public function search(Request $request)
     {
@@ -125,14 +145,14 @@ class CategoryController extends Controller
             $categories = DB::table('categories')->where('title', 'LIKE', '%' . $request->search . "%")->get();
             dd($categories);
             if ($categories) {
-                $iteration = 1; // Manual iteration counter
+                $iteration = 1; 
                 foreach ($categories as $category) {
                     $output .= '<tr>' .
                         '<td>' . $iteration . '</td>' .
                         '<td>' . $category->title . '</td>' .
                         '<td>' . $category->is_income . '</td>' .
                         '</tr>';
-                    $iteration++; // Increment the counter
+                    $iteration++; 
                 }
                 return response($output);
             }

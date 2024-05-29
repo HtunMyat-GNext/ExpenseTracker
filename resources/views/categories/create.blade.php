@@ -7,32 +7,29 @@
             {{ __('categories') }}
         </h2>
     </x-slot>
-    
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                
+
                 <form class="max-w-sm mx-auto p-5" method="POST" action="{{ route('categories.store') }}">
                     @csrf
 
                     {{-- validation error for can't create same title, same income --}}
-                    
+
                     @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error )
-                            {{-- <li>{{$error}}</li> --}}
-                                
-                            @endforeach
-                        </ul>
-                    </div>
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
-                    
+
                     <div class="mb-5">
 
                         {{-- title --}}
-                        <label for=""
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                             Category Title
                         </label>
 
@@ -41,8 +38,8 @@
                             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 
                             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
                             dark:focus:border-blue-500 dark:shadow-sm-light"
-                            placeholder="Enter Category"  />
-                            <x-input-error :messages="$errors->get('title')" class="mt-2" />
+                            placeholder="Enter Category" value="{{ old('title') }}" />
+                        <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
 
                     {{-- color picker --}}
@@ -54,8 +51,8 @@
                         <input type="color"
                             class="p-1 h-10 w-full block bg-white border border-gray-300 cursor-pointer 
                             rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-100 
-                            dark:border-neutral-100" id="hs-color-input" value="#ecfeff" title="Choose your color" 
-                            name="color">
+                            dark:border-neutral-100"
+                            id="hs-color-input" value="{{ old('color', '') }}" title="Choose your color" name="color">
                     </div>
 
                     {{-- income / expense radio button  --}}
@@ -70,52 +67,58 @@
                             <div class="inline-flex items-center">
                                 <label class="relative flex items-center p-3 rounded-full cursor-pointer"
                                     htmlFor="green">
-                                    <input name="is_income" type="radio" value="1" checked id="income" 
+                                    <input name="is_income" type="radio" value="1" checked id="income"
                                         class="before:content[''] peer relative h-5 w-5 cursor-pointer 
                                         appearance-none rounded-full border border-blue-gray-200 text-green-500 
                                         transition-all before:absolute before:top-2/4 before:left-2/4 before:block 
                                         before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full 
                                         before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 
-                                        checked:before:bg-green-500 hover:before:opacity-10"/>
+                                        checked:before:bg-green-500 hover:before:opacity-10"
+                                        {{ old('is_income') == 1 ? 'checked' : '' }} />
 
                                     <span
                                         class="absolute text-green-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 
                                         -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
 
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="currentColor">
-                                            <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
-                                        </svg>
-                                     </span>
-                                </label>
-
-                                <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html" for="income">
-                                    Income
-                                </label>
-                                
-                            </div>
-
-                            <div class="inline-flex items-center">
-                                <label class="relative flex items-center p-3 rounded-full cursor-pointer"
-                                    htmlFor="green">
-                                    <input name="is_income" type="radio" value="0" id="expense" 
-                                        class="before:content[''] peer relative h-5 w-5 cursor-pointer 
-                                        appearance-none rounded-full border border-blue-gray-200 text-green-500 
-                                        transition-all before:absolute before:top-2/4 before:left-2/4 before:block 
-                                        before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full 
-                                        before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 
-                                        checked:before:bg-green-500 hover:before:opacity-10"/>
-
-                                    <span
-                                        class="absolute text-green-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 
-                                        -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
-
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16" fill="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16"
+                                            fill="currentColor">
                                             <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
                                         </svg>
                                     </span>
                                 </label>
 
-                                <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html" for="expense">
+                                <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none"
+                                    htmlFor="html" for="income">
+                                    Income
+                                </label>
+
+                            </div>
+
+                            <div class="inline-flex items-center">
+                                <label class="relative flex items-center p-3 rounded-full cursor-pointer"
+                                    htmlFor="green">
+                                    <input name="is_income" type="radio" value="0" id="expense"
+                                        class="before:content[''] peer relative h-5 w-5 cursor-pointer 
+                                        appearance-none rounded-full border border-blue-gray-200 text-green-500 
+                                        transition-all before:absolute before:top-2/4 before:left-2/4 before:block 
+                                        before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full 
+                                        before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 
+                                        checked:before:bg-green-500 hover:before:opacity-10"
+                                        {{ old('is_income') == 0 ? 'checked' : '' }} />
+
+                                    <span
+                                        class="absolute text-green-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 
+                                        -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
+
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 16 16"
+                                            fill="currentColor">
+                                            <circle data-name="ellipse" cx="8" cy="8" r="8"></circle>
+                                        </svg>
+                                    </span>
+                                </label>
+
+                                <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none"
+                                    htmlFor="html" for="expense">
                                     Expense
                                 </label>
                             </div>
@@ -146,5 +149,5 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 </x-app-layout>
