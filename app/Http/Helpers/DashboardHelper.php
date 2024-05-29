@@ -21,6 +21,7 @@ class DashboardHelper
                 'name' => $item->category->title,
                 'total' => $item->total,
                 'count' => $item->count,
+                'color' => $item->category->color,
             ];
         });
 

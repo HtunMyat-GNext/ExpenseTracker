@@ -1,6 +1,6 @@
 <x-app-layout>
     @push('title')
-    ExpenseTrakcker | Dashboard
+        ExpenseTrakcker | Dashboard
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -145,8 +145,8 @@
                     <div
                         class="relative mx-4 mt-4 flex flex-col gap-4 overflow-hidden rounded-none bg-transparent bg-clip-border text-gray-700 shadow-none md:flex-row md:items-center">
                         <div class="w-max rounded-lg bg-gray-900 p-5 text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" aria-hidden="true" class="h-6 w-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-6 w-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3">
                                 </path>
@@ -170,10 +170,11 @@
                     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
                     <script>
                         const categories = @json($categories_data);
-                        const series = categories.map(category => category.total);
-                        console.log(series);
+                        // const series = categories.map(category => category.total);
+                        // console.log(series);
                         const labels = categories.map(category => category.name);
                         const datas = categories.map(category => category.count);
+                        const color = categories.map(category => category.color);
                         console.log(datas);
 
                         const chartConfig = {
@@ -183,16 +184,17 @@
                                 width: 500,
                                 height: 500,
                                 toolbar: {
-                                    show: true,
+                                    show: false,
                                 },
                             },
+                            labels: labels,
                             title: {
                                 show: "Expense",
                             },
                             dataLabels: {
                                 enabled: true,
                             },
-                            colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
+                            colors: color,
                             legend: {
                                 show: false,
                             },
