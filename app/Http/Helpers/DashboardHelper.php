@@ -6,13 +6,20 @@ use App\Models\Expense;
 
 class DashboardHelper
 {
-    public static function getExpensesByCategory($userId, $year, $month)
+    public static function getExpensesByCategory($userId, $year, $month, $startDate = null, $endDate = null)
     {
-        $datas = Expense::selectRaw('category_id, SUM(amount) as total, COUNT(*) as count')
+        $query = Expense::selectRaw('category_id, SUM(amount) as total, COUNT(*) as count')
             ->where('user_id', $userId)
             ->whereYear('created_at', $year)
-            ->whereMonth('created_at', $month)
-            ->groupBy('category_id')
+            ->whereMonth('created_at', $month);
+
+        // Apply date range filters
+        if ($startDate && $endDate) {
+            $query->whereDate('created_at', '>=', $startDate)
+                ->whereDate('created_at', '<=', $endDate);
+        }
+
+        $datas = $query->groupBy('category_id')
             ->with('category')
             ->get();
 

@@ -11,13 +11,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                {{-- <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div> --}}
-                {{-- @dd(request()->all()) --}}
-                <form action="{{ route('dashboard') }}" method="POST">
+
+                <form action="{{ route('dashboard') }}" method="GET">
                     @csrf
-                    @method('POST')
+                    @method('GET')
                     <div date-rangepicker class="flex pt-6 pr-6 pl-6 items-center justify-end">
                         <div class="relative">
                             <input type="text" name="start_date" value="{{ request()['start_date'] }}" type="text"
@@ -168,17 +165,27 @@
                     </div>
 
                     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
                     <script>
+                        $(document).ready(function() {
+                            $(".flatpicker").flatpickr({
+                                // "locale": "jp"
+                            });
+                        });
+
                         const categories = @json($categories_data);
-                        // const series = categories.map(category => category.total);
-                        // console.log(series);
-                        const labels = categories.map(category => category.name);
-                        const datas = categories.map(category => category.count);
-                        const color = categories.map(category => category.color);
-                        console.log(datas);
+
+                        //category total amounts
+                        const amounts = categories.map((category) => parseInt(category.total));
+
+                        //labels for
+                        const labels = categories.map((category) => category.name);
+                        const datas = categories.map((category) => category.count);
+                        const color = categories.map((category) => category.color);
+                        // console.log(total);
 
                         const chartConfig = {
-                            series: datas,
+                            // series: percentage,
                             chart: {
                                 type: "pie",
                                 width: 500,
@@ -187,6 +194,7 @@
                                     show: false,
                                 },
                             },
+                            series: amounts,
                             labels: labels,
                             title: {
                                 show: "Expense",

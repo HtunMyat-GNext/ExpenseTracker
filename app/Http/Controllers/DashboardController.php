@@ -36,9 +36,7 @@ class DashboardController
             $endDate = $request->input('end_date');
             $incomes = Income::whereBetween('date', [$startDate, $endDate])->where('user_id', $user_id)->sum('amount');
             $expenses = Expense::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user_id)->sum('amount');
-            // $categories = Category::where('user_id', $user_id)->whereBetween('date', $startDate, $endDate)->count();
-            // $events = Event::where('user_id', $user_id)->whereBetween('date', $startDate, $endDate)->count();
-
+            $categories_data = DashboardHelper::getExpensesByCategory($user_id, $currentYear, $currentMonth, $startDate, $endDate);
         }
 
 
