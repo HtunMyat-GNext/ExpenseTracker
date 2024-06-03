@@ -17,8 +17,6 @@ class DashboardController
         // get current login user id
         $user_id = Auth::user()->id;
         // If request have date filter with start and end date
-
-
         // Total income for the current month
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
@@ -38,7 +36,6 @@ class DashboardController
             $expenses = Expense::whereBetween('created_at', [$startDate, $endDate])->where('user_id', $user_id)->sum('amount');
             $categories_data = DashboardHelper::getExpensesByCategory($user_id, $currentYear, $currentMonth, $startDate, $endDate);
         }
-
 
         return view('dashboard', compact('incomes', 'expenses', 'categories', 'categories_data'));
     }

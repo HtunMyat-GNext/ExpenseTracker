@@ -34,7 +34,6 @@
                     </div>
                 </form>
 
-
                 <div class="grid grid-cols-4 gap-4 p-6">
                     <div
                         class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl text-center">
@@ -60,7 +59,6 @@
                         </div>
 
                     </div>
-
                     <div
                         class="bg-white dark:bg-slate-800 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl text-center">
                         <div>
@@ -132,11 +130,7 @@
                         </div>
 
                     </div>
-
-
-
                 </div>
-
                 <div
                     class="relative flex flex-col rounded-xl bg-white dark:bg-gray-800 bg-clip-border text-gray-700 shadow-md">
                     <div
@@ -182,8 +176,6 @@
                         const labels = categories.map((category) => category.name);
                         const datas = categories.map((category) => category.count);
                         const color = categories.map((category) => category.color);
-                        // console.log(total);
-
                         const chartConfig = {
                             // series: percentage,
                             chart: {
@@ -207,9 +199,7 @@
                                 show: false,
                             },
                         };
-
                         const chart = new ApexCharts(document.querySelector("#pie-chart"), chartConfig);
-
                         chart.render();
                     </script>
                 </div>
