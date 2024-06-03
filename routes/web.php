@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\IncomeController;
@@ -29,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
     Route::resource('expenses', ExpenseController::class);
+    // Route::post('expenses/search', [ExpenseController::class, 'search'])->name('expenses.search');
+    // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
 });
 
 require __DIR__ . '/auth.php';

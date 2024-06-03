@@ -1,6 +1,6 @@
 <x-app-layout>
     @push('title')
-    ExpenseTrakcker | Dashboard
+        ExpenseTrakcker | Dashboard
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -11,13 +11,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                {{-- <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
-                </div> --}}
-                {{-- @dd(request()->all()) --}}
-                <form action="{{ route('dashboard') }}" method="POST">
+
+                <form action="{{ route('dashboard') }}" method="GET">
                     @csrf
-                    @method("POST")
+                    @method('GET')
                     <div date-rangepicker class="flex pt-6 pr-6 pl-6 items-center justify-end">
                         <div class="relative">
                             <input type="text" name="start_date" value="{{ request()['start_date'] }}" type="text"
@@ -61,7 +58,7 @@
                                 {{ number_format($incomes, 0) }} Ks
                             </h4>
                         </div>
-                        
+
                     </div>
 
                     <div
@@ -85,7 +82,7 @@
                                 {{ number_format($expenses, 0) }} Ks
                             </h4>
                         </div>
-                        
+
                     </div>
 
                     <div
@@ -106,10 +103,10 @@
                         </div>
                         <div>
                             <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                You have {{  $categories }} Categories
+                                You have {{ $categories }} Categories
                             </h4>
                         </div>
-                       
+
                     </div>
 
                     <div
@@ -133,7 +130,7 @@
                                 You can see your <a href="{{ route('calendar') }}">Events</a> here.
                             </h4>
                         </div>
-                        
+
                     </div>
 
 
@@ -145,8 +142,8 @@
                     <div
                         class="relative mx-4 mt-4 flex flex-col gap-4 overflow-hidden rounded-none bg-transparent bg-clip-border text-gray-700 shadow-none md:flex-row md:items-center">
                         <div class="w-max rounded-lg bg-gray-900 p-5 text-white">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                stroke="currentColor" aria-hidden="true" class="h-6 w-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" aria-hidden="true" class="h-6 w-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3">
                                 </path>
@@ -168,27 +165,44 @@
                     </div>
 
                     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
                     <script>
-                        $(".flatpicker").flatpickr({
-                            // "locale": "jp"
+                        $(document).ready(function() {
+                            $(".flatpicker").flatpickr({
+                                // "locale": "jp"
+                            });
                         });
+
+                        const categories = @json($categories_data);
+
+                        //category total amounts
+                        const amounts = categories.map((category) => parseInt(category.total));
+
+                        //labels for
+                        const labels = categories.map((category) => category.name);
+                        const datas = categories.map((category) => category.count);
+                        const color = categories.map((category) => category.color);
+                        // console.log(total);
+
                         const chartConfig = {
-                            series: [44, 55, 13, 43, 22],
+                            // series: percentage,
                             chart: {
                                 type: "pie",
                                 width: 500,
                                 height: 500,
                                 toolbar: {
-                                    show: true,
+                                    show: false,
                                 },
                             },
+                            series: amounts,
+                            labels: labels,
                             title: {
                                 show: "Expense",
                             },
                             dataLabels: {
                                 enabled: true,
                             },
-                            colors: ["#020617", "#ff8f00", "#00897b", "#1e88e5", "#d81b60"],
+                            colors: color,
                             legend: {
                                 show: false,
                             },

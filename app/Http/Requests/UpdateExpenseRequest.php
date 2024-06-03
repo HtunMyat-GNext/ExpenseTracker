@@ -25,6 +25,7 @@ class UpdateExpenseRequest extends FormRequest
             'name' => 'required',
             'amount' => 'required',
             'description' => 'required',
+            'category_id' => 'required',
             'date'  => 'required',
         ];
     }

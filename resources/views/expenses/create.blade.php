@@ -55,7 +55,7 @@
                                     dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">Remove</button>
                             </div>
                         </div>
-
+                        <span class="invisible text-red-500" id="imgErr"></span>
                         <x-input-error :messages="$errors->get('img')" class="mt-2" />
                     </div>
 
@@ -66,6 +66,19 @@
                         <x-my-input type="number" :value="old('amount')" :placeholder="'amount'" name="amount">
                         </x-my-input>
                         <x-input-error :messages="$errors->get('amount')" class="mt-2" />
+
+                    </div>
+
+                    {{-- category --}}
+
+                    <div class="mb-5">
+                        <x-my-label :value="'Enter Amount'"></x-my-label>
+                        <x-my-select name="category_id" :placeholder="'Category'">
+                            @foreach ($categories as $key => $category)
+                                <option value="{{ $key }}">{{ $category }}</option>
+                            @endforeach
+                        </x-my-select>
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
 
                     </div>
 
@@ -83,12 +96,12 @@
                     <div class="flex items-center justify-between  mt-4">
                         <div>
                             <a onclick="goBack()"
-                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
+                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
                                 Back</a>
                         </div>
                         <div>
                             <button type="submit"
-                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create
+                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create
                                 Expense
                             </button>
                         </div>
@@ -128,6 +141,10 @@
                 } else {
                     // Clear the src attribute and hide the image if the file is not an image
                     output.attr('src', '').hide();
+                    $('#imgErr').text("Please choose the correct file.").removeClass(
+                    'invisible'); // Show the error message
+                    removeBtn.hide();
+
                 }
             } else {
                 // Hide the image if no file is selected

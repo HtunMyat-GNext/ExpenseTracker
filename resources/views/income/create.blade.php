@@ -1,6 +1,6 @@
 <x-app-layout>
     @push('title')
-        ExpenseTrakcker | Income
+    ExpenseTrakcker | Income
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
@@ -40,14 +40,14 @@
                         <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter
                             date
                         </label>
-                        <input type="date" id="flatpicker" name="date" value="{{ old('date') }}" type="text"
-                            name="date" :placeholder="'Date'"
+                        <input type="date" id="flatpicker" name="date" value="{{ old('date') }}" type="text" name="date"
+                            :placeholder="'Date'"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
                     </div>
 
                     <div class="mb-5">
-                        <label for="image"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload photo
+                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload
+                            photo
                         </label>
                         <input type="file" id="image"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
@@ -66,7 +66,7 @@
                     <select id="categories" name="category_id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @foreach ($categories as $category)
-                            <option value={{ $category->id }}>{{ $category->title }}</option>
+                        <option value={{ $category->id }}>{{ $category->title }}</option>
                         @endforeach
                     </select>
                     <x-input-error class="mt-2" :messages="$errors->get('category_id')" />
@@ -89,8 +89,8 @@
     </div>
     </div>
     @push('scripts')
-        <script>
-            $(document).ready(function() {
+    <script>
+        $(document).ready(function() {
                 $("#flatpicker").flatpickr({
                     // "locale": "jp"
                 });
@@ -130,6 +130,6 @@
                     removeBtn.hide();
                 });
             });
-        </script>
+    </script>
     @endpush
 </x-app-layout>

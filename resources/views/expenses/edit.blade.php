@@ -32,11 +32,14 @@
                     <div class="mb-5">
                         <x-my-label :value="'Enter Date'"></x-my-label>
                         <x-my-input id="flatpicker" name="date" type="text" name="date" :placeholder="'Date'"
-                            :value="old('name', \Carbon\Carbon::parse($expense->date)->format('d-m-y'))"></x-my-input>
+                            :value="old('date', \Carbon\Carbon::parse($expense->date)->format('d-m-y'))"></x-my-input>
+
+                        <x-input-error :messages="$errors->get('date')" class="mt-2" />
                     </div>
 
 
                     <!-- Img -->
+
                     <div class="mb-5">
                         <x-my-label :value="'Choose your image'"></x-my-label>
                         <x-my-img type="file" class="block mt-1 w-full" name="image" />
@@ -53,6 +56,7 @@
                                     dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer"
                                     style="display: {{ $expense->img ? 'inline-block' : 'none' }}">Remove</button>
                             </div>
+                            <span class="invisible text-red-500" id="imgErr"></span>
                             <input type="hidden" name="remove_image" value="" id="remove-image">
                         </div>
 
@@ -67,6 +71,21 @@
                         </x-my-input>
                     </div>
 
+                    {{-- category --}}
+
+                    <div class="mb-5">
+                        <x-my-label :value="'Enter Amount'"></x-my-label>
+                        <x-my-select name="category_id" :placeholder="'Select Category'">
+                            @foreach ($categories as $key => $category)
+                            <option value="{{ $key }}" {{ $expense->category_id == $key ? 'selected' : '' }}>
+                                {{ $category }}
+                            </option>
+                            @endforeach
+                        </x-my-select>
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
+
+                    </div>
+
                     {{-- description --}}
 
                     <div class="mb-5">
@@ -79,10 +98,10 @@
 
                     <div class="flex items-center justify-between  mt-4">
                         <a onclick="window.history.back()"
-                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
                             Back</a>
                         <button type="submit"
-                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Save
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Save
                         </button>
 
 
@@ -103,7 +122,7 @@
     }
     $(document).ready(function() {
         $("#flatpicker").flatpickr({
-            // "locale": "jp"
+            dateFormat: "d-m-Y"
         });
     });
 
@@ -126,18 +145,24 @@
                     };
                     reader.readAsDataURL(file);
                 } else {
+
                     // Clear the src attribute and hide the image if the file is not an image
+
                     output.attr('src', '').hide();
+                    $('#imgErr').text("Please choose the correct file.").removeClass('invisible'); // Show the error message
                     removeBtn.hide();
                 }
             } else {
+
                 // Hide the image if no file is selected
+
                 output.attr('src', '').hide();
                 removeBtn.hide();
             }
         });
 
         // Remove button functionality
+
         removeBtn.on('click', function() {
             imgUpload.val(''); // Clear the file input value
             output.attr('src', '').hide(); // Clear the src attribute and hide the image
@@ -145,7 +170,7 @@
             removeImage.val(true); // remove image
         });
 
-        // Initially hide the image and remove button if no image exists
+        // On loading hide the image and remove button if no image exists
         if (!output.attr('src')) {
             output.hide();
             removeBtn.hide();

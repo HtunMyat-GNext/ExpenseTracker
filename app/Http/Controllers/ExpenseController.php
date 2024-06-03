@@ -8,53 +8,66 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
+use App\Models\Category;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
 
 class ExpenseController extends Controller
 {
 
 
-    public function index()
+    public function index(Request $request)
     {
-        $qry = Expense::query();
+        $qry = Expense::with('category', 'user');
 
-        if (request()->has('search')) {
+        // search
+        if ($request->ajax()) {
+
             $search = request()->input('search');
+
             $qry->where(function ($query) use ($search) {
-                // dd($query);
                 $query->where('name', 'like', '%' . $search . '%')
                     ->orWhere('description', 'like', '%' . $search . '%')
                     ->orWhere('amount', 'like', '%' . $search . '%');
             });
-        }
 
+            $expenses = $qry->paginate(10);
+
+            return response()->json(['expenses' => $expenses]);
+        }
         $expenses = $qry->paginate(10);
+
         return view('expenses.index', compact('expenses'));
     }
 
     public function create()
     {
-        return view('expenses.create');
+
+        $categories = Category::pluck('title', 'id');
+        // dd($categories);
+        return view('expenses.create', compact('categories'));
     }
 
     public function store(StoreExpenseRequest $request)
     {
+
         $user_id = Auth::user()->id;
 
-        // get image file and save in public/images dir
         $imageName = '';
+
+        // get image file and save in public/images dir
 
         if ($request->has('image')) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/expenses/'), $imageName);
         }
 
         Expense::create([
             'name'  =>  $request->name,
             'user_id'   => $user_id,
             'date'  => $request->date,
-            // 'category_id' => 1,
-            'img' =>  $imageName != '' ? 'images/' . $imageName : '',
+            'category_id' => $request->category_id,
+            'img' =>  $imageName != '' ? 'images/expenses/' . $imageName : '',
             'amount' => $request->amount,
             'description' => $request->description,
         ]);
@@ -63,28 +76,39 @@ class ExpenseController extends Controller
 
     public function edit(Expense $expense)
     {
-        return view('expenses.edit', compact('expense'));
+        $categories = Category::pluck('title', 'id');
+        return view('expenses.edit', compact('expense', 'categories'));
     }
 
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
-        // dd($request->all());
-        // dd($request->remove_image);
-        $expense->update($request->except('image'));
+
+        $user_id = Auth::user()->id;
+        $date = Carbon::parse($request->date)->format('Y-m-d');
+
+        $expense->update([
+            'name'  =>  $request->name,
+            'user_id'   => $user_id,
+            'date'  => $date,
+            'category_id' => $request->category_id,
+            'amount' => $request->amount,
+            'description' => $request->description,
+        ]);
 
 
         // if image is updated
+
         if ($request->has('image')) {
             $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
+            $request->image->move(public_path('images/expenses/'), $imageName);
             $expense->update([
-                'img' => 'images/' . $imageName,
+                'img' => 'images/expenses/' . $imageName,
             ]);
         }
 
         // when remove image in update
         if ($request->remove_image  && $expense->img) {
-            // dd('here');
+
             $this->removeImage($expense->img);
             // update image value to null
             $expense->update([
@@ -101,31 +125,16 @@ class ExpenseController extends Controller
 
     public function destroy(Expense $expense)
     {
+        $this->removeImage($expense->img);
         $expense->delete();
         return redirect()->route('expenses.index');
     }
 
 
-    // live search
-    // public function search(Request $request)
-    // {
-    //     // dd($request->all());
-    //     if ($request->ajax()) {
-    //         $output = "";
-    //         $expenses = DB::table('expenses')->where('name', 'LIKE', '%' . $request->search . "%")->get();
-    //         if ($expenses) {
-    //             foreach ($expenses as $key => $expense) {
-    //                 $output .= '<tr>' .
-    //                     '<td>' . $expense->id . '</td>' .
-    //                     '<td>' . $expense->title . '</td>' .
-    //                     '<td>' . $expense->description . '</td>' .
-    //                     '<td>' . $expense->price . '</td>' .
-    //                     '</tr>';
-    //             }
-    //             return Response($output);
-    //         }
-    //     }
-    // }
+
+
+
+
     /**
      * delete old image
      *
@@ -134,7 +143,8 @@ class ExpenseController extends Controller
     private function removeImage($image)
     {
         // dd('hi');
-        $imagePath = 'images/' . $image;
+        $imagePath =  $image;
+        // dd($imagePath);
         if (File::exists($imagePath)) {
             unlink(public_path($imagePath));
         }
