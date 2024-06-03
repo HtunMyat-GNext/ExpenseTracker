@@ -3,8 +3,8 @@
         ExpenseTrakcker | Expense
     @endpush
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Expense') }}
+        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight italic ...">
+            {{ __("Let's See Your Expenses") }}
         </h2>
     </x-slot>
 

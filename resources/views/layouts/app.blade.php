@@ -31,34 +31,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        #external-events {
-            position: fixed;
-            z-index: 2;
-            top: 272px;
-            left: 120px;
-            width: 185px;
-            padding: 0 10px;
-            border: 1px solid #ccc;
-            background: #eee;
-        }
-
-        #external-events .fc-event {
-            cursor: move;
-            margin: 3px 0;
-        }
-
-        #calendar-container {
-            position: relative;
-            z-index: 1;
-            margin-left: 200px;
-        }
-
-        #calendar {
-            max-width: 1100px;
-            margin: 20px auto;
-        }
-    </style>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite('resources/css/style.css')
@@ -85,6 +57,11 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
             {{ $slot }}
         </main>
     </div>
+    <footer class="bg-white dark:bg-gray-800 text-center py-4">
+        <p class="text-sm text-gray-800 dark:text-gray-200">
+            &copy; {{ date('Y') }} ExpenseTrakcker. All rights reserved.
+        </p>
+    </footer>
     @stack('scripts')
 </body>
 
