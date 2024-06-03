@@ -103,6 +103,7 @@
                         </tr>
                     </tbody>
                 </table>
+                
             </div>
         </div>
         @include('income.modal', [

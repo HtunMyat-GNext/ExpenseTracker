@@ -112,7 +112,6 @@ class CategoryController extends Controller
                 'required',
                 'boolean',
                 function ($attribute, $value, $fail) use ($request, $id) {
-
                     // Check for existing category
                     $exists = Category::where('title', $request->title)
                         ->where('is_income', $value)

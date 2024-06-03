@@ -106,7 +106,7 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
+                
         </div>
 
         <x-modal name="confirm-category-deletion" :show="$errors->categoryDeletion->isNotEmpty()" focusable>
