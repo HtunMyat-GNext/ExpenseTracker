@@ -36,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
     Route::resource('expenses', ExpenseController::class);
+
+    Route::get('/income/export/{format}', [IncomeController::class, 'export'])->name('income.export');
     // Route::post('expenses/search', [ExpenseController::class, 'search'])->name('expenses.search');
     // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
 });

@@ -8,6 +8,8 @@ use App\Models\Income;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\IncomeExport;
 
 class IncomeController extends Controller
 {
@@ -138,6 +140,17 @@ class IncomeController extends Controller
         }
         $income->delete();
         return redirect()->route('income.index');
+    }
+
+    /**
+     * Export income data in specified format.
+     * 
+     * @param string $format The format to export the data ('pdf' or 'excel').
+     * @return \Illuminate\Http\Response
+     */
+    public function export($format)
+    {
+        return Excel::download(new IncomeExport, 'income.' . $format);
     }
 
     /**
