@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\File;
 
 class ExpenseController extends Controller
 {
-
-
     public function index(Request $request)
     {
         $qry = Expense::with('category', 'user');
@@ -95,7 +93,6 @@ class ExpenseController extends Controller
             'description' => $request->description,
         ]);
 
-
         // if image is updated
 
         if ($request->has('image')) {
@@ -118,22 +115,12 @@ class ExpenseController extends Controller
         return redirect()->route('expenses.index');
     }
 
-    // public function show()
-    // {
-    //     dd('show');
-    // }
-
     public function destroy(Expense $expense)
     {
         $this->removeImage($expense->img);
         $expense->delete();
         return redirect()->route('expenses.index');
     }
-
-
-
-
-
 
     /**
      * delete old image
@@ -142,9 +129,7 @@ class ExpenseController extends Controller
      */
     private function removeImage($image)
     {
-        // dd('hi');
         $imagePath =  $image;
-        // dd($imagePath);
         if (File::exists($imagePath)) {
             unlink(public_path($imagePath));
         }

@@ -8,20 +8,22 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SocialLoginController;
 
-// Route::get('/', function () {
-//     return view('auth.login');
-// });
+
 Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+// Social Login
+Route::get('/auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');
+Route::get('/auth/google/callback', [SocialLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
+Route::get('/auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
+Route::get('/auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback'])->name('auth.facebook.callback');
 
 Route::middleware('auth')->group(function () {
-    // get total income
-    // Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
-    // Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+    Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
     // langauge switch
     Route::get('/language/switch/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
