@@ -5,16 +5,30 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IncomeRequest;
 use App\Models\Category;
 use App\Models\Income;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
 
 class IncomeController extends Controller
 {
     /**
      * show index page
      */
-    public function index()
+    public function index(Request $request)
     {
-        $incomes = Income::with('Category')->get();
+        // get login user id 
+        $user_id = Auth::user()->id;
+        $query = $request->input('search');
+        // check the http request with search query 
+        if ($request->ajax()) {
+            if (!empty($query)) {
+                $incomes = Income::where('user_id', $user_id)->where('title', 'LIKE', "%{$query}%")->paginate(10);
+            } else {
+                $incomes = Income::where('user_id', $user_id)->paginate(10);
+            }
+            return view('income.partial.search', compact('incomes'))->render();
+        }
+        $incomes = Income::with('Category')->where('user_id', $user_id)->paginate(10);
         return view('income.index', compact('incomes'));
     }
 
@@ -23,7 +37,8 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $user_id = auth()->user()->id;
+        $categories = Category::where('user_id', $user_id)->get();
         return view('income.create', compact('categories'));
     }
 
@@ -103,7 +118,8 @@ class IncomeController extends Controller
     public function edit($id)
     {
         $income = Income::find($id);
-        $categories = Category::all();
+        $user_id = auth()->user()->id;
+        $categories = Category::where('user_id', $user_id)->get();
         return view('income.edit', compact('income', 'categories'));
     }
 
@@ -116,9 +132,11 @@ class IncomeController extends Controller
     {
         // find income data
         $income = Income::findOrFail($id);
+        if ($income->image) {
+            // when delete the icome, it's image also disappear
+            $this->removeImage($income->image);
+        }
         $income->delete();
-        // when delete the icome, it's image also disappear
-        $this->removeImage($income->image);
         return redirect()->route('income.index');
     }
 
