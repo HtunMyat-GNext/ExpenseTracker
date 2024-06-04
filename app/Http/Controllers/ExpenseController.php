@@ -42,9 +42,8 @@ class ExpenseController extends Controller
 
     public function create()
     {
+        $categories = Category::where([['user_id', Auth::id()], ['is_income', 0]])->pluck('title', 'id');
 
-        $categories = Category::pluck('title', 'id');
-        // dd($categories);
         return view('expenses.create', compact('categories'));
     }
 
@@ -76,7 +75,8 @@ class ExpenseController extends Controller
 
     public function edit(Expense $expense)
     {
-        $categories = Category::pluck('title', 'id');
+        $categories = Category::where([['user_id', Auth::id()], ['is_income', 0]])->pluck('title', 'id');
+
         return view('expenses.edit', compact('expense', 'categories'));
     }
 
