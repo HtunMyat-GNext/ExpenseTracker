@@ -3,9 +3,16 @@
         ExpenseTrakcker | Income
     @endpush
     <x-slot name="header">
-        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight italic ...">
-            {{ __("Let's See Your Incomes") }}
-        </h2>
+        <div class="flex">
+            <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight italic ...">
+                {{ __("Let's See Your Incomes") }}
+            </h2>
+            <div class="text-right ml-auto">
+                <a href="{{ route('income.create') }}" type="button"
+                    class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
+                    Income</a>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -24,14 +31,30 @@
                         class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Search income">
                 </div>
-
-                <div>
-                    <a href="{{ route('income.create') }}" type="button"
-                        class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create</a>
+                <div class="relative">
+                    <div class="flex justify-end">
+                        <div class="flex items-center space-x-3">
+                            <label for="pdf" class="flex items-center cursor-pointer dark:text-white">
+                                <input type="radio" id="pdf" name="export_type" value="pdf" class="mr-2">
+                                PDF
+                            </label>
+                            <label for="excel" class="flex items-center cursor-pointer dark:text-white">
+                                <input type="radio" id="excel" name="export_type" value="excel" class="mr-2">
+                                Excel
+                            </label>
+                            <button onclick="exportIncome()"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                </svg>
+                                <span>Export Income</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
             </div>
-
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg" id="income-result">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -59,8 +82,7 @@
                     <tbody>
                         @if ($incomes->isEmpty())
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                <td class="bg-white dark:bg-gray-800 p-8 font-bold text-lg text-center"
-                                    colspan="8">
+                                <td class="bg-white dark:bg-gray-800 p-8 font-bold text-lg text-center" colspan="8">
                                     <h3 class="dark:text-gray-400 text-gray-400 mx-auto">No income found!</h3>
                                 </td>
                             </tr>
@@ -145,7 +167,6 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
-
                 function searchIncome(query, page = 1) {
                     $.ajax({
                         url: '{{ route('income.index') }}',
@@ -176,6 +197,17 @@
                     searchIncome(query, page);
                 });
             })
+
+            function exportIncome() {
+                var exportType = $('input[name="export_type"]:checked').val();
+                if (exportType === 'excel') {
+                    window.location.href = '{{ route('income.export', ['format' => 'xlsx']) }}';
+                } else if (exportType === 'pdf') {
+                    window.location.href = '{{ route('income.export', ['format' => 'pdf']) }}';
+                } else {
+                    alert('Please select an export format.');
+                }
+            }
         </script>
     @endpush
 </x-app-layout>
