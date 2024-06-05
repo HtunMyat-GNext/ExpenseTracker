@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 // Social Login
+
 Route::get('/auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');
 Route::get('/auth/google/callback', [SocialLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
 Route::get('/auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
@@ -23,7 +24,7 @@ Route::get('/auth/facebook/callback', [SocialLoginController::class, 'handleFace
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
-    Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+    // Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
     // langauge switch
     Route::get('/language/switch/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 

@@ -21,7 +21,7 @@ class DashboardController
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
         $incomes = Income::where('user_id', $user_id)->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->sum('amount');
-        $expenses = Expense::where('user_id', $user_id)->whereYear('date', $currentYear)->whereMonth('created_at', $currentMonth)->sum('amount');
+        $expenses = Expense::where('user_id', $user_id)->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->sum('amount');
         $categories = Category::count();
 
         // get data for pie-chart
