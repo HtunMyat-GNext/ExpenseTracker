@@ -14,35 +14,39 @@ use Illuminate\Support\Facades\File;
 
 class ExpenseController extends Controller
 {
+
+
     public function index(Request $request)
     {
         $qry = Expense::with('category', 'user');
 
-        // search
         if ($request->ajax()) {
+            $search = $request->input('search');
 
-            $search = request()->input('search');
+            if ($search) {
+                $qry->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%')
+                        ->orWhere('amount', 'like', '%' . $search . '%');
+                });
 
-            $qry->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('amount', 'like', '%' . $search . '%');
-            });
+                $expenses = $qry->get();
 
-            $expenses = $qry->paginate(10);
-
-            return response()->json(['expenses' => $expenses]);
+                return response()->json(['expenses' => $expenses]);
+            } else {
+                $expenses = $qry->paginate(5);
+                return response()->json(['expenses' => $expenses]);
+            }
         }
-        $expenses = $qry->paginate(10);
 
+        $expenses = $qry->paginate(5);
         return view('expenses.index', compact('expenses'));
     }
 
     public function create()
     {
+        $categories = Category::where([['user_id', Auth::id()], ['is_income', 0]])->pluck('title', 'id');
 
-        $categories = Category::pluck('title', 'id');
-        // dd($categories);
         return view('expenses.create', compact('categories'));
     }
 
@@ -74,7 +78,8 @@ class ExpenseController extends Controller
 
     public function edit(Expense $expense)
     {
-        $categories = Category::pluck('title', 'id');
+        $categories = Category::where([['user_id', Auth::id()], ['is_income', 0]])->pluck('title', 'id');
+
         return view('expenses.edit', compact('expense', 'categories'));
     }
 
@@ -92,6 +97,7 @@ class ExpenseController extends Controller
             'amount' => $request->amount,
             'description' => $request->description,
         ]);
+
 
         // if image is updated
 
@@ -115,12 +121,22 @@ class ExpenseController extends Controller
         return redirect()->route('expenses.index');
     }
 
+    // public function show()
+    // {
+    //     dd('show');
+    // }
+
     public function destroy(Expense $expense)
     {
         $this->removeImage($expense->img);
         $expense->delete();
         return redirect()->route('expenses.index');
     }
+
+
+
+
+
 
     /**
      * delete old image
@@ -129,7 +145,9 @@ class ExpenseController extends Controller
      */
     private function removeImage($image)
     {
+        // dd('hi');
         $imagePath =  $image;
+        // dd($imagePath);
         if (File::exists($imagePath)) {
             unlink(public_path($imagePath));
         }
