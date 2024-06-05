@@ -34,11 +34,11 @@
                 <div class="relative">
                     <div class="flex justify-end">
                         <div class="flex items-center space-x-3">
-                            <label for="pdf" class="flex items-center cursor-pointer">
+                            <label for="pdf" class="flex items-center cursor-pointer dark:text-white">
                                 <input type="radio" id="pdf" name="export_type" value="pdf" class="mr-2">
                                 PDF
                             </label>
-                            <label for="excel" class="flex items-center cursor-pointer">
+                            <label for="excel" class="flex items-center cursor-pointer dark:text-white">
                                 <input type="radio" id="excel" name="export_type" value="excel" class="mr-2">
                                 Excel
                             </label>

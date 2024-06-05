@@ -17,6 +17,6 @@ class IncomeExport implements FromView, ShouldAutoSize
         // sum total amount to display in excel
         $total_amount = $incomes->sum('amount');
         // return to export view file 
-        return view('income.export', compact('incomes', 'total_amount'));
+        return view('income.exports.excel', compact('incomes', 'total_amount'));
     }
 }

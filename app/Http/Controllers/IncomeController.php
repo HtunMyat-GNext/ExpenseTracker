@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\IncomeExport;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 
 class IncomeController extends Controller
 {
@@ -153,7 +154,19 @@ class IncomeController extends Controller
         // get current date time to add in file name
         $currentDateTime = now()->format('Y-m-d_H-i-s');
         // file name with current date time
-        $fileName = $currentDateTime . '_income.xlsx';
+        $fileName = $currentDateTime . '_income.' . $format;
+        if ($format == 'pdf') {
+            // get income data by loign user id
+            $user_id = auth()->user()->id;
+            // get income data
+            $incomes = Income::where('user_id', $user_id)->get();
+            // sum total amount to display in excel
+            $total_amount = $incomes->sum('amount');
+            // return pdf format view
+            $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount'));
+            // download pdf with current date time name
+            return $pdf->download($fileName);
+        }
         return Excel::download(new IncomeExport, $fileName);
     }
 
