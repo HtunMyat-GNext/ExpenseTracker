@@ -150,7 +150,11 @@ class IncomeController extends Controller
      */
     public function export($format)
     {
-        return Excel::download(new IncomeExport, 'income.' . $format);
+        // get current date time to add in file name
+        $currentDateTime = now()->format('Y-m-d_H-i-s');
+        // file name with current date time
+        $fileName = $currentDateTime . '_income.xlsx';
+        return Excel::download(new IncomeExport, $fileName);
     }
 
     /**
