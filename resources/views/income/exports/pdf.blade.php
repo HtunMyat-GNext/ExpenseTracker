@@ -40,7 +40,7 @@
 
 <body>
 
-    <h1 id="title">Your Income Data</h1>
+    <h2 id="title">Your Total Income For {{ date('F, Y') }}</h2>
 
     <table id="income">
         <tr>
@@ -61,7 +61,7 @@
             </tr>
         @endforeach
         <tr>
-            <td colspan="3" style="text-align: center; font-weight: bold;">Total Income</td>
+            <td colspan="4" style="text-align: center; font-weight: bold;">Total Income</td>
             <td style="font-weight: bold;text-align: right;">{{ $total_amount }}</td>
         </tr>
         </tbody>
