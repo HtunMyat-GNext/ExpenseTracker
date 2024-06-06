@@ -34,23 +34,30 @@
                 <div class="relative">
                     <div class="flex justify-end">
                         <div class="flex items-center space-x-3">
-                            <label for="pdf" class="flex items-center cursor-pointer dark:text-white">
-                                <input type="radio" id="pdf" name="export_type" value="pdf" class="mr-2">
-                                PDF
-                            </label>
-                            <label for="excel" class="flex items-center cursor-pointer dark:text-white">
-                                <input type="radio" id="excel" name="export_type" value="excel" class="mr-2">
-                                Excel
-                            </label>
-                            <button onclick="exportIncome()"
+                            <input type="text" id="start_date" name="start_date" value="{{ request()['start_date'] }}" type="text"
+                                name="date" :placeholder="'Select start date'"
+                                class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
+                            <input type="text" id="end_date" name="end_date" value="{{ request()['end_date'] }}" type="text"
+                                name="date" :placeholder="'Select end date'"
+                                class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
+                            <button onclick="exportIncome('pdf')"
                                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                                 <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
                                     <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
                                 </svg>
-                                <span>Export Income</span>
+                                <span>PDF</span>
+                            </button>
+                            <button onclick="exportIncome('excel')"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                </svg>
+                                <span>Excel</span>
                             </button>
                         </div>
+
                     </div>
                 </div>
 
@@ -59,6 +66,9 @@
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
+                            <th scope="col" class="px-6 py-3">
+                                No
+                            </th>
                             <th scope="col" class="px-6 py-3">
                                 Income Title
                             </th>
@@ -87,8 +97,13 @@
                                 </td>
                             </tr>
                         @else
+                            @php $index = 1; @endphp
                             @foreach ($incomes as $income)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                    <th scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        {{ $index++ }}
+                                    </th>
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{ $income->title }}
@@ -167,6 +182,11 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
+                // set up flatpicker
+                $(".flatpicker").flatpickr({
+                    // "locale": "jp"
+                });
+
                 function searchIncome(query, page = 1) {
                     $.ajax({
                         url: '{{ route('income.index') }}',
@@ -198,14 +218,15 @@
                 });
             })
 
-            function exportIncome() {
-                var exportType = $('input[name="export_type"]:checked').val();
-                if (exportType === 'excel') {
+            function exportIncome(type) {
+                let query = $('#search').val();
+                let start_date = $('#start_date').val();
+                let end_date = $('#end_date').val();
+                
+                if (type === 'excel') {
                     window.location.href = '{{ route('income.export', ['format' => 'xlsx']) }}';
-                } else if (exportType === 'pdf') {
-                    window.location.href = '{{ route('income.export', ['format' => 'pdf']) }}';
                 } else {
-                    alert('Please select an export format.');
+                    window.location.href = '{{ route('income.export', ['format' => 'pdf']) }}';
                 }
             }
         </script>
