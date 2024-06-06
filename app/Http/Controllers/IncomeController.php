@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\IncomeExport;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
+use Illuminate\Support\Carbon;
 
 class IncomeController extends Controller
 {
@@ -22,16 +23,26 @@ class IncomeController extends Controller
         // get login user id 
         $user_id = Auth::user()->id;
         $query = $request->input('search');
+        $filter = $request->input('filter');
+        // Total income for the current month
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $incomes = Income::with('Category')->where('user_id', $user_id);
         // check the http request with search query 
         if ($request->ajax()) {
             if (!empty($query)) {
-                $incomes = Income::where('user_id', $user_id)->where('title', 'LIKE', "%{$query}%")->paginate(10);
+                $incomes = $this->filterIncome($incomes, $filter, $query, $currentYear, $currentMonth);
             } else {
-                $incomes = Income::where('user_id', $user_id)->paginate(10);
+                $incomes = $this->filterIncome($incomes, $filter, $query, $currentYear, $currentMonth);
             }
             return view('income.partial.search', compact('incomes'))->render();
         }
-        $incomes = Income::with('Category')->where('user_id', $user_id)->paginate(10);
+
+        if ($filter == "all") {
+            $incomes = $incomes->paginate(10);
+        } else {
+            $incomes = $incomes->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->paginate(10);
+        }
         return view('income.index', compact('incomes'));
     }
 
@@ -181,5 +192,24 @@ class IncomeController extends Controller
         if (File::exists($imagePath)) {
             unlink(public_path($imagePath));
         }
+    }
+
+    /**
+     * Filters the incomes based on the specified filter criteria and search query.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $incomes The income query builder.
+     * @param string $filter The filter type ('current' for current month or 'all').
+     * @param string $query The search query to filter incomes by title.
+     * @param int $currentYear The current year to filter incomes.
+     * @param int $currentMonth The current month to filter incomes if 'current' filter is applied.
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator The paginated result of incomes.
+     */
+    private function filterIncome($incomes, $filter, $query, $currentYear, $currentMonth) {
+        if ($filter == "current") {
+            $incomes = $incomes->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->where('title', 'LIKE', "%{$query}%");
+        } else {
+            $incomes = $incomes->where('title', 'LIKE', "%{$query}%");
+        }
+        return $incomes->paginate(10);
     }
 }
