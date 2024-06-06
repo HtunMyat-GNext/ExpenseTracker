@@ -25,22 +25,27 @@ Route::get('/auth/facebook/callback', [SocialLoginController::class, 'handleFace
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
     // Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+
     // langauge switch
     Route::get('/language/switch/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //incomes
     Route::resource('categories', CategoryController::class);
 
+    //incomes
     Route::resource('income', IncomeController::class)->except('show');
+    Route::get('/income/export/{format}', [IncomeController::class, 'export'])->name('income.export');
+
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
+    // expenses
     Route::resource('expenses', ExpenseController::class);
-
-    Route::get('/income/export/{format}', [IncomeController::class, 'export'])->name('income.export');
-    // Route::post('expenses/search', [ExpenseController::class, 'search'])->name('expenses.search');
-    // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::get('/expenses/export/excel', [ExpenseController::class, 'excelExport'])->name('expenses.export.excel');
+    Route::get('/expenses/export/pdf', [ExpenseController::class, 'pdfExport'])->name('expenses.export.pdf');
 });
 
 require __DIR__ . '/auth.php';

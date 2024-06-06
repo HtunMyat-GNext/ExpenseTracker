@@ -3,9 +3,17 @@
     ExpenseTrakcker | Expense
     @endpush
     <x-slot name="header">
-        <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight italic ...">
-            {{ __("Let's See Your Expenses") }}
-        </h2>
+        <div class="flex justify-between">
+            <div class="">
+                <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight italic ...">
+                    {{ __("Let's See Your Expenses") }}
+                </h2>
+            </div>
+            <div>
+                <a href="{{ route('expenses.create') }}" type="button"
+                    class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create</a>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
@@ -39,10 +47,35 @@
 
                 </div>
 
-                <div>
-                    <a href="{{ route('expenses.create') }}" type="button"
-                        class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create</a>
+
+
+                <div class="relative">
+                    <div class="flex justify-end">
+                        <div class="flex items-center space-x-3">
+                            <input type="text" id="date" value="{{ request()['date'] }}" type="text" name="date"
+                                :placeholder="'Select Date'"
+                                class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
+                            <a href="{{ route('expenses.export.pdf') }}" id="export-pdf"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                </svg>
+                                <span>PDF</span>
+                            </a>
+                            <a href="{{ route('expenses.export.excel') }}" id="export-excel"
+                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20">
+                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                </svg>
+                                <span>Excel</span>
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
+
 
             </div>
 
@@ -204,18 +237,39 @@
 
 </x-app-layout>
 <script>
-    // search function
-
     $(document).ready(function() {
+
+    // flatpicker
+
+        $(".flatpicker").flatpickr({
+            // "locale": "jp",
+            mode:"range",
+            dateFormat:"Y-m-d",
+        });
+
+    // bind date filter to exports
+        function updateExportUrls() {
+            const dateValue = $('#date').val();
+            $('#export-pdf').attr('href', "{{ route('expenses.export.pdf') }}?date=" + dateValue);
+            $('#export-excel').attr('href', "{{ route('expenses.export.excel') }}?date=" + dateValue);
+        }
+
+        $('#date').on('change', updateExportUrls);
+
+    //search
         $('#search').keyup(function() {
             var keyword = $('#search').val();
+
+            // if live-search keywords are revert to null
             if (keyword.length === 0) {
                 initialState();
             } else {
+            // if live-searching
                 search(keyword);
             }
         });
 
+        // search function
         function search(keyword) {
             $.ajax({
                 url: '{{ route('expenses.index') }}',
@@ -233,6 +287,7 @@
             });
         }
 
+        // when live-search is null
         function initialState() {
             $.ajax({
                 url: '{{ route('expenses.index') }}',
@@ -247,6 +302,7 @@
             });
         }
 
+        // live-search datas and table
         function row(expenses) {
             let htmlView = '';
             if (expenses.length == 0) {
@@ -305,8 +361,7 @@
             }
             $('tbody').html(htmlView);
         }
+        });
 
-
-    });
 
 </script>

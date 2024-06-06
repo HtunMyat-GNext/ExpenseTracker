@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Expense;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Exports\ExpensesExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
-use App\Models\Category;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 
 class ExpenseController extends Controller
 {
@@ -121,11 +124,6 @@ class ExpenseController extends Controller
         return redirect()->route('expenses.index');
     }
 
-    // public function show()
-    // {
-    //     dd('show');
-    // }
-
     public function destroy(Expense $expense)
     {
         $this->removeImage($expense->img);
@@ -151,5 +149,68 @@ class ExpenseController extends Controller
         if (File::exists($imagePath)) {
             unlink(public_path($imagePath));
         }
+    }
+
+
+    /**
+     * Export income data in specified format.
+     *
+     * @param string $format The format to export the data ('pdf' or 'excel').
+     * @return \Illuminate\Http\Response
+     */
+    // public function excelExport($format)
+    // {
+    //     // get current date time to add in file name
+    //     $currentDateTime = now()->format('Y-m-d_H-i-s');
+    //     // file name with current date time
+    //     $fileName = $currentDateTime . '_income.' . $format;
+    //     if ($format == 'pdf') {
+    //         // get income data by loign user id
+    //         $user_id = auth()->user()->id;
+    //         // get income data
+    //         $incomes = Expense::where('user_id', $user_id)->get();
+    //         // sum total amount to display in excel
+    //         $total_amount = $incomes->sum('amount');
+    //         // return pdf format view
+    //         $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount'));
+    //         // download pdf with current date time name
+    //         return $pdf->download($fileName);
+    //     }
+    //     return Excel::download(new IncomeExport, $fileName);
+    // }
+
+    public function pdfExport(Request $request)
+    {
+
+        $dateRange = $request->date;
+
+        // destruct to start and end date
+        [$startDate, $endDate] = explode(' to ', $dateRange);
+
+
+        // get current date time to add in file name
+        $currentDateTime = now()->format('d-m-Y');
+
+        // file name with current date time
+        $fileName = $currentDateTime . '_expense.' . 'pdf';
+
+        // get income data by loign user id
+        $user_id = auth()->user()->id;
+
+        // get expense data
+        if ($request->has('date')) {
+            $expenses = Expense::where('user_id', $user_id)
+                ->whereBetween('date', [$startDate, $endDate])
+                ->get();
+        }
+        $expenses = Expense::where('user_id', $user_id)->get();
+
+
+
+        // Sum total amount to display in excel
+        $total_amount = $expenses->sum('amount');
+
+        // Return the PDF export with the data
+        return Excel::download(new ExpensesExport($startDate, $endDate, $expenses, $total_amount), $fileName);
     }
 }
