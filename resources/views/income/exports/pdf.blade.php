@@ -44,13 +44,16 @@
 
     <table id="income">
         <tr>
+            <th>No</th>
             <th>Income Title</th>
             <th>Income Category</th>
             <th>Date</th>
             <th>Amount</th>
         </tr>
+        {{ $i = 1; }}
         @foreach ($incomes as $income)
             <tr>
+                <td>{{ $i++ }}</td>
                 <td>{{ $income->title }}</td>
                 <td>{{ $income->category->title }}</td>
                 <td>{{ $income->date }}</td>
