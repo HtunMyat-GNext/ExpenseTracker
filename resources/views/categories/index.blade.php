@@ -106,7 +106,9 @@
                         @endforelse
                     </tbody>
                 </table>
-                
+                <div class="m-4" id="paginate">
+                    {{ $categories->links() }}
+                </div>
         </div>
 
         <x-modal name="confirm-category-deletion" :show="$errors->categoryDeletion->isNotEmpty()" focusable>
@@ -152,13 +154,14 @@
             }
         }
 
-        function search() {
+       
+        function search(query) {
             var keyword = $('#search').val();
             $.ajax({
                 url: '{{ route('categories.index') }}',
                 type: 'GET',
                 data: {
-                    search: keyword
+                    search: keyword,
                 },
                 success: function(data) {
                     row(data.categories.data);

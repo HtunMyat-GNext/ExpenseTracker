@@ -14,8 +14,6 @@ class CategoryController extends Controller
      */
     public function create()
     {
-
-
         return view('categories.create');
     }
 
@@ -41,8 +39,6 @@ class CategoryController extends Controller
             'color' => 'required|string',
         ]);
 
-
-
         \App\Models\Category::create([
             'user_id' => Auth::user()->id,
             'title' => $validatedData['title'],
@@ -67,11 +63,11 @@ class CategoryController extends Controller
                 $qry->where('title', 'like', '%' . $search . '%')
                     ->orWhere('is_income', 'like', '%' . $search . '%');
             }
-            $categories = $qry->paginate(10);
+            $categories = $qry->paginate(3);
             return response()->json(['categories' => $categories]);
         }
 
-        $categories = $qry->paginate(10);
+        $categories = $qry->paginate(3);
         return view('categories.index', compact('categories'));
     }
 
@@ -81,9 +77,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        // dd('delete');
         $category->delete();
-
         return redirect()->route('categories.index');
     }
 
@@ -98,7 +92,6 @@ class CategoryController extends Controller
         return view('categories.edit', compact('category'));
     }
 
-
     /** 
      * Update the specified category in the database.
      * @param $id
@@ -112,6 +105,7 @@ class CategoryController extends Controller
                 'required',
                 'boolean',
                 function ($attribute, $value, $fail) use ($request, $id) {
+
                     // Check for existing category
                     $exists = Category::where('title', $request->title)
                         ->where('is_income', $value)
@@ -144,14 +138,14 @@ class CategoryController extends Controller
             $categories = DB::table('categories')->where('title', 'LIKE', '%' . $request->search . "%")->get();
             dd($categories);
             if ($categories) {
-                $iteration = 1; 
+                $iteration = 1;
                 foreach ($categories as $category) {
                     $output .= '<tr>' .
                         '<td>' . $iteration . '</td>' .
                         '<td>' . $category->title . '</td>' .
                         '<td>' . $category->is_income . '</td>' .
                         '</tr>';
-                    $iteration++; 
+                    $iteration++;
                 }
                 return response($output);
             }
