@@ -93,7 +93,7 @@
                         @if ($incomes->isEmpty())
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td class="bg-white dark:bg-gray-800 p-8 font-bold text-lg text-center" colspan="8">
-                                    <h3 class="dark:text-gray-400 text-gray-400 mx-auto">No income found!</h3>
+                                    <h3 class="dark:text-gray-400 text-gray-400 mx-auto">{{__('There is no data!')}}</h3>
                                 </td>
                             </tr>
                         @else

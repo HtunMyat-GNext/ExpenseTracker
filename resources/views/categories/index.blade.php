@@ -4,7 +4,7 @@
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight italic ...">
-            {{ __("Let's See Your Categories") }}
+            {{ __("Your Categories here!") }}
         </h2>
     </x-slot>
 
@@ -13,7 +13,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex items-center justify-between flex-column flex-wrap md:flex-row mb-3">
 
-                <input type="text" name="" id="search" placeholder="Search for Category"
+                <input type="text" name="" id="search" placeholder="{{__('Search for Category')}}"
                     class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 
                     focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
                     dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -23,7 +23,7 @@
                         focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center 
                         me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 
                         dark:focus:ring-green-800">
-                        Create</a>
+                        {{__('Create')}}</a>
                 </div>
             </div>
 
@@ -32,18 +32,18 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                Category
+                               {{__('Category')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Type
-                            </th>
-
-                            <th scope="col" class="px-6 py-3">
-                                Color
+                                {{__('Type')}}
                             </th>
 
                             <th scope="col" class="px-6 py-3">
-                                Action
+                                {{__('Color')}}
+                            </th>
+
+                            <th scope="col" class="px-6 py-3">
+                                {{__('Action')}}
                             </th>
                         </tr>
                     </thead>
@@ -99,7 +99,7 @@
                             <tr>
                                 <td colspan="4">
                                     <div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3">
-                                        <h3 class="text-gray-600 mx-auto">There is no category. Let's create now!</h3>
+                                        <h3 class="text-gray-600 mx-auto">{{__('There is no data!')}}</h3>
                                     </div>
                                 </td>
                             </tr>
@@ -206,7 +206,7 @@
                 });
             } else {
                 tableBody.append(
-                    '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
+                    '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3"><h3 class="text-gray-600 mx-auto">{{__('There is no data!')}}</h3></div></td></tr>'
                 );
             }
         }

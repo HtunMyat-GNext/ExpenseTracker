@@ -19,7 +19,7 @@
                     {{-- title --}}
                     <div class="mb-5">
                         <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Category Title
+                            {{__('Category Title')}}
                         </label>
 
                         <input type="text" id="title"
@@ -31,8 +31,8 @@
 
                     {{-- color picker --}}
                     <div class="color_picker grid grid-cols-2 gap-1">
-                        <label for="hs-color-input" class="block text-sm font-medium mb-3 mt-2 dark:text-white">Choose
-                            Your Color</label>
+                        <label for="hs-color-input" class="block text-sm font-medium mb-3 mt-2 dark:text-white">
+                            {{__('Choose Your Color')}}</label>
                         <input type="color"
                             class="p-1 h-10 w-full block bg-white border border-gray-300 cursor-pointer rounded-lg 
                             disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-100 dark:border-neutral-100"
@@ -41,7 +41,7 @@
 
                     {{-- color picker --}}
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Select Option
+                        {{__('Select Option')}}
                     </label>
 
                     {{-- income / expense radio button  --}}
@@ -67,7 +67,7 @@
                             </label>
 
                             <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html" for="income">
-                                Income
+                                {{__('Income')}}
                             </label>
 
                         </div>
@@ -92,7 +92,7 @@
                             </label>
 
                             <label class="mt-px font-light text-sky-400/100 cursor-pointer select-none" htmlFor="html" for="expense">
-                                Expense
+                                {{__('Expense')}}
                             </label>
                         </div>
                     </div>
@@ -110,7 +110,7 @@
                                 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 
                                 font-medium rounded-lg text-sm px-8 py-3 text-center dark:border-green-500 
                                 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                Back
+                                {{__('Go Back')}}
                             </a>
                         </div>
 
@@ -119,7 +119,7 @@
                             hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 
                             font-medium rounded-lg text-sm px-8 py-3 text-center dark:border-green-500 
                             dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                            Update
+                            {{(__('Update'))}}
                         </button>
                     </div>
                 </form>
