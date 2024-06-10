@@ -4,7 +4,7 @@
     @endpush
     <x-slot name="header">
         <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight italic ...">
-            {{ __("Your Categories here!") }}
+            {{ __("Your Categories here!")}}
         </h2>
     </x-slot>
 

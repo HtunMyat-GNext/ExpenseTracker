@@ -9,8 +9,8 @@
             </h2>
             <div class="text-right ml-auto">
                 <a href="{{ route('income.create') }}" type="button"
-                    class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                    Income</a>
+                    class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
+                {{__('Create')}}</a>
             </div>
         </div>
     </x-slot>
@@ -18,7 +18,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex items-center justify-between flex-column flex-wrap md:flex-row mb-3">
-                <label for="table-Income" class="sr-only">Search</label>
+                <label for="table-Income" class="sr-only">{{__('Search')}}</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -29,7 +29,7 @@
                     </div>
                     <input type="text" id="search"
                         class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search income">
+                        placeholder="{{__('Search income')}}">
                 </div>
                 <div class="relative">
                     <div class="flex justify-end">
@@ -54,7 +54,7 @@
                                     viewBox="0 0 20 20">
                                     <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
                                 </svg>
-                                <span>Excel</span>
+                                <span>{{__('Excel')}}</span>
                             </button>
                         </div>
 
@@ -67,25 +67,25 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                No
+                                {{__('No')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Income Title
+                                {{__('Income Title')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Amount
+                                {{__('Amount')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Category
+                                {{__('Category')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Image
+                                {{__('Image')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Date
+                                {{__('Date')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Action
+                                {{__('Action')}}
                             </th>
                         </tr>
                     </thead>
