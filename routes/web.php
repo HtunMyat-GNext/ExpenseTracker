@@ -32,13 +32,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('categories', CategoryController::class);
-
-    Route::resource('income', IncomeController::class)->except('show');
+    Route::get('/income/{filter?}', [IncomeController::class, 'index'])->name('income.index');
+    Route::resource('income', IncomeController::class)->except('show','index');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
     Route::resource('expenses', ExpenseController::class);
 
-    Route::get('/income/export/{format}', [IncomeController::class, 'export'])->name('income.export');
+    Route::get('/income/export/{format?}/{filter?}/{query?}', [IncomeController::class, 'export'])->name('income.export');
     // Route::post('expenses/search', [ExpenseController::class, 'search'])->name('expenses.search');
     // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
 });

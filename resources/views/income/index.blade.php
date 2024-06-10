@@ -20,26 +20,43 @@
             <div class="flex items-center justify-between flex-column flex-wrap md:flex-row mb-3">
                 <label for="table-Income" class="sr-only">Search</label>
                 <div class="relative">
-                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                        </svg>
+
+                    <div class="flex justify-end">
+                        <div class="flex items-center">
+                            <div
+                                class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                            </div>
+                            <input type="text" id="search"
+                                class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Search income">
+                            <select id="income_filter"
+                                class="block p-2 ml-2 text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="default">Filter Incomes</option>
+                                <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Incomes
+                                </option>
+                                <option value="current" {{ request('filter') == 'current' ? 'selected' : '' }}>Current
+                                    {{ '( ' . \Carbon\Carbon::now()->format('F') . ' )' }}</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M6 8l4 4 4-4" />
+                                </svg>
+                            </div>
+
+
+                        </div>
                     </div>
-                    <input type="text" id="search"
-                        class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Search income">
                 </div>
                 <div class="relative">
                     <div class="flex justify-end">
                         <div class="flex items-center space-x-3">
-                            <input type="text" id="start_date" name="start_date" value="{{ request()['start_date'] }}" type="text"
-                                name="date" :placeholder="'Select start date'"
-                                class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
-                            <input type="text" id="end_date" name="end_date" value="{{ request()['end_date'] }}" type="text"
-                                name="date" :placeholder="'Select end date'"
-                                class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
                             <button onclick="exportIncome('pdf')"
                                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                                 <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +65,7 @@
                                 </svg>
                                 <span>PDF</span>
                             </button>
-                            <button onclick="exportIncome('excel')"
+                            <button onclick="exportIncome('xlsx')"
                                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                                 <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
@@ -182,18 +199,28 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
-                // set up flatpicker
-                $(".flatpicker").flatpickr({
-                    // "locale": "jp"
+                // filter income data with all and current month
+                $('#income_filter').change(function() {
+                    var filterValue = $(this).val();
+                    // disableDate();
+                    window.location.href = '{{ route('income.index') }}' + '?filter=' + filterValue;
                 });
 
+                /**
+                 * Perform an AJAX search for income data based on the provided query and page number.
+                 * 
+                 * @param {string} query The search query to filter incomes by.
+                 * @param {number} page The page number for pagination (default is 1).
+                 */
                 function searchIncome(query, page = 1) {
+                    let filter = $('#income_filter').val();
                     $.ajax({
                         url: '{{ route('income.index') }}',
                         type: 'GET',
                         data: {
                             search: query,
                             page: page,
+                            filter: filter
                         },
                         success: function(data) {
                             $('#income-result').empty();
@@ -205,11 +232,13 @@
                     });
                 }
 
+                // search text when enter keyword on search text box
                 $('#search').keyup(function() {
                     let query = $(this).val();
                     searchIncome(query);
                 });
 
+                // when click pagination link
                 $(document).on('click', '#paginate a', function(e) {
                     e.preventDefault();
                     let query = $('#search').val();
@@ -218,16 +247,17 @@
                 });
             })
 
+            /**
+             * Export income data in the specified format.
+             * 
+             * @param {string} type The format to export the data ('pdf' or 'excel').
+             */
             function exportIncome(type) {
+                let filter = $('#income_filter').val();
                 let query = $('#search').val();
-                let start_date = $('#start_date').val();
-                let end_date = $('#end_date').val();
-                
-                if (type === 'excel') {
-                    window.location.href = '{{ route('income.export', ['format' => 'xlsx']) }}';
-                } else {
-                    window.location.href = '{{ route('income.export', ['format' => 'pdf']) }}';
-                }
+                let url = '{{ route('income.export', ['format' => ':type', 'filter' => ':filter', 'query' => ':query']) }}'
+                    .replace(':type', type).replace(':filter', filter).replace(':query', query);
+                window.location.href = url;
             }
         </script>
     @endpush
