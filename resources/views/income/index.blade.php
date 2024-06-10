@@ -36,11 +36,12 @@
                                 placeholder="Search income">
                             <select id="income_filter"
                                 class="block p-2 ml-2 text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="default">Filter Incomes</option>
+                                <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>Filter Incomes</option>
                                 <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Incomes
                                 </option>
-                                <option value="current" {{ request('filter') == 'current' ? 'selected' : '' }}>Current
-                                    {{ '( ' . \Carbon\Carbon::now()->format('F') . ' )' }}</option>
+                                @foreach ($months as $monthNumber => $monthName)
+                                    <option value="{{ $monthNumber }}" {{ request('filter') == $monthNumber ? 'selected' : '' }}>{{ $monthName }}</option>
+                                @endforeach
                             </select>
                             <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none"
