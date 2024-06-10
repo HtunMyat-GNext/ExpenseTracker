@@ -35,17 +35,16 @@ Route::middleware('auth')->group(function () {
 
     //incomes
     Route::resource('categories', CategoryController::class);
-
-    //incomes
-    Route::resource('income', IncomeController::class)->except('show');
-    Route::get('/income/export/{format}', [IncomeController::class, 'export'])->name('income.export');
-
+    Route::get('/income/{filter?}', [IncomeController::class, 'index'])->name('income.index');
+    Route::resource('income', IncomeController::class)->except('show', 'index');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
     // expenses
     Route::resource('expenses', ExpenseController::class);
-    Route::get('/expenses/export/excel', [ExpenseController::class, 'excelExport'])->name('expenses.export.excel');
-    Route::get('/expenses/export/pdf', [ExpenseController::class, 'pdfExport'])->name('expenses.export.pdf');
+
+    Route::get('/income/export/{format?}/{filter?}/{query?}', [IncomeController::class, 'export'])->name('income.export');
+    // Route::post('expenses/search', [ExpenseController::class, 'search'])->name('expenses.search');
+    // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
 });
 
 require __DIR__ . '/auth.php';
