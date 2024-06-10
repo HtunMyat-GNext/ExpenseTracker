@@ -29,7 +29,12 @@
     "Income Title": "所得タイトル",
     "Amount": "金額",
     "Image": "写真",
-    "Date": "日付"
+    "Date": "日付",
+    "Your Income Title": "あなたの所得",
+    "Enter date": "日付を入力してください ",
+    "Upload Photo": "写真を追加してください",
+    "Select your Category": "カテゴリーを選択してください",
+    "Create Income": "所得を作成する"
     
 
 
