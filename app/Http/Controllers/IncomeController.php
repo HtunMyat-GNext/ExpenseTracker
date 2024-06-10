@@ -31,9 +31,9 @@ class IncomeController extends Controller
         // check the http request with search query 
         if ($request->ajax()) {
             if (!empty($query)) {
-                $incomes = $this->filterIncome($incomes, $filter, $query, $currentYear, $currentMonth);
+                $incomes = $this->filterIncome($incomes, $filter, $query, $export = false);
             } else {
-                $incomes = $this->filterIncome($incomes, $filter, $query, $currentYear, $currentMonth);
+                $incomes = $this->filterIncome($incomes, $filter, $query, $export = false);
             }
             return view('income.partial.search', compact('incomes'))->render();
         }
@@ -155,30 +155,34 @@ class IncomeController extends Controller
     }
 
     /**
-     * Export income data in specified format.
+     * Export income data in the specified format.
      * 
-     * @param string $format The format to export the data ('pdf' or 'excel').
+     * @param {string} $format The format to export the data ('pdf' or 'excel').
+     * @param {string|null} $filter The filter type ('current' for current month or 'all').
+     * @param {string|null} $query The search query to filter incomes by title.
      * @return \Illuminate\Http\Response
      */
-    public function export($format)
+    public function export($format, $filter = null, $query = null)
     {
         // get current date time to add in file name
         $currentDateTime = now()->format('Y-m-d_H-i-s');
         // file name with current date time
         $fileName = $currentDateTime . '_income.' . $format;
+        // get income data by login user id
+        $user_id = auth()->user()->id;
+        // get income data
+        $incomes = Income::where('user_id', $user_id);
+        $incomes = $this->filterIncome($incomes, $filter, $query, $export = true);
+        // sum total amount to display in excel
+        $total_amount = $incomes->sum('amount');
         if ($format == 'pdf') {
-            // get income data by loign user id
-            $user_id = auth()->user()->id;
-            // get income data
-            $incomes = Income::where('user_id', $user_id)->get();
-            // sum total amount to display in excel
-            $total_amount = $incomes->sum('amount');
             // return pdf format view
             $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount'));
             // download pdf with current date time name
             return $pdf->download($fileName);
         }
-        return Excel::download(new IncomeExport, $fileName);
+        $incomeExport = new IncomeExport($incomes, $total_amount); // Pass $incomes and $total_amount to IncomeExport
+        return Excel::download($incomeExport, $fileName);
     }
 
     /**
@@ -202,13 +206,18 @@ class IncomeController extends Controller
      * @param string $query The search query to filter incomes by title.
      * @param int $currentYear The current year to filter incomes.
      * @param int $currentMonth The current month to filter incomes if 'current' filter is applied.
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator The paginated result of incomes.
      */
-    private function filterIncome($incomes, $filter, $query, $currentYear, $currentMonth) {
-        if ($filter == "current") {
+    private function filterIncome($incomes, $filter, $query, $export)
+    {
+        if (in_array($filter, ['current', 'default'])) {
+            $currentMonth = Carbon::now()->month;
+            $currentYear = Carbon::now()->year;
             $incomes = $incomes->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->where('title', 'LIKE', "%{$query}%");
         } else {
             $incomes = $incomes->where('title', 'LIKE', "%{$query}%");
+        }
+        if ($export) {
+            return $incomes->get();
         }
         return $incomes->paginate(10);
     }

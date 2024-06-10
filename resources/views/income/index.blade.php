@@ -36,7 +36,7 @@
                                 placeholder="Search income">
                             <select id="income_filter"
                                 class="block p-2 ml-2 text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option>Filter Incomes</option>
+                                <option value="default">Filter Incomes</option>
                                 <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Incomes
                                 </option>
                                 <option value="current" {{ request('filter') == 'current' ? 'selected' : '' }}>Current
@@ -57,9 +57,6 @@
                 <div class="relative">
                     <div class="flex justify-end">
                         <div class="flex items-center space-x-3">
-                            <input type="text" id="date" name="start_date" value="{{ request()['start_date'] }}"
-                                type="text" name="date" :placeholder="'Select date range'"
-                                class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
                             <button onclick="exportIncome('pdf')"
                                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                                 <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +65,7 @@
                                 </svg>
                                 <span>PDF</span>
                             </button>
-                            <button onclick="exportIncome('excel')"
+                            <button onclick="exportIncome('xlsx')"
                                 class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
                                 <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
@@ -202,20 +199,6 @@
     @push('scripts')
         <script>
             $(document).ready(function() {
-                // set up flatpicker
-                $(".flatpicker").flatpickr({
-                    mode: "range"
-                });
-
-                // function disableDate() {
-                //     if (filterValue === 'all' || filterValue === 'current') {
-                //         alert("hello");
-                //         $('#date').prop('disabled', true);
-                //     } else {
-                //         $('#date').prop('disabled', false);
-                //     }
-                // }
-
                 // filter income data with all and current month
                 $('#income_filter').change(function() {
                     var filterValue = $(this).val();
@@ -223,7 +206,12 @@
                     window.location.href = '{{ route('income.index') }}' + '?filter=' + filterValue;
                 });
 
-                // search income
+                /**
+                 * Perform an AJAX search for income data based on the provided query and page number.
+                 * 
+                 * @param {string} query The search query to filter incomes by.
+                 * @param {number} page The page number for pagination (default is 1).
+                 */
                 function searchIncome(query, page = 1) {
                     let filter = $('#income_filter').val();
                     $.ajax({
@@ -243,6 +231,7 @@
                         }
                     });
                 }
+
                 // search text when enter keyword on search text box
                 $('#search').keyup(function() {
                     let query = $(this).val();
@@ -258,17 +247,17 @@
                 });
             })
 
-            // export income data with selected type (pdf, excel)
+            /**
+             * Export income data in the specified format.
+             * 
+             * @param {string} type The format to export the data ('pdf' or 'excel').
+             */
             function exportIncome(type) {
+                let filter = $('#income_filter').val();
                 let query = $('#search').val();
-                let start_date = $('#start_date').val();
-                let end_date = $('#end_date').val();
-
-                if (type === 'excel') {
-                    window.location.href = '{{ route('income.export', ['format' => 'xlsx']) }}';
-                } else {
-                    window.location.href = '{{ route('income.export', ['format' => 'pdf']) }}';
-                }
+                let url = '{{ route('income.export', ['format' => ':type', 'filter' => ':filter', 'query' => ':query']) }}'
+                    .replace(':type', type).replace(':filter', filter).replace(':query', query);
+                window.location.href = url;
             }
         </script>
     @endpush
