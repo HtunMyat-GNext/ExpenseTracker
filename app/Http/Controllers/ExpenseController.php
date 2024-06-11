@@ -18,7 +18,8 @@ class ExpenseController extends Controller
 
     public function index(Request $request)
     {
-        $qry = Expense::with('category', 'user');
+        $user_id = auth()->user()->id;
+        $qry = Expense::with('category', 'user')->where('user_id', $user_id);
 
         if ($request->ajax()) {
             $search = $request->input('search');
@@ -34,12 +35,12 @@ class ExpenseController extends Controller
 
                 return response()->json(['expenses' => $expenses]);
             } else {
-                $expenses = $qry->paginate(5);
+                $expenses = $qry->paginate(10);
                 return response()->json(['expenses' => $expenses]);
             }
         }
 
-        $expenses = $qry->paginate(5);
+        $expenses = $qry->paginate(10);
         return view('expenses.index', compact('expenses'));
     }
 

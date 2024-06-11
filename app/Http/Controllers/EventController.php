@@ -41,7 +41,7 @@ class EventController extends Controller
         $event->color = $request->color;
         $event->save();
 
-        return redirect()->route('event.index')->with('success', 'Event created successfully.');
+        return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
 
     /**
