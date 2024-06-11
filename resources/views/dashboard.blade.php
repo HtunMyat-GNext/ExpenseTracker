@@ -51,7 +51,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                        Income
+                                        {{__('Income')}}
                                     </h4>
                                 </div>
                                 <div>
@@ -77,7 +77,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                        Expense
+                                        {{__('Expense')}}
                                     </h4>
                                 </div>
                                 <div>
@@ -104,7 +104,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                        Categories
+                                       {{__('Categories')}}
                                     </h4>
                                 </div>
                                 <div>
@@ -129,7 +129,7 @@
                             </div>
                             <div>
                                 <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                    Events
+                                   {{__('Events')}}
                                 </h4>
                             </div>
                             <div>

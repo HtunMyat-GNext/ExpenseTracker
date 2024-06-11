@@ -16,24 +16,24 @@
                     @csrf
                     @method('PUT')
                     <div class="mb-5">
-                        <label for="income" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter
-                            Your income Title
+                        <label for="income" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{__('Enter Your Income Title')}}
                         </label>
                         <input type="text" id="income" name="title"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-                            placeholder="salary" value="{{ $income->title }}" />
+                            placeholder="{{__('Salary')}}" value="{{ $income->title }}" />
                     </div>
                     <div class="mb-5">
-                        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter
-                            Amount
+                        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{__('Enter Amount')}}
                         </label>
                         <input type="text" id="amount" name="amount"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                             placeholder="1000000" value="{{ $income->amount }}" />
                     </div>
                     <div class="mb-5">
-                        <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter
-                            date
+                        <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{__('Enter date')}}
                         </label>
                         <input type="date" id="flatpicker" name="date" value="{{ $income->date }}" type="text"
                             name="date" :placeholder="'Date'"
@@ -42,7 +42,8 @@
 
                     <div class="mb-5">
                         <label for="image"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload photo
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{__('Upload Photo')}}
                         </label>
                         <input type="file" id="image"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
@@ -54,15 +55,15 @@
                             <div class="">
                                 <button id="remove-btn" type="button"
                                     class="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
-                                    style="display: {{ $income->image ? 'inline-block' : 'none' }}">Remove</button>
+                                    style="display: {{ $income->image ? 'inline-block' : 'none' }}">{{__('Remove')}}</button>
                             </div>
                             <input type="hidden" name="remove_image" value="" id="remove-image">
                         </div>
                     </div>
 
 
-                    <label for="cateogry" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
-                        your category</label>
+                    <label for="cateogry" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        {{__('Select your Category')}}</label>
                     <select id="cateogry" name="category_id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @foreach ($categories as $category)
@@ -74,14 +75,12 @@
                         <div>
                             <a href="{{ route('income.index') }}"
                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                Back</a>
+                                {{__('Go Back')}}</a>
                         </div>
                         <button type="submit"
-                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Update
-                            Income
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
+                            {{__('Update')}}
                         </button>
-
-
                     </div>
 
                 </form>

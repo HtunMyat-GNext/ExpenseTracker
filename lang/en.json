@@ -3,6 +3,8 @@
     "Expense" : "Expense",
     "Income" : "Income",
     "Category" : "Category",
+    "Categories": "Categories",
+    "Events": "Events",
     "Calendar" : "Calendar",
     "Create" : "Create",
     "There is no data!": "There is no data!",
@@ -34,5 +36,21 @@
     "Enter date": "Enter date",
     "Upload Photo": "Upload Photo",
     "Select your Category": "Select your Category",
-    "Create Income": "Create Income"
+    "Create Income": "Create Income",
+    "Enter Your Income Title": "Enter Your Income Title",
+    "Salary": "サラリー",
+    "Remove": "Remove",
+    "Are you sure you want to delete this?": "Are you sure you want to delete this?",
+    "Once your income is deleted, all of its resources and data will be permanently deleted.": "Once your income is deleted, all of its resources and data will be permanently deleted.",
+    "Delete Income": "Delete Income",
+    "Search for Expense": "Search for Expense",
+    "Create Expense": "Create Expense",
+    "Expense Title": "Expense Title",
+    "Description": "Description",
+    "Delete Expense": "Delete Expense",
+    "Let's Create Your Expenses": "Let's Create Your Expenses",
+    "Let's Update Your Expenses": "Let's Update Your Expenses",
+    "Let's See Your Incomes & Expenses Data": "Let's See Your Incomes & Expenses Data"
+
+
 }
