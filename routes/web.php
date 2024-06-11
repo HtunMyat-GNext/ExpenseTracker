@@ -5,6 +5,7 @@ use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -35,12 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('income', IncomeController::class)->except('show','index');
     Route::get('/income/{filter?}', [IncomeController::class, 'index'])->name('income.index');
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
-
     Route::resource('expenses', ExpenseController::class);
-
     Route::get('/income/export/{format?}/{filter?}/{query?}', [IncomeController::class, 'export'])->name('income.export');
-    // Route::post('expenses/search', [ExpenseController::class, 'search'])->name('expenses.search');
-    // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::resource('events', EventController::class);
 });
 
 require __DIR__ . '/auth.php';
