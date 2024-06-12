@@ -21,29 +21,31 @@ class ExpenseController extends Controller
 
     public function index(Request $request)
     {
-        $qry = Expense::with('category', 'user');
+        $expenses = Expense::with('category', 'user');
+        $months = config('custom.months');
+        $filter = $request->input('filter'); // filters
+        $query = $request->input('search'); // search keyword
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
 
         if ($request->ajax()) {
-            $search = $request->input('search');
-
-            if ($search) {
-                $qry->where(function ($query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('description', 'like', '%' . $search . '%')
-                        ->orWhere('amount', 'like', '%' . $search . '%');
-                });
-
-                $expenses = $qry->get();
-
-                return response()->json(['expenses' => $expenses]);
+            if (!empty($query)) {
+                $expenses = $this->filterExpense($expenses, $filter, $query, $export = false);
             } else {
-                $expenses = $qry->paginate(5);
-                return response()->json(['expenses' => $expenses]);
+                $expenses = $this->filterExpense($expenses, $filter, $query, $export = false);
             }
+            return view('expenses.partial.search', compact('expenses'))->render();
         }
 
-        $expenses = $qry->paginate(5);
-        return view('expenses.index', compact('expenses'));
+        if ($filter == "all") {
+            $expenses = $expenses->paginate(10);
+        } else if (is_numeric($filter)) {
+            $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $filter)->paginate(10);
+        } else {
+            $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->paginate(10);
+        }
+
+        return view('expenses.index', compact('expenses', 'months'));
     }
 
     public function create()
@@ -151,66 +153,52 @@ class ExpenseController extends Controller
         }
     }
 
+    public function export($format, $filter = null, $query = null)
+    {
+        // get current date time to add in file name
+        $currentDateTime = now()->format('Y-m-d_H-i-s');
+        // file name with current date time
+        $fileName = $currentDateTime . '_expense.' . $format;
+        // get expense data by login user id
+        $user_id = auth()->user()->id;
+        // get expense data
+        $expenses = Expense::where('user_id', $user_id);
+        $expenses = $this->filterExpense($expenses, $filter, $query, $export = true);
+        // sum total amount to display in excel
+        $total_amount = $expenses->sum('amount');
+        if ($format == 'pdf') {
+            // return pdf format view
+            $pdf = LaravelMpdf::loadView('expenses.exports.pdf', compact('expenses', 'total_amount'));
+            // download pdf with current date time name
+            return $pdf->download($fileName);
+        }
+        $expenseExport = new ExpensesExport($expenses, $total_amount); // Pass $expenses and $total_amount to ExpenseExport
+        return Excel::download($expenseExport, $fileName);
+    }
 
     /**
-     * Export income data in specified format.
+     * Filters the expenses based on the specified filter criteria and search query.
      *
-     * @param string $format The format to export the data ('pdf' or 'excel').
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Database\Eloquent\Builder $expenses The income query builder.
+     * @param string $filter The filter type ('current' for current month or 'all').
+     * @param string $query The search query to filter expenses by title.
+     * @param int $currentYear The current year to filter expenses.
+     * @param int $currentMonth The current month to filter expenses if 'current' filter is applied.
      */
-    // public function excelExport($format)
-    // {
-    //     // get current date time to add in file name
-    //     $currentDateTime = now()->format('Y-m-d_H-i-s');
-    //     // file name with current date time
-    //     $fileName = $currentDateTime . '_income.' . $format;
-    //     if ($format == 'pdf') {
-    //         // get income data by loign user id
-    //         $user_id = auth()->user()->id;
-    //         // get income data
-    //         $incomes = Expense::where('user_id', $user_id)->get();
-    //         // sum total amount to display in excel
-    //         $total_amount = $incomes->sum('amount');
-    //         // return pdf format view
-    //         $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount'));
-    //         // download pdf with current date time name
-    //         return $pdf->download($fileName);
-    //     }
-    //     return Excel::download(new IncomeExport, $fileName);
-    // }
-
-    public function pdfExport(Request $request)
+    private function filterExpense($expenses, $filter, $query, $export)
     {
-
-        $dateRange = $request->date;
-
-        // destruct to start and end date
-        [$startDate, $endDate] = explode(' to ', $dateRange);
-
-
-        // get current date time to add in file name
-        $currentDateTime = now()->format('d-m-Y');
-
-        // file name with current date time
-        $fileName = $currentDateTime . '_expense.' . 'pdf';
-
-        // get income data by loign user id
-        $user_id = auth()->user()->id;
-
-        // get expense data
-        if ($request->has('date')) {
-            $expenses = Expense::where('user_id', $user_id)
-                ->whereBetween('date', [$startDate, $endDate])
-                ->get();
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        if ($filter == 'default') {
+            $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->where('name', 'LIKE', "%{$query}%");
+        } else if (is_numeric($filter)) {
+            $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $filter)->where('name', 'LIKE', "%{$query}%");
+        } else {
+            $expenses = $expenses->where('name', 'LIKE', "%{$query}%");
         }
-        $expenses = Expense::where('user_id', $user_id)->get();
-
-
-
-        // Sum total amount to display in excel
-        $total_amount = $expenses->sum('amount');
-
-        // Return the PDF export with the data
-        return Excel::download(new ExpensesExport($startDate, $endDate, $expenses, $total_amount), $fileName);
+        if ($export) {
+            return $expenses->get();
+        }
+        return $expenses->paginate(10);
     }
 }

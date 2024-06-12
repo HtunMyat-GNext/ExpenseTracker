@@ -33,16 +33,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //incomes
+    // categories
     Route::resource('categories', CategoryController::class);
-    Route::get('/income/{filter?}', [IncomeController::class, 'index'])->name('income.index');
+
+    //incomes
     Route::resource('income', IncomeController::class)->except('show', 'index');
+    Route::get('/income/{filter?}', [IncomeController::class, 'index'])->name('income.index');
+    Route::get('/income/export/{format?}/{filter?}/{query?}', [IncomeController::class, 'export'])->name('income.export');
+
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
     // expenses
-    Route::resource('expenses', ExpenseController::class);
-
-    Route::get('/income/export/{format?}/{filter?}/{query?}', [IncomeController::class, 'export'])->name('income.export');
+    Route::resource('expenses', ExpenseController::class)->except('show', 'index');
+    Route::get('/expenses/{filter?}', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::get('/expenses/export/{format?}/{filter?}/{query?}', [ExpenseController::class, 'export'])->name('expenses.export');
     // Route::post('expenses/search', [ExpenseController::class, 'search'])->name('expenses.search');
     // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
 });

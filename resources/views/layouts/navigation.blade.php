@@ -191,7 +191,7 @@
                             <path stroke-linecap="round" d="M2.5 9L21.5 9M2.5 15L21.5 15" />
                         </svg>
                     </button>
-                    
+
                     <div x-show="open" @click.away="open = false"
                         class="absolute right-0 mt-2 w-30 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10">
                         <a href="{{ route('language.switch', ['locale' => 'en']) }}"
@@ -240,8 +240,8 @@
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">
-                <div class=text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class=text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                <div class="text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                <div class="text-sm text-gray-500">{{ Auth::user()->email }}</div>
             </div>
 
             <div class="mt-3 space-y-1">

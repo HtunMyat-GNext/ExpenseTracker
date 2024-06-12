@@ -7,30 +7,28 @@ use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class ExpensesExport implements FromView
+class ExpensesExport implements FromView, ShouldAutoSize
 {
-    private $start_date;
-    private $end_date;
     private $expenses;
+    private $total_amount;
 
+    /**
+     * Create a new instance of IncomeExport.
+     *
+     * @param array $expenses The income data to export.
+     * @param float $total_amount The total amount of expenses.
+     */
 
-    public function __construct($start_date, $end_date, $expenses)
+    public function __construct($expenses, $total_amount)
     {
-
-        $this->start_date = $start_date;
-        $this->end_date = $end_date;
         $this->expenses = $expenses;
+        $this->total_amount = $total_amount;
     }
 
     public function view(): View
     {
-        // get income data by loign user id
-        $user_id = auth()->user()->id;
-        // get income data
-        $expenses = Expense::where('user_id', $user_id)->get();
-        // sum total amount to display in excel
-        $total_amount = $expenses->sum('amount');
-        // dd($total_amount . 'haha');
+        $expenses = $this->expenses;
+        $total_amount = $this->total_amount;
         // return to export view file
         return view('expenses.exports.excel', compact('expenses', 'total_amount'));
     }

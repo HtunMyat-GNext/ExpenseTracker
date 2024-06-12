@@ -7,28 +7,28 @@
             text-align: center;
         }
 
-        #income {
+        #expense {
             font-family: Arial, Helvetica, sans-serif;
             border-collapse: collapse;
             width: 100%;
         }
 
-        #income td,
-        #income th {
+        #expense td,
+        #expense th {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
         }
 
-        #income tr:nth-child(even) {
+        #expense tr:nth-child(even) {
             background-color: #f2f2f2;
         }
 
-        #income tr:hover {
+        #expense tr:hover {
             background-color: #ddd;
         }
 
-        #income th {
+        #expense th {
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: center;
@@ -40,28 +40,28 @@
 
 <body>
 
-    <h2 id="title">Your Total Income For {{ date('F, Y') }}</h2>
+    <h2 id="title">Your Total expense For {{ date('F, Y') }}</h2>
 
-    <table id="income">
+    <table id="expense">
         <tr>
             <th>No</th>
-            <th>Income Title</th>
-            <th>Income Category</th>
+            <th>expense Title</th>
+            <th>expense Category</th>
             <th>Date</th>
             <th>Amount</th>
         </tr>
         {{ $i = 1; }}
-        @foreach ($incomes as $income)
-            <tr>
-                <td>{{ $i++ }}</td>
-                <td>{{ $income->title }}</td>
-                <td>{{ $income->category->title }}</td>
-                <td>{{ $income->date }}</td>
-                <td style="text-align: right">{{ $income->amount }}</td>
-            </tr>
+        @foreach ($expenses as $expense)
+        <tr>
+            <td>{{ $i++ }}</td>
+            <td>{{ $expense->name }}</td>
+            <td>{{ $expense->category->title }}</td>
+            <td>{{ $expense->date }}</td>
+            <td style="text-align: right">{{ $expense->amount }}</td>
+        </tr>
         @endforeach
         <tr>
-            <td colspan="4" style="text-align: center; font-weight: bold;">Total Income</td>
+            <td colspan="4" style="text-align: center; font-weight: bold;">Total expense</td>
             <td style="font-weight: bold;text-align: right;">{{ $total_amount }}</td>
         </tr>
         </tbody>
