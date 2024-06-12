@@ -40,8 +40,8 @@
                         <select id="income_filter"
                             class="block  p-2  text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>Filter
-                                Expenses</option>
-                            <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Expenses
+                                Incomes</option>
+                            <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Incomes
                             </option>
                             @foreach ($months as $monthNumber => $monthName)
                                 <option value="{{ $monthNumber }}"
@@ -56,26 +56,28 @@
 
                 <div class="relative mt-2 sm:mt-0 mx-auto sm:mx-0">
                     <div class="flex space-x-52 sm:space-x-2">
-                        <div class="">
-                            <button onclick="exportIncome('pdf')"
-                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                                </svg>
-                                <span>PDF</span>
-                            </button>
-                        </div>
-                        <div class="">
-                            <button onclick="exportIncome('xlsx')"
-                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                                </svg>
-                                <span>Excel</span>
-                            </button>
-                        </div>
+                        @if (!$incomes->isEmpty())
+                            <div class="">
+                                <button onclick="exportIncome('pdf')"
+                                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                    </svg>
+                                    <span>PDF</span>
+                                </button>
+                            </div>
+                            <div class="">
+                                <button onclick="exportIncome('xlsx')"
+                                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                    </svg>
+                                    <span>Excel</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

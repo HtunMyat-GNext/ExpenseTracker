@@ -40,7 +40,7 @@
 
 <body>
 
-    <h2 id="title">Your Total expense For {{ date('F, Y') }}</h2>
+    <h2 id="title">Your Total Expense For {{ $month }} {{ date('Y')}}</h2>
 
     <table id="expense">
         <tr>

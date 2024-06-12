@@ -101,7 +101,8 @@
                         @empty
                             <tr>
                                 <td colspan="4">
-                                    <div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-white">
+                                    <div
+                                        class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-white">
                                         <h3 class="text-gray-600 mx-auto">There is no category. Let's create now!</h3>
                                     </div>
                                 </td>
@@ -112,34 +113,34 @@
                 <div class="m-4" id="paginate">
                     {{ $categories->links() }}
                 </div>
+            </div>
+
+            <x-modal name="confirm-category-deletion" :show="$errors->categoryDeletion->isNotEmpty()" focusable>
+                <form method="post" :action="`{{ route('categories.destroy', '') }}/${id}`" class="p-6">
+                    @csrf
+                    @method('delete')
+
+                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-400">
+                        {{ __('Are you sure to delete this category?') }}
+                    </h2>
+
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                        {{ __('Once your category is deleted, all of its resources and data will be permanently deleted.') }}
+                    </p>
+
+                    <div class="mt-6 flex justify-end">
+                        <x-secondary-button x-on:click="$dispatch('close')">
+                            {{ __('Go Back') }}
+                        </x-secondary-button>
+
+                        <x-danger-button class="ms-3">
+                            {{ __('Delete Category') }}
+                        </x-danger-button>
+                    </div>
+                </form>
+            </x-modal>
+
         </div>
-
-        <x-modal name="confirm-category-deletion" :show="$errors->categoryDeletion->isNotEmpty()" focusable>
-            <form method="post" :action="`{{ route('categories.destroy', '') }}/${id}`" class="p-6">
-                @csrf
-                @method('delete')
-
-                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-400">
-                    {{ __('Are you sure to delete this category?') }}
-                </h2>
-
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {{ __('Once your category is deleted, all of its resources and data will be permanently deleted.') }}
-                </p>
-
-                <div class="mt-6 flex justify-end">
-                    <x-secondary-button x-on:click="$dispatch('close')">
-                        {{ __('Go Back') }}
-                    </x-secondary-button>
-
-                    <x-danger-button class="ms-3">
-                        {{ __('Delete Category') }}
-                    </x-danger-button>
-                </div>
-            </form>
-        </x-modal>
-
-    </div>
 
 </x-app-layout>
 
@@ -157,7 +158,7 @@
             }
         }
 
-       
+
         function search(query) {
             var keyword = $('#search').val();
             $.ajax({
@@ -211,6 +212,7 @@
                     `);
                 });
             } else {
+                $('#paginate').hide();
                 tableBody.append(
                     '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-gray-400"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
                 );

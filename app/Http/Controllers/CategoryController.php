@@ -127,28 +127,4 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
     }
-
-    /**
-     *  Search for categories based on the title.
-     */
-    public function search(Request $request)
-    {
-        if ($request->ajax()) {
-            $output = "";
-            $categories = DB::table('categories')->where('title', 'LIKE', '%' . $request->search . "%")->get();
-            dd($categories);
-            if ($categories) {
-                $iteration = 1;
-                foreach ($categories as $category) {
-                    $output .= '<tr>' .
-                        '<td>' . $iteration . '</td>' .
-                        '<td>' . $category->title . '</td>' .
-                        '<td>' . $category->is_income . '</td>' .
-                        '</tr>';
-                    $iteration++;
-                }
-                return response($output);
-            }
-        }
-    }
 }

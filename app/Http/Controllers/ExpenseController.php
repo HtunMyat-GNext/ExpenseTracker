@@ -155,10 +155,16 @@ class ExpenseController extends Controller
 
     public function export($format, $filter = null, $query = null)
     {
-        // get current date time to add in file name
-        $currentDateTime = now()->format('Y-m-d_H-i-s');
+        $current_year = date('Y');
+        if ($filter == 'default') {
+            $month = date('F');
+        } else if ($filter == 'all') {
+            $month = 'All';
+        } else {
+            $month = date('F', mktime(0, 0, 0, $filter, 1));
+        }
         // file name with current date time
-        $fileName = $currentDateTime . '_expense.' . $format;
+        $fileName = $current_year . '_' . $month . '_Expense.' . $format;
         // get expense data by login user id
         $user_id = auth()->user()->id;
         // get expense data
@@ -168,7 +174,7 @@ class ExpenseController extends Controller
         $total_amount = $expenses->sum('amount');
         if ($format == 'pdf') {
             // return pdf format view
-            $pdf = LaravelMpdf::loadView('expenses.exports.pdf', compact('expenses', 'total_amount'));
+            $pdf = LaravelMpdf::loadView('expenses.exports.pdf', compact('expenses', 'total_amount', 'month'));
             // download pdf with current date time name
             return $pdf->download($fileName);
         }

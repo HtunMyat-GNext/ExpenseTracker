@@ -57,26 +57,28 @@
 
                 <div class="relative mt-2 sm:mt-0 mx-auto sm:mx-0">
                     <div class="flex space-x-52 sm:space-x-2">
-                        <div class="">
-                            <button onclick="exportExpense('pdf')"
-                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                                </svg>
-                                <span>PDF</span>
-                            </button>
-                        </div>
-                        <div class="">
-                            <button onclick="exportExpense('xlsx')"
-                                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                                </svg>
-                                <span>Excel</span>
-                            </button>
-                        </div>
+                        @if (!$expenses->isEmpty())
+                            <div class="">
+                                <button onclick="exportExpense('pdf')"
+                                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                    </svg>
+                                    <span>PDF</span>
+                                </button>
+                            </div>
+                            <div class="">
+                                <button onclick="exportExpense('xlsx')"
+                                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                                    <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                                    </svg>
+                                    <span>Excel</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

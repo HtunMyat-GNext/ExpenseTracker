@@ -19,7 +19,10 @@ use function PHPUnit\Framework\isEmpty;
 class IncomeController extends Controller
 {
     /**
-     * show index page
+     * Display a listing of the incomes.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
@@ -171,24 +174,26 @@ class IncomeController extends Controller
     public function export($format, $filter = null, $query = null)
     {
         // get current date time to add in file name
-        $currentDateTime = now()->format('Y-m-d_H-i-s');
+        $current_year = date('Y');
+        if ($filter == 'default') {
+            $month = date('F');
+        } else if ($filter == 'all') {
+            $month = 'All';
+        } else {
+            $month = date('F', mktime(0, 0, 0, $filter, 1));
+        }
         // file name with current date time
-        $fileName = $currentDateTime . '_income.' . $format;
+        $fileName = $current_year . '_' . $month . '_Income.' . $format;
         // get income data by login user id
         $user_id = auth()->user()->id;
         // get income data
         $incomes = Income::where('user_id', $user_id);
         $incomes = $this->filterIncome($incomes, $filter, $query, $export = true);
-
-        // check datas exists or not in income collection
-        // if ($incomes->isEmpty()) {
-        //     return redirect()->back();
-        // }
         // sum total amount to display in excel
         $total_amount = $incomes->sum('amount');
         if ($format == 'pdf') {
             // return pdf format view
-            $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount'));
+            $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount', 'month'));
             // download pdf with current date time name
             return $pdf->download($fileName);
         }
