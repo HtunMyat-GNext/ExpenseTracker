@@ -12,18 +12,25 @@
         {{-- Search --}}
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex items-center justify-between flex-column flex-wrap md:flex-row mb-3">
+                <label for="table-search" class="sr-only">Search</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <x-my-input type="text" :placeholder="'Search for Category'"
+                        class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        id="search">
+                    </x-my-input>
 
-                <input type="text" name="" id="search" placeholder="Search for Category"
-                    class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 
-                    focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
-                    dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+
                 <div>
                     <a href="{{ route('categories.create') }}" type="button"
-                        class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 
-                        focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center 
-                        me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 
-                        dark:focus:ring-green-800">
-                        Create</a>
+                        class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create</a>
                 </div>
             </div>
 
@@ -98,7 +105,7 @@
                         @empty
                             <tr>
                                 <td colspan="4">
-                                    <div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3">
+                                    <div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-white">
                                         <h3 class="text-gray-600 mx-auto">There is no category. Let's create now!</h3>
                                     </div>
                                 </td>
@@ -106,7 +113,9 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
+                <div class="m-4" id="paginate">
+                    {{ $categories->links() }}
+                </div>
         </div>
 
         <x-modal name="confirm-category-deletion" :show="$errors->categoryDeletion->isNotEmpty()" focusable>
@@ -152,13 +161,14 @@
             }
         }
 
-        function search() {
+       
+        function search(query) {
             var keyword = $('#search').val();
             $.ajax({
                 url: '{{ route('categories.index') }}',
                 type: 'GET',
                 data: {
-                    search: keyword
+                    search: keyword,
                 },
                 success: function(data) {
                     row(data.categories.data);
@@ -206,7 +216,7 @@
                 });
             } else {
                 tableBody.append(
-                    '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
+                    '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-gray-400"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
                 );
             }
         }
