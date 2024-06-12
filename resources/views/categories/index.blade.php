@@ -101,8 +101,7 @@
                         @empty
                             <tr>
                                 <td colspan="4">
-                                    <div
-                                        class="flex bg-stone-100 dark:bg-gray-600 p-8 font-bold text-sm rounded-lg mt-3">
+                                    <div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-white">
                                         <h3 class="text-gray-600 mx-auto">There is no category. Let's create now!</h3>
                                     </div>
                                 </td>
@@ -110,7 +109,9 @@
                         @endforelse
                     </tbody>
                 </table>
-            </div>
+                <div class="m-4" id="paginate">
+                    {{ $categories->links() }}
+                </div>
         </div>
 
         <x-modal name="confirm-category-deletion" :show="$errors->categoryDeletion->isNotEmpty()" focusable>
@@ -156,13 +157,14 @@
             }
         }
 
-        function search() {
+       
+        function search(query) {
             var keyword = $('#search').val();
             $.ajax({
                 url: '{{ route('categories.index') }}',
                 type: 'GET',
                 data: {
-                    search: keyword
+                    search: keyword,
                 },
                 success: function(data) {
                     row(data.categories.data);
@@ -210,7 +212,7 @@
                 });
             } else {
                 tableBody.append(
-                    '<tr><td colspan="4"><div class="flex bg-stone-100 dark:bg-gray-600 p-8 font-bold text-sm rounded-lg mt-3"><h3 class="text-gray-600 dark:text-gray-400 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
+                    '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-gray-400"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
                 );
             }
         }

@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use PhpOffice\PhpSpreadsheet\Calculation\DateTimeExcel\Days;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Income>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Expense>
  */
-class IncomeFactory extends Factory
+class ExpenseFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,10 +20,9 @@ class IncomeFactory extends Factory
         $day = rand(1, 28);
         return [
             'user_id' => '1',
-            'title' => $this->faker->words(3, true),
-            'amount' => $this->faker->numberBetween(100, 5000),
-            'category_id' => $this->faker->numberBetween(1, 2),
-            'image' => $this->faker->imageUrl(640, 480, 'finance'),
+            'name' => $this->faker->words(3, true),
+            'amount' => $this->faker->numberBetween(10, 1000),
+            'category_id' => $this->faker->numberBetween(1, 5),
             'date' => '2024/6' . '/' . $day,
         ];
     }

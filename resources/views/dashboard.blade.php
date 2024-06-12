@@ -134,7 +134,7 @@
                             </div>
                             <div>
                                 <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                    You can see your <a href="{{ route('calendar') }}">Events</a> here.
+                                    You have <a href="{{ route('calendar') }}">{{ $events }}</a> upcoming Events.
                                 </h4>
                             </div>
 
