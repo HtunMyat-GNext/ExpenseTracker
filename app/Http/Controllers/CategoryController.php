@@ -55,7 +55,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $qry = Category::query();
+        $user_id = auth()->user()->id;
+        $qry = Category::where('user_id', $user_id);
 
         if ($request->ajax()) {
             $search = $request->input('search');

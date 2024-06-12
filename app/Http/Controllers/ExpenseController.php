@@ -21,7 +21,8 @@ class ExpenseController extends Controller
 
     public function index(Request $request)
     {
-        $expenses = Expense::with('category', 'user');
+        $user_id = auth()->user()->id;
+        $expenses = Expense::with('category', 'user')->where('user_id', $user_id);
         $months = config('custom.months');
         $filter = $request->input('filter'); // filters
         $query = $request->input('search'); // search keyword
