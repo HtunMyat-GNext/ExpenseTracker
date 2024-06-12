@@ -21,7 +21,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Expense Title')"></x-my-label>
-                        <x-my-input :placeholder="'name'" name="name" :value="old('name')">
+                        <x-my-input :placeholder="__('Expense Title')" name="name" :value="old('name')">
                         </x-my-input>
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
 
@@ -32,7 +32,7 @@
                     <div class="mb-5">
                         <x-my-label :value="__('Date')"></x-my-label>
                         <x-my-input id="flatpicker" name="date" :value="old('date')" type="text" name="date"
-                            :placeholder="'Date'">
+                            :placeholder="__('Date')">
                         </x-my-input>
                         <x-input-error :messages="$errors->get('date')" class="mt-2" />
 
@@ -63,7 +63,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Amount')"></x-my-label>
-                        <x-my-input type="number" :value="old('amount')" :placeholder="'amount'" name="amount">
+                        <x-my-input type="number" :value="old('amount')" :placeholder="__('Amount')" name="amount">
                         </x-my-input>
                         <x-input-error :messages="$errors->get('amount')" class="mt-2" />
 
@@ -73,7 +73,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Select your Category')"></x-my-label>
-                        <x-my-select name="category_id" :placeholder="'Category'">
+                        <x-my-select name="category_id" :placeholder="__('Category')">
                             @foreach ($categories as $key => $category)
                                 <option value="{{ $key }}">{{ $category }}</option>
                             @endforeach
@@ -86,7 +86,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Description')"></x-my-label>
-                        <x-my-textarea type="text" :value="old('description')" :placeholder="'description'" name="description">
+                        <x-my-textarea type="text" :value="old('description')" :placeholder="__('Description')" name="description">
                         </x-my-textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
 

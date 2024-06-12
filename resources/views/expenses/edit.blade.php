@@ -23,7 +23,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Expense Title')"></x-my-label>
-                        <x-my-input :placeholder="'name'" name="name" :value="old('name', $expense->name)">
+                        <x-my-input :placeholder="__('Expense Title')" name="name" :value="old('name', $expense->name)">
                         </x-my-input>
                     </div>
 
@@ -31,7 +31,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Date')"></x-my-label>
-                        <x-my-input id="flatpicker" name="date" type="text" name="date" :placeholder="'Date'"
+                        <x-my-input id="flatpicker" name="date" type="text" name="date" :placeholder="__('Date')"
                             :value="old('date', \Carbon\Carbon::parse($expense->date)->format('d-m-y'))"></x-my-input>
 
                         <x-input-error :messages="$errors->get('date')" class="mt-2" />
@@ -67,7 +67,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Amount')"></x-my-label>
-                        <x-my-input type="number" :placeholder="'amount'" name="amount" :value="$expense->amount">
+                        <x-my-input type="number" :placeholder="__('Amount')" name="amount" :value="$expense->amount">
                         </x-my-input>
                     </div>
 
@@ -75,7 +75,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Select your Category')"></x-my-label>
-                        <x-my-select name="category_id" :placeholder="'Select Category'">
+                        <x-my-select name="category_id" :placeholder="__('Select your Category')">
                             @foreach ($categories as $key => $category)
                             <option value="{{ $key }}" {{ $expense->category_id == $key ? 'selected' : '' }}>
                                 {{ $category }}
@@ -90,7 +90,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Description')"></x-my-label>
-                        <x-my-textarea type="text" :placeholder="'description'" name="description"
+                        <x-my-textarea type="text" :placeholder="__('Description')" name="description"
                             :value="$expense->description">
                         </x-my-textarea>
                     </div>
