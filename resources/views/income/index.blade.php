@@ -5,7 +5,7 @@
     <x-slot name="header">
         <div class="flex">
             <h2 class="font-semibold text-gray-800 dark:text-gray-200 leading-tight italic ...">
-                {{ __("Let's See Your Incomes") }}
+                {{ __("Let's Create Your Incomes") }}
             </h2>
             <div class="text-right ml-auto">
                 <a href="{{ route('income.create') }}" type="button"
@@ -33,10 +33,10 @@
                             </div>
                             <input type="text" id="search"
                                 class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                placeholder="Search income">
+                                placeholder="{{__('Search income')}}">
                             <select id="income_filter"
                                 class="block p-2 ml-2 text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>Filter Incomes</option>
+                                <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>{{__('Filter Incomes')}}</option>
                                 <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Incomes
                                 </option>
                                 @foreach ($months as $monthNumber => $monthName)

@@ -57,7 +57,23 @@
     "Select start date": "開始日を選択してください",
     "Select end date": "終了日を選択してください",
     "To": "と",
-    "Filter": "フィルター"
+    "Filter": "フィルター",
+    "Filter Incomes": "フィルタ",
+    "Let's See Your Incomes ": "所得を見てみましょう",
+    "Let's Create Your Incomes": "所得を作成しましょう",
+    "Let's Update Your Incomes": "所得を更新しましょう",
+    "Enter Category": "カテゴリを入力してください",
+    "See Calendar Events": "カレンダーイベントを見る",
+    "Your event lists": "イベントリスト",
+    "Search for Event": "イベントを検索",
+    "Let's See Your Events": "イベントを見てみましょう",
+    "Title": "タイトル",
+    "Created At": "作成時刻",
+    "Event Title": "イベントのタイトル",
+    "Create Event": "イベントを作成する",
+    "Let's Update Your Event": "イベントを更新しましょう",
+    "Once your event is deleted, all of its resources and data will be permanently deleted.": "イベントを削除すると、そのすべてのリソースとデータが永久に削除されます。",
+    "Delete Event": "イベントを削除する"
 
 
 

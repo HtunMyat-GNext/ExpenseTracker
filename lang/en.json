@@ -56,7 +56,22 @@
     "Select start date": "Select start date",
     "Select end date": "Select end date",
     "To": "To",
-    "Filter": "Filter"
+    "Filter": "Filter",
+    "Filter Incomes": "Filter Incomes",
+    "Let's Create Your Incomes": "Let's Create Your Incomes",
+    "Let's Update Your Incomes": "Let's Update Your Incomes",
+    "Enter Category": "Enter Category",
+    "See Calendar Events": "See Calendar Events",
+    "Your event lists": "Your event lists",
+    "Search for Event": "Search for Event",
+    "Let's See Your Events": "Let's See Your Events",
+    "Title": "Title",
+    "Created At": "Created At",
+    "Event Title": "Events Title",
+    "Create Event": "Create Event",
+    "Let's Update Your Event": "Let's Update Your Event",
+    "Once your event is deleted, all of its resources and data will be permanently deleted.": "Once your event is deleted, all of its resources and data will be permanently deleted.",
+    "Delete Event": "Delete Event"
 
 
     

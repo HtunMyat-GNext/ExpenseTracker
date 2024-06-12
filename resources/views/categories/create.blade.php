@@ -38,7 +38,7 @@
                             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 
                             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
                             dark:focus:border-blue-500 dark:shadow-sm-light"
-                            placeholder="Enter Category" value="{{ old('title') }}" />
+                            placeholder="{{__('Enter Category')}}" value="{{ old('title') }}" />
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
 

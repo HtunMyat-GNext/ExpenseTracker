@@ -31,7 +31,7 @@
 
                         {{-- title --}}
                         <label for="" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                            Event Title
+                            {{__('Event Title')}}
                         </label>
 
                         <input type="text" id="title" name="title"
@@ -39,13 +39,13 @@
                             focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 
                             dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
                             dark:focus:border-blue-500 dark:shadow-sm-light"
-                            placeholder="Enter Category" value="{{ $event->title }}" />
+                            placeholder="{{__('Enter Category')}}" value="{{ $event->title }}" />
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
                     {{-- color picker --}}
                     <div class="color_picker grid grid-cols-2 gap-1">
                         <label for="hs-color-input" class="block text-sm font-medium mb-3 mt-2 dark:text-white">
-                            Choose Desire Color
+                            {{__('Choose Desire Color')}}
                         </label>
 
                         <input type="color"
@@ -63,7 +63,7 @@
                                 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 
                                 font-medium rounded-lg text-sm px-8 py-3 text-center  mb-2 mt dark:border-green-500 
                                 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                Back
+                                {{__('Go Back')}}
                             </a>
                         </div>
                         <button type="submit"
@@ -71,7 +71,7 @@
                             focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-3 text-center  
                             mb-2 mt-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 
                             dark:focus:ring-green-800">
-                            Update Event
+                            {{__('Update')}}
                         </button>
                     </div>
                 </form>
