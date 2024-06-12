@@ -50,7 +50,7 @@
     "Delete Expense": "Delete Expense",
     "Let's Create Your Expenses": "Let's Create Your Expenses",
     "Let's Update Your Expenses": "Let's Update Your Expenses",
-    "Let's See Your Incomes & Expenses Data": "Let's See Your Incomes & Expenses Data"
-
+    "Let's See Your Incomes & Expenses Data": "Let's See Your Incomes & Expenses Data",
+    "total_categories": "You have :count Categories"
 
 }
