@@ -18,8 +18,8 @@
                     @csrf
                     @method('POST')
                     <div class="mb-5">
-                        <label for="income" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter
-                            Your Income Title
+                        <label for="income" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{__('Your Income Title')}}
                         </label>
                         <input type="text" id="income"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
@@ -27,8 +27,8 @@
                         <x-input-error class="mt-2" :messages="$errors->get('title')" />
                     </div>
                     <div class="mb-5">
-                        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter
-                            Amount
+                        <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{__('Amount')}}
                         </label>
                         <input type="text" id="amount"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
@@ -37,8 +37,8 @@
                     </div>
 
                     <div class="mb-5">
-                        <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter
-                            date
+                        <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{__('Enter date')}}                
                         </label>
                         <input type="date" id="flatpicker" name="date" value="{{ old('date') }}" type="text" name="date"
                             :placeholder="'Date'"
@@ -46,8 +46,8 @@
                     </div>
 
                     <div class="mb-5">
-                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload
-                            photo
+                        <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                            {{__('Upload Photo')}}
                         </label>
                         <input type="file" id="image"
                             class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
@@ -61,8 +61,8 @@
                         </div>
                     </div>
 
-                    <label for="categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select
-                        your Category</label>
+                    <label for="categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                       {{__('Select your Category')}} </label>
                     <select id="categories" name="category_id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @foreach ($categories as $category)
@@ -74,11 +74,11 @@
                         <div>
                             <a href="{{ route('income.index') }}"
                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                Back</a>
+                              {{__('Go Back')}} </a>
                         </div>
                         <button type="submit"
-                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create
-                            Income
+                            class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
+                            {{__('Create Income')}}
                         </button>
                     </div>
 

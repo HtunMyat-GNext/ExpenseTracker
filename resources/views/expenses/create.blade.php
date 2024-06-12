@@ -20,8 +20,8 @@
                     {{-- name --}}
 
                     <div class="mb-5">
-                        <x-my-label :value="'Enter name'"></x-my-label>
-                        <x-my-input :placeholder="'name'" name="name" :value="old('name')">
+                        <x-my-label :value="__('Expense Title')"></x-my-label>
+                        <x-my-input :placeholder="__('Expense Title')" name="name" :value="old('name')">
                         </x-my-input>
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
 
@@ -30,9 +30,9 @@
                     {{-- date picker --}}
 
                     <div class="mb-5">
-                        <x-my-label :value="'Enter Date'"></x-my-label>
+                        <x-my-label :value="__('Date')"></x-my-label>
                         <x-my-input id="flatpicker" name="date" :value="old('date')" type="text" name="date"
-                            :placeholder="'Date'">
+                            :placeholder="__('Date')">
                         </x-my-input>
                         <x-input-error :messages="$errors->get('date')" class="mt-2" />
 
@@ -41,7 +41,7 @@
 
                     <!-- Img -->
                     <div class="mb-5">
-                        <x-my-label :value="'Choose your image'"></x-my-label>
+                        <x-my-label :value="__('Image')"></x-my-label>
                         <x-my-img id="image" type="file" :value="old('img')" class="block mt-1 w-full"
                             name="image" />
                         <div class="mt-2 flex items-center justify-center">
@@ -62,8 +62,8 @@
                     {{-- amount --}}
 
                     <div class="mb-5">
-                        <x-my-label :value="'Enter Amount'"></x-my-label>
-                        <x-my-input type="number" :value="old('amount')" :placeholder="'amount'" name="amount">
+                        <x-my-label :value="__('Amount')"></x-my-label>
+                        <x-my-input type="number" :value="old('amount')" :placeholder="__('Amount')" name="amount">
                         </x-my-input>
                         <x-input-error :messages="$errors->get('amount')" class="mt-2" />
 
@@ -72,8 +72,8 @@
                     {{-- category --}}
 
                     <div class="mb-5">
-                        <x-my-label :value="'Enter Amount'"></x-my-label>
-                        <x-my-select name="category_id" :placeholder="'Category'">
+                        <x-my-label :value="__('Select your Category')"></x-my-label>
+                        <x-my-select name="category_id" :placeholder="__('Category')">
                             @foreach ($categories as $key => $category)
                                 <option value="{{ $key }}">{{ $category }}</option>
                             @endforeach
@@ -85,8 +85,8 @@
                     {{-- description --}}
 
                     <div class="mb-5">
-                        <x-my-label :value="'Enter Description'"></x-my-label>
-                        <x-my-textarea type="text" :value="old('description')" :placeholder="'description'" name="description">
+                        <x-my-label :value="__('Description')"></x-my-label>
+                        <x-my-textarea type="text" :value="old('description')" :placeholder="__('Description')" name="description">
                         </x-my-textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2" />
 
@@ -97,12 +97,12 @@
                         <div>
                             <a onclick="goBack()"
                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
-                                Back</a>
+                                {{__('Go Back')}}</a>
                         </div>
                         <div>
                             <button type="submit"
-                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create
-                                Expense
+                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
+                                {{__('Create Expense')}}
                             </button>
                         </div>
                     </div>

@@ -18,18 +18,18 @@
                     <div class="flex pt-6 pr-6 pl-6 items-center justify-end">
                         <div class="relative">
                             <input type="text" name="start_date" value="{{ request()['start_date'] }}" type="text"
-                                name="date" :placeholder="'Select start date'"
+                                name="date" :placeholder="'{{__('Select start date')}}'"
                                 class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
                         </div>
-                        <span class="mx-4 text-gray-500">To</span>
+                        <span class="mx-4 text-gray-500">{{__('To')}}</span>
                         <div class="relative">
                             <input type="text" name="end_date" value="{{ request()['end_date'] }}" type="text"
-                                name="date" :placeholder="'Select end date'"
+                                name="date" :placeholder="'{{__('Select end date')}}'"
                                 class="flatpicker shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
                         </div>
                         <div class="relative ml-2 mt-2">
                             <button
-                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Filter</button>
+                                class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-3 py-2 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">{{__('Filter')}}</button>
                         </div>
                     </div>
                 </form>
@@ -51,7 +51,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                        Income
+                                        {{__('Income')}}
                                     </h4>
                                 </div>
                                 <div>
@@ -77,7 +77,7 @@
                                 </div>
                                 <div>
                                     <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                        Expense
+                                        {{__('Expense')}}
                                     </h4>
                                 </div>
                                 <div>
@@ -104,12 +104,12 @@
                                 </div>
                                 <div>
                                     <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                        Categories
+                                       {{__('Categories')}}
                                     </h4>
                                 </div>
                                 <div>
                                     <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                        You have {{ $categories }} Categories
+                                        {{ __('You have :count categories', ['count' => $categories]) }}
                                     </h4>
                                 </div>
                             </a>
@@ -129,12 +129,12 @@
                             </div>
                             <div>
                                 <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                    Events
+                                   {{__('Events')}}
                                 </h4>
                             </div>
                             <div>
                                 <h4 class="text-title-md font-bold text-black dark:text-white mt-4">
-                                    You have <a href="{{ route('calendar') }}">{{ $events }}</a> upcoming Events.
+                                    {!! __('You have <a href=":url">:events</a> upcoming Events', ['events' => $events, 'url' => route('calendar')]) !!}   
                                 </h4>
                             </div>
 

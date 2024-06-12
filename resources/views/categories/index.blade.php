@@ -13,7 +13,7 @@
                         focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center
                         me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600
                         dark:focus:ring-green-800">
-                    Create</a>
+                    {{ __('Create') }}</a>
             </div>
         </div>
     </x-slot>
@@ -22,12 +22,19 @@
         {{-- Search --}}
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex items-center justify-between mb-3">
-
-                <input type="text" name="" id="search" placeholder="Search for Category"
-                    class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500
-                    focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-                    dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
+                <div class="relative">
+                    <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                        </svg>
+                    </div>
+                    <x-my-input type="text" :placeholder="__('Search for Category')"
+                        class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        id="search">
+                    </x-my-input>
+                </div>
             </div>
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -35,25 +42,34 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                Category
+                                {{ __('No') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Type
+                                {{ __('Category') }}
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                {{ __('Type') }}
                             </th>
 
                             <th scope="col" class="px-6 py-3">
-                                Color
+                                {{ __('Color') }}
                             </th>
 
                             <th scope="col" class="px-6 py-3">
-                                Action
+                                {{ __('Action') }}
                             </th>
                         </tr>
                     </thead>
-
+                    @php
+                        $index = 1;
+                    @endphp
                     <tbody id="category-table-body">
                         @forelse ($categories as $category)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row"
+                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $index++ }}
+                                </th>
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $category->title }}
@@ -100,7 +116,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4">
+                                <td colspan="5">
                                     <div
                                         class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-white">
                                         <h3 class="text-gray-600 mx-auto">There is no category. Let's create now!</h3>
@@ -180,9 +196,11 @@
             let tableBody = $('#category-table-body');
             tableBody.empty();
             if (categories.length > 0) {
+                let index = 1;
                 categories.forEach(category => {
                     tableBody.append(`
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${index++}</th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${category.title}</th>
                             <td class="px-6 py-4">${category.is_income == 0 ? 'Expense' : 'Income'}</td>
                             <td class="px-6 py-4"><span class="inline-block w-6 h-6 rounded-full" style="background-color: ${category.color};"></span></td>
@@ -214,7 +232,7 @@
             } else {
                 $('#paginate').hide();
                 tableBody.append(
-                    '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-gray-400"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
+                    '<tr><td colspan="5"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-gray-400"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
                 );
             }
         }

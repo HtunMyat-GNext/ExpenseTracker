@@ -11,7 +11,7 @@
             </div>
             <div>
                 <a href="{{ route('expenses.create') }}" type="button"
-                    class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create</a>
+                    class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">{{ __('Create') }}</a>
             </div>
         </div>
     </x-slot>
@@ -30,7 +30,7 @@
                                     stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <x-my-input type="text" :placeholder="'Search for Expense'"
+                        <x-my-input type="text" :placeholder="__('Search for Expense')"
                             class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             id="search">
                         </x-my-input>
@@ -40,8 +40,8 @@
                     <div class="ml-2 ">
                         <select id="expense_filter"
                             class="block  p-2  text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>Filter
-                                Expenses</option>
+                            <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>
+                                {{ __('Filter') }}</option>
                             <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Expenses
                             </option>
                             @foreach ($months as $monthNumber => $monthName)
@@ -90,28 +90,28 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                    #
+                                    {{ __('No') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                    Name
+                                    {{ __('Expense Title') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                    Date
+                                    {{ __('Date') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                    Amount
+                                    {{ __('Amount') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                    Category
+                                    {{ __('Category') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                    Description
+                                    {{ __('Description') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                    Image
+                                    {{ __('Image') }}
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-center">
-                                    Action
+                                    {{ __('Action') }}
                                 </th>
                             </tr>
                         </thead>
@@ -228,11 +228,11 @@
 
             <div class="mt-6 flex justify-end">
                 <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
+                    {{ __('Go Back') }}
                 </x-secondary-button>
 
                 <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
+                    {{ __('Delete Expense') }}
                 </x-danger-button>
             </div>
         </form>

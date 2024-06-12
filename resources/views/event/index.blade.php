@@ -21,7 +21,7 @@
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
-                    <x-my-input type="text" :placeholder="'Search for Event'"
+                    <x-my-input type="text" :placeholder="__('Search for Event')"
                         class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         id="search">
                     </x-my-input>
@@ -30,7 +30,7 @@
 
                 <div>
                     <a href="{{ route('events.create') }}" type="button"
-                        class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Create</a>
+                        class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">{{__('Create')}}</a>
                 </div>
 
             </div>
@@ -40,19 +40,19 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                No
+                                {{__('No')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Title
+                                {{__('Title')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Color
+                                {{__('Color')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Created At
+                                {{__('Created At')}}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Action
+                                {{__('Action')}}
                             </th>
                         </tr>
                     </thead>
@@ -134,7 +134,7 @@
                 @method('delete')
 
                 <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                    {{ __('Are you sure to delete this event?') }}
+                    {{ __('Are you sure you want to delete this?') }}
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">

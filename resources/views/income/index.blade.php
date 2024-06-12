@@ -9,8 +9,8 @@
             </h2>
             <div class="text-right ml-auto">
                 <a href="{{ route('income.create') }}" type="button"
-                    class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                    Income</a>
+                    class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
+                    {{ __('Create') }}</a>
             </div>
         </div>
     </x-slot>
@@ -29,7 +29,7 @@
                                     stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                             </svg>
                         </div>
-                        <x-my-input type="text" :placeholder="'Search for Income'"
+                        <x-my-input type="text" :placeholder="__('Search for Expense')"
                             class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             id="search">
                         </x-my-input>
@@ -39,8 +39,8 @@
                     <div class="ml-2 ">
                         <select id="income_filter"
                             class="block  p-2  text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>Filter
-                                Incomes</option>
+                            <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>
+                                {{ __('Filter') }} </option>
                             <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Incomes
                             </option>
                             @foreach ($months as $monthNumber => $monthName)
@@ -86,25 +86,25 @@
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-3">
-                                No
+                                {{ __('No') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Income Title
+                                {{ __('Income Title') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Amount
+                                {{ __('Amount') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Category
+                                {{ __('Category') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Image
+                                {{ __('Image') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Date
+                                {{ __('Date') }}
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Action
+                                {{ __('Action') }}
                             </th>
                         </tr>
                     </thead>
@@ -112,7 +112,8 @@
                         @if ($incomes->isEmpty())
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td class="bg-white dark:bg-gray-800 p-8 font-bold text-lg text-center" colspan="8">
-                                    <h3 class="dark:text-gray-400 text-gray-400 mx-auto">No income found!</h3>
+                                    <h3 class="dark:text-gray-400 text-gray-400 mx-auto">{{ __('There is no data!') }}
+                                    </h3>
                                 </td>
                             </tr>
                         @else
@@ -189,11 +190,11 @@
 
                 <div class="mt-6 flex justify-end">
                     <x-secondary-button x-on:click="$dispatch('close')">
-                        {{ __('Cancel') }}
+                        {{ __('Go Back') }}
                     </x-secondary-button>
 
                     <x-danger-button class="ms-3">
-                        {{ __('Delete Account') }}
+                        {{ __('Delete Income') }}
                     </x-danger-button>
                 </div>
             </form>
