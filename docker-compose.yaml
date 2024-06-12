@@ -29,11 +29,17 @@ services:
       MYSQL_PASSWORD: root1234
       MYSQL_ROOT_PASSWORD: root1234
     ports:
-      - "3306:3306"
+      - "46715:3306"
     volumes:
       - db_data:/var/lib/mysql
     networks:
       - laravel
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
 
 networks:
   laravel:

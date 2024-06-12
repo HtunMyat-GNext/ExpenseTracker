@@ -19,6 +19,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'provider_id',
+        'avatar',
         'password',
     ];
 
@@ -55,5 +57,9 @@ class User extends Authenticatable
 
     public function income() {
         return $this->hasMany(Income::class);
+    }
+
+    public function event() {
+        return $this->hasMany(Event::class);
     }
 }

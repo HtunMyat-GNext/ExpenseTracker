@@ -5,17 +5,49 @@ namespace App\Http\Controllers;
 use App\Http\Requests\IncomeRequest;
 use App\Models\Category;
 use App\Models\Income;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\IncomeExport;
+use Hamcrest\Type\IsNumeric;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
+use Illuminate\Support\Carbon;
 
 class IncomeController extends Controller
 {
     /**
      * show index page
      */
-    public function index()
+    public function index(Request $request)
     {
-        $incomes = Income::with('Category')->get();
-        return view('income.index', compact('incomes'));
+        // get login user id 
+        $user_id = Auth::user()->id;
+        $query = $request->input('search');
+        $filter = $request->input('filter');
+        // Total income for the current month
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $incomes = Income::with('Category')->where('user_id', $user_id);
+        $months = config('custom.months');
+        // check the http request with search query 
+        if ($request->ajax()) {
+            if (!empty($query)) {
+                $incomes = $this->filterIncome($incomes, $filter, $query, $export = false);
+            } else {
+                $incomes = $this->filterIncome($incomes, $filter, $query, $export = false);
+            }
+            return view('income.partial.search', compact('incomes'))->render();
+        }
+
+        if ($filter == "all") {
+            $incomes = $incomes->paginate(10);
+        } else if (is_numeric($filter)) {
+            $incomes = $incomes->whereYear('date', $currentYear)->whereMonth('date', $filter)->paginate(10);
+        } else {
+            $incomes = $incomes->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->paginate(10);
+        }
+        return view('income.index', compact('incomes', 'months'));
     }
 
     /**
@@ -23,7 +55,8 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $user_id = auth()->user()->id;
+        $categories = Category::where('user_id', $user_id)->get();
         return view('income.create', compact('categories'));
     }
 
@@ -103,7 +136,8 @@ class IncomeController extends Controller
     public function edit($id)
     {
         $income = Income::find($id);
-        $categories = Category::all();
+        $user_id = auth()->user()->id;
+        $categories = Category::where('user_id', $user_id)->get();
         return view('income.edit', compact('income', 'categories'));
     }
 
@@ -116,10 +150,43 @@ class IncomeController extends Controller
     {
         // find income data
         $income = Income::findOrFail($id);
+        if ($income->image) {
+            // when delete the icome, it's image also disappear
+            $this->removeImage($income->image);
+        }
         $income->delete();
-        // when delete the icome, it's image also disappear
-        $this->removeImage($income->image);
         return redirect()->route('income.index');
+    }
+
+    /**
+     * Export income data in the specified format.
+     * 
+     * @param {string} $format The format to export the data ('pdf' or 'excel').
+     * @param {string|null} $filter The filter type ('current' for current month or 'all').
+     * @param {string|null} $query The search query to filter incomes by title.
+     * @return \Illuminate\Http\Response
+     */
+    public function export($format, $filter = null, $query = null)
+    {
+        // get current date time to add in file name
+        $currentDateTime = now()->format('Y-m-d_H-i-s');
+        // file name with current date time
+        $fileName = $currentDateTime . '_income.' . $format;
+        // get income data by login user id
+        $user_id = auth()->user()->id;
+        // get income data
+        $incomes = Income::where('user_id', $user_id);
+        $incomes = $this->filterIncome($incomes, $filter, $query, $export = true);
+        // sum total amount to display in excel
+        $total_amount = $incomes->sum('amount');
+        if ($format == 'pdf') {
+            // return pdf format view
+            $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount'));
+            // download pdf with current date time name
+            return $pdf->download($fileName);
+        }
+        $incomeExport = new IncomeExport($incomes, $total_amount); // Pass $incomes and $total_amount to IncomeExport
+        return Excel::download($incomeExport, $fileName);
     }
 
     /**
@@ -133,5 +200,31 @@ class IncomeController extends Controller
         if (File::exists($imagePath)) {
             unlink(public_path($imagePath));
         }
+    }
+
+    /**
+     * Filters the incomes based on the specified filter criteria and search query.
+     * 
+     * @param \Illuminate\Database\Eloquent\Builder $incomes The income query builder.
+     * @param string $filter The filter type ('current' for current month or 'all').
+     * @param string $query The search query to filter incomes by title.
+     * @param int $currentYear The current year to filter incomes.
+     * @param int $currentMonth The current month to filter incomes if 'current' filter is applied.
+     */
+    private function filterIncome($incomes, $filter, $query, $export)
+    {
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        if ($filter == 'default') {
+            $incomes = $incomes->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->where('title', 'LIKE', "%{$query}%");
+        } else if (is_numeric($filter)) {
+            $incomes = $incomes->whereYear('date', $currentYear)->whereMonth('date', $filter)->where('title', 'LIKE', "%{$query}%");
+        } else {
+            $incomes = $incomes->where('title', 'LIKE', "%{$query}%");
+        }
+        if ($export) {
+            return $incomes->get();
+        }
+        return $incomes->paginate(10);
     }
 }

@@ -18,33 +18,36 @@ class ExpenseController extends Controller
 
     public function index(Request $request)
     {
-        $qry = Expense::with('category', 'user');
+        $user_id = auth()->user()->id;
+        $qry = Expense::with('category', 'user')->where('user_id', $user_id);
 
-        // search
         if ($request->ajax()) {
+            $search = $request->input('search');
 
-            $search = request()->input('search');
+            if ($search) {
+                $qry->where(function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%')
+                        ->orWhere('amount', 'like', '%' . $search . '%');
+                });
 
-            $qry->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('amount', 'like', '%' . $search . '%');
-            });
+                $expenses = $qry->get();
 
-            $expenses = $qry->paginate(10);
-
-            return response()->json(['expenses' => $expenses]);
+                return response()->json(['expenses' => $expenses]);
+            } else {
+                $expenses = $qry->paginate(10);
+                return response()->json(['expenses' => $expenses]);
+            }
         }
-        $expenses = $qry->paginate(10);
 
+        $expenses = $qry->paginate(10);
         return view('expenses.index', compact('expenses'));
     }
 
     public function create()
     {
+        $categories = Category::where([['user_id', Auth::id()], ['is_income', 0]])->pluck('title', 'id');
 
-        $categories = Category::pluck('title', 'id');
-        // dd($categories);
         return view('expenses.create', compact('categories'));
     }
 
@@ -76,7 +79,8 @@ class ExpenseController extends Controller
 
     public function edit(Expense $expense)
     {
-        $categories = Category::pluck('title', 'id');
+        $categories = Category::where([['user_id', Auth::id()], ['is_income', 0]])->pluck('title', 'id');
+
         return view('expenses.edit', compact('expense', 'categories'));
     }
 
