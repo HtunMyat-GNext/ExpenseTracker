@@ -40,7 +40,7 @@
                         <select id="income_filter"
                             class="block  p-2  text-sm text-gray-900 border border-gray-300 rounded-lg w-40 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="default" {{ request('filter') == 'default' ? 'selected' : '' }}>
-                                {{ __('Filter') }} </option>
+                                {{ __('Select Month') }} </option>
                             <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Incomes
                             </option>
                             @foreach ($months as $monthNumber => $monthName)
