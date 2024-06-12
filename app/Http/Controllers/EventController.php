@@ -10,9 +10,18 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->input('search');
         $user_id = auth()->user()->id;
+        if ($request->ajax()) {
+            if (!empty($query)) {
+                $events = Event::where('user_id', $user_id)->where('title', 'LIKE', "%{$query}%")->paginate(10);
+            } else {
+                $events = Event::where('user_id', $user_id)->paginate(10);
+            }
+            return view('event.partial.search', compact('events'))->render();
+        }
         $events = Event::where('user_id', $user_id)->paginate(10);
         return view('event.index', compact('events'));
     }
@@ -49,7 +58,6 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        info($event);
         return view('event.edit', compact('event'));
     }
 

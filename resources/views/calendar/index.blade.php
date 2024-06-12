@@ -17,7 +17,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-700 dark:text-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="grid grid-cols-5 gap-4">
                     <div id='external-events' class="col-span-1">
                         <p class="text-center p-4">
@@ -25,7 +25,7 @@
                         </p>
                         @foreach ($events as $event)
                             <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event m-2'>
-                                <div class='fc-event-main p-2 text-center p-2 text-center'>{{ $event->title }}</div>
+                                <div class='fc-event-main p-2 text-center p-2'>{{ $event->title }}</div>
                             </div>
                         @endforeach
                     </div>
@@ -34,31 +34,6 @@
                         <div id='calendar'></div>
                     </div>
                 </div>
-                {{-- <div id='external-events'>
-                    <p>
-                        <strong>Create Your Events Here</strong>
-                    </p>
-
-                    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>Meeting with Team</div>
-                    </div>
-                    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>App Release</div>
-                    </div>
-                    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>To do Task</div>
-                    </div>
-                    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>Client Meeting</div>
-                    </div>
-                    <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
-                        <div class='fc-event-main'>My Birthday</div>
-                    </div>
-                </div>
-
-                <div id='calendar-container'>
-                    <div id='calendar'></div>
-                </div> --}}
             </div>
         </div>
     </div>
