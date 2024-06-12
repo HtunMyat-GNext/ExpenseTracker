@@ -26,18 +26,30 @@ Route::get('/auth/facebook/callback', [SocialLoginController::class, 'handleFace
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
     // Route::post('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
+
     // langauge switch
     Route::get('/language/switch/{locale}', [LanguageController::class, 'switch'])->name('language.switch');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // categories
     Route::resource('categories', CategoryController::class);
-    Route::resource('income', IncomeController::class)->except('show','index');
+
+    //incomes
+    Route::resource('income', IncomeController::class)->except('show', 'index');
     Route::get('/income/{filter?}', [IncomeController::class, 'index'])->name('income.index');
-    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
-    Route::resource('expenses', ExpenseController::class);
     Route::get('/income/export/{format?}/{filter?}/{query?}', [IncomeController::class, 'export'])->name('income.export');
+
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+
+    // expenses
+    Route::resource('expenses', ExpenseController::class)->except('show', 'index');
+    Route::get('/expenses/{filter?}', [ExpenseController::class, 'index'])->name('expenses.index');
+    Route::get('/expenses/export/{format?}/{filter?}/{query?}', [ExpenseController::class, 'export'])->name('expenses.export');
+    
+    // events 
     Route::resource('events', EventController::class);
 });
 
