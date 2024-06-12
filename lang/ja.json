@@ -52,7 +52,22 @@
     "Let's Create Your Expenses": "費用を作成しましょう",
     "Let's Update Your Expenses": "費用を更新しましょう",
     "Let's See Your Incomes & Expenses Data": "所得と費用データを見てみましょう",
-    "total_categories": "所得と費用デ :count Categories"
+    "You have :count categories": "あなたには :count のカテゴリがあります",
+    "You have <a href=\":url\">:events</a> upcoming Events": "あなたには '<a href=\":url\">:events</a>' 件の今後のイベントがあります",
+    "Select start date": "開始日を選択してください",
+    "Select end date": "終了日を選択してください",
+    "To": "と",
+    "Filter": "フィルター"
+
+
+
+
+
+
+
+
+
+
     
    
     

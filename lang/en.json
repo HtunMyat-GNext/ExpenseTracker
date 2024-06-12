@@ -51,6 +51,14 @@
     "Let's Create Your Expenses": "Let's Create Your Expenses",
     "Let's Update Your Expenses": "Let's Update Your Expenses",
     "Let's See Your Incomes & Expenses Data": "Let's See Your Incomes & Expenses Data",
-    "total_categories": "You have :count Categories"
+    "You have :count categories": "You have :count categories",
+    "You have <a href=\":url\">:events</a> upcoming Events": "You have <a href=\":url\">:events</a> upcoming Events",
+    "Select start date": "Select start date",
+    "Select end date": "Select end date",
+    "To": "To",
+    "Filter": "Filter"
+
+
+    
 
 }
