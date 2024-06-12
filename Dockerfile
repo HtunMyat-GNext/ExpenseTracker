@@ -1,5 +1,6 @@
 # Use the official PHP image
-FROM php:8.2-fpm
+# FROM php:8.2-fpm
+FROM debian:stable-slim
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \

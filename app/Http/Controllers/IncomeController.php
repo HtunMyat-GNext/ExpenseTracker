@@ -14,14 +14,19 @@ use Hamcrest\Type\IsNumeric;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 use Illuminate\Support\Carbon;
 
+use function PHPUnit\Framework\isEmpty;
+
 class IncomeController extends Controller
 {
     /**
-     * show index page
+     * Display a listing of the incomes.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
-        // get login user id 
+        // get login user id
         $user_id = Auth::user()->id;
         $query = $request->input('search');
         $filter = $request->input('filter');
@@ -30,7 +35,7 @@ class IncomeController extends Controller
         $currentYear = Carbon::now()->year;
         $incomes = Income::with('Category')->where('user_id', $user_id);
         $months = config('custom.months');
-        // check the http request with search query 
+        // check the http request with search query
         if ($request->ajax()) {
             if (!empty($query)) {
                 $incomes = $this->filterIncome($incomes, $filter, $query, $export = false);
@@ -62,7 +67,7 @@ class IncomeController extends Controller
 
     /**
      * store data to income db
-     * 
+     *
      * @param $request
      */
     public function store(IncomeRequest $request)
@@ -88,7 +93,7 @@ class IncomeController extends Controller
 
     /**
      * update income data
-     * 
+     *
      * @param $request
      * @param $id
      */
@@ -130,7 +135,7 @@ class IncomeController extends Controller
 
     /**
      * show edit form
-     * 
+     *
      * @param $id
      */
     public function edit($id)
@@ -143,7 +148,7 @@ class IncomeController extends Controller
 
     /**
      * destroy income data
-     * 
+     *
      * @param $id
      */
     public function destroy($id)
@@ -160,7 +165,7 @@ class IncomeController extends Controller
 
     /**
      * Export income data in the specified format.
-     * 
+     *
      * @param {string} $format The format to export the data ('pdf' or 'excel').
      * @param {string|null} $filter The filter type ('current' for current month or 'all').
      * @param {string|null} $query The search query to filter incomes by title.
@@ -169,9 +174,16 @@ class IncomeController extends Controller
     public function export($format, $filter = null, $query = null)
     {
         // get current date time to add in file name
-        $currentDateTime = now()->format('Y-m-d_H-i-s');
+        $current_year = date('Y');
+        if ($filter == 'default') {
+            $month = date('F');
+        } else if ($filter == 'all') {
+            $month = 'All';
+        } else {
+            $month = date('F', mktime(0, 0, 0, $filter, 1));
+        }
         // file name with current date time
-        $fileName = $currentDateTime . '_income.' . $format;
+        $fileName = $current_year . '_' . $month . '_Income.' . $format;
         // get income data by login user id
         $user_id = auth()->user()->id;
         // get income data
@@ -181,7 +193,7 @@ class IncomeController extends Controller
         $total_amount = $incomes->sum('amount');
         if ($format == 'pdf') {
             // return pdf format view
-            $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount'));
+            $pdf = LaravelMpdf::loadView('income.exports.pdf', compact('incomes', 'total_amount', 'month'));
             // download pdf with current date time name
             return $pdf->download($fileName);
         }
@@ -191,7 +203,7 @@ class IncomeController extends Controller
 
     /**
      * delete old image
-     * 
+     *
      * @param @string $image
      */
     private function removeImage($image)
@@ -204,7 +216,7 @@ class IncomeController extends Controller
 
     /**
      * Filters the incomes based on the specified filter criteria and search query.
-     * 
+     *
      * @param \Illuminate\Database\Eloquent\Builder $incomes The income query builder.
      * @param string $filter The filter type ('current' for current month or 'all').
      * @param string $query The search query to filter incomes by title.
