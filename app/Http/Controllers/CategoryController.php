@@ -63,11 +63,11 @@ class CategoryController extends Controller
                 $qry->where('title', 'like', '%' . $search . '%')
                     ->orWhere('is_income', 'like', '%' . $search . '%');
             }
-            $categories = $qry->paginate(3);
+            $categories = $qry->paginate(10);
             return response()->json(['categories' => $categories]);
         }
 
-        $categories = $qry->paginate(3);
+        $categories = $qry->paginate(10);
         return view('categories.index', compact('categories'));
     }
 

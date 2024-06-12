@@ -105,7 +105,7 @@
                         @empty
                             <tr>
                                 <td colspan="4">
-                                    <div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3">
+                                    <div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-white">
                                         <h3 class="text-gray-600 mx-auto">There is no category. Let's create now!</h3>
                                     </div>
                                 </td>
@@ -216,7 +216,7 @@
                 });
             } else {
                 tableBody.append(
-                    '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
+                    '<tr><td colspan="4"><div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-gray-400"><h3 class="text-gray-600 mx-auto">There is no category. Let\'s create now!</h3></div></td></tr>'
                 );
             }
         }
