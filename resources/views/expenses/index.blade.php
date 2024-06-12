@@ -148,8 +148,12 @@
                             <tr>
                                 <td class="bg-white dark:bg-gray-800 p-8 font-bold text-lg rounded-lg text-center"
                                     colspan="8">
+<<<<<<< Updated upstream
                                     <h3 class="dark:text-gray-400 text-gray-400 mx-auto">{{ __('There is no data!') }}
                                     </h3>
+=======
+                                    <h3 class="dark:text-gray-400 text-gray-400 mx-auto">{{__('There is no data!')}}</h3>
+>>>>>>> Stashed changes
                                 </td>
                             </tr>
                         @endforelse

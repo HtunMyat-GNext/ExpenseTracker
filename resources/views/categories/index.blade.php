@@ -104,9 +104,16 @@
                             </tr>
                         @empty
                             <tr>
+<<<<<<< Updated upstream
                                 <td colspan="4">
                                     <div class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-white">
                                         <h3 class="text-gray-600 mx-auto">There is no category. Let's create now!</h3>
+=======
+                                <td colspan="5">
+                                    <div
+                                        class="flex bg-stone-100 p-8 font-bold text-sm rounded-lg mt-3 dark:bg-gray-700 dark:text-white">
+                                        <h3 class="text-gray-600 mx-auto">{{__('There is no data!')}}</h3>
+>>>>>>> Stashed changes
                                     </div>
                                 </td>
                             </tr>

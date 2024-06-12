@@ -73,6 +73,7 @@
     "Create Event": "イベントを作成する",
     "Let's Update Your Event": "イベントを更新しましょう",
     "Once your event is deleted, all of its resources and data will be permanently deleted.": "イベントを削除すると、そのすべてのリソースとデータが永久に削除されます。",
+<<<<<<< Updated upstream
     "Delete Event": "イベントを削除する"
 
 
@@ -91,3 +92,10 @@
 
     
 }
+=======
+    "Delete Event": "イベントを削除する",
+    "Let's See Your Categories": "あなたのカテゴリーを見てみましょう",
+    "Let's See Your Expenses": "あなたの経費を見てみましょう"
+    
+}
+>>>>>>> Stashed changes
