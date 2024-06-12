@@ -1,12 +1,12 @@
 {
-    "Dashboard" : "Dashboard",
-    "Expense" : "Expense",
-    "Income" : "Income",
-    "Category" : "Category",
+    "Dashboard": "Dashboard",
+    "Expense": "Expense",
+    "Income": "Income",
+    "Category": "Category",
     "Categories": "Categories",
     "Events": "Events",
-    "Calendar" : "Calendar",
-    "Create" : "Create",
+    "Calendar": "Calendar",
+    "Create": "Create",
     "There is no data!": "There is no data!",
     "Type": "Type",
     "Color": "Color",
@@ -72,8 +72,4 @@
     "Let's Update Your Event": "Let's Update Your Event",
     "Once your event is deleted, all of its resources and data will be permanently deleted.": "Once your event is deleted, all of its resources and data will be permanently deleted.",
     "Delete Event": "Delete Event"
-
-
-    
-
 }
