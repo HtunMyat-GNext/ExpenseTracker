@@ -23,12 +23,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $validatedData = $request->validate([
             'title' => [
                 'required',
                 function ($attribute, $value, $fail) use ($request) {
                     $exists = \App\Models\Category::where('title', $value)
-                        ->where('is_income', $request->is_income)
+                        ->where('', $request->is_income)
                         ->exists();
                     if ($exists) {
                         $fail('This category with the same title and type already exist.');
