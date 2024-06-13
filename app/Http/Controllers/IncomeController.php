@@ -13,11 +13,20 @@ use App\Exports\IncomeExport;
 use Hamcrest\Type\IsNumeric;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 use Illuminate\Support\Carbon;
+use App\Repositories\Income\IncomeRepositoryInterface;
 
 use function PHPUnit\Framework\isEmpty;
 
 class IncomeController extends Controller
 {
+
+    protected $incomeRepository;
+
+    public function __construct(IncomeRepositoryInterface $incomeRepository)
+    {
+        $this->incomeRepository = $incomeRepository;
+    }
+
     /**
      * Display a listing of the incomes.
      *
