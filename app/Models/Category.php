@@ -2,13 +2,24 @@
 
 namespace App\Models;
 
-use App\Http\Controllers\CategoryType;
+use App\Enums\CategoryType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
     use HasFactory;
+
+    // protected $casts = [
+    //     'type' => CategoryType::class,
+    // ];
+
+    // protected function casts(): array
+    // {
+    //     return [
+    //         'type' => CategoryType::class,
+    //     ];
+    // }
 
     /**
      * The attributeså that are mass assignable.
@@ -18,7 +29,7 @@ class Category extends Model
     protected $fillable = [
         'user_id',
         'title',
-        'type' => CategoryType::class,
+        'type',
         'color',
     ];
 

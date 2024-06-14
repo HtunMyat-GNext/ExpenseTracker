@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryType;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('categories.create');
+        $types = CategoryType::cases();
+        return view('categories.create', compact('types'));
     }
 
     /**
@@ -23,27 +25,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $categoryTypes = array_column(CategoryType::cases(), 'value');
+
         $validatedData = $request->validate([
             'title' => [
                 'required',
                 function ($attribute, $value, $fail) use ($request) {
-                    $exists = \App\Models\Category::where('title', $value)
-                        ->where('', $request->is_income)
+                    $exists = Category::where('title', $value)
+                        ->where('type', $request->type)
                         ->exists();
                     if ($exists) {
-                        $fail('This category with the same title and type already exist.');
+                        $fail('This category with the same title and type already exists.');
                     }
                 },
             ],
-            'is_income' => 'required|boolean',
+            'type' => ['required', 'in:' . implode(',', $categoryTypes)],
             'color' => 'required|string',
         ]);
-
-        \App\Models\Category::create([
-            'user_id' => Auth::user()->id,
+        // dd(CategoryType::from($validatedData['type'])->name);
+        Category::create([
+            'user_id' => Auth::id(),
             'title' => $validatedData['title'],
-            'is_income' => $validatedData['is_income'],
+            'type' => CategoryType::from($validatedData['type'])->value,
             'color' => $validatedData['color'],
         ]);
 

@@ -74,8 +74,9 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $category->title }}
                                 </th>
+                                {{-- @dd($category->type) --}}
                                 <td class="px-6 py-4">
-                                    {{ $category->is_income == 0 ? 'Expense' : 'Income' }}
+                                    {{ $category->type }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <span class="inline-block w-6 h-6 rounded-full"

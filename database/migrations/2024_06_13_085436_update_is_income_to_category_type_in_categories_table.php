@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoryType;
+use App\Enums\CategoryType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -15,15 +15,14 @@ return new class extends Migration
     {
         Schema::table('categories', function (Blueprint $table) {
             $table->enum('type',[
-
                 CategoryType::INCOME->value,
                 CategoryType::EXPENSE->value,
                 CategoryType::OTHERS->value
-            ])->default(CategoryType::INCOME->value);
+            ])->change();
 
             // DB::table('categories')->update(['type'=> DB::raw("CASE WHEN is_income =1 THEN 'income' ELSE 'expense' END")]);
 
-            $table->dropColumn('is_income');
+            // $table->dropColumn('is_income');
         });
     }
 
