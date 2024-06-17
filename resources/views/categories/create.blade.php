@@ -14,15 +14,6 @@
                 <form class="max-w-sm mx-auto p-5" method="POST" action="{{ route('categories.store') }}">
                     @csrf
 
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
 
                     <div class="mb-5">
                         {{-- title --}}

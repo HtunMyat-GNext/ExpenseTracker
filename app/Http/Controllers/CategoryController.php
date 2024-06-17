@@ -65,8 +65,8 @@ class CategoryController extends Controller
         if ($request->ajax()) {
             $search = $request->input('search');
             if ($search) {
-                $qry->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('is_income', 'like', '%' . $search . '%');
+                $qry->where('title', 'like', '%' . $search . '%');
+                    // ->orWhere('type', 'like', '%' . $search . '%');
             }
             $categories = $qry->paginate(10);
             return response()->json(['categories' => $categories]);
@@ -113,7 +113,7 @@ class CategoryController extends Controller
 
                     // Check for existing category
                     $exists = Category::where('title', $request->title)
-                        ->where('is_income', $value)
+                        ->where('type', $value)
                         ->where('id', '<>', $id)
                         ->exists();
                     if ($exists) {

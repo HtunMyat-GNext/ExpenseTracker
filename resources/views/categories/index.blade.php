@@ -203,7 +203,7 @@
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${index++}</th>
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${category.title}</th>
-                            <td class="px-6 py-4">${category.is_income == 0 ? 'Expense' : 'Income'}</td>
+                            <td class="px-6 py-4">${category.type}</td>
                             <td class="px-6 py-4"><span class="inline-block w-6 h-6 rounded-full" style="background-color: ${category.color};"></span></td>
                             <td class="px-6 py-4">
                                 <div class="flex">

@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
         Schema::table('categories', function (Blueprint $table) {
@@ -20,9 +18,7 @@ return new class extends Migration
                 CategoryType::OTHERS->value
             ])->change();
 
-            // DB::table('categories')->update(['type'=> DB::raw("CASE WHEN is_income =1 THEN 'income' ELSE 'expense' END")]);
-
-            // $table->dropColumn('is_income');
+            
         });
     }
 
