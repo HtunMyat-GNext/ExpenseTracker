@@ -8,6 +8,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Helpers\DashboardHelper;
+use App\Models\Event;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController
@@ -22,7 +23,8 @@ class DashboardController
         $currentYear = Carbon::now()->year;
         $incomes = Income::where('user_id', $user_id)->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->sum('amount');
         $expenses = Expense::where('user_id', $user_id)->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->sum('amount');
-        $categories = Category::count();
+        $categories = Category::where('user_id', $user_id)->count();
+        $events = Event::where('user_id', $user_id)->count();
 
         // get data for pie-chart
         $categories_data = $this->getExpensesByCategory($user_id, $currentYear, $currentMonth);
@@ -37,7 +39,7 @@ class DashboardController
             $categories_data = $this->getExpensesByCategory($user_id, $currentYear, $currentMonth, $startDate, $endDate);
         }
 
-        return view('dashboard', compact('incomes', 'expenses', 'categories', 'categories_data'));
+        return view('dashboard', compact('incomes', 'expenses', 'categories', 'categories_data','events'));
     }
 
     private function getExpensesByCategory($userId, $year, $month, $startDate = null, $endDate = null)

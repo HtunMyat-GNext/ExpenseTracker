@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Expense;
+use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Exports\ExpensesExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
-use App\Models\Category;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\File;
+use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 
 class ExpenseController extends Controller
 {
@@ -18,29 +21,32 @@ class ExpenseController extends Controller
 
     public function index(Request $request)
     {
-        $qry = Expense::with('category', 'user');
+        $user_id = auth()->user()->id;
+        $expenses = Expense::with('category', 'user')->where('user_id', $user_id);
+        $months = config('custom.months');
+        $filter = $request->input('filter'); // filters
+        $query = $request->input('search'); // search keyword
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
 
         if ($request->ajax()) {
-            $search = $request->input('search');
-
-            if ($search) {
-                $qry->where(function ($query) use ($search) {
-                    $query->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('description', 'like', '%' . $search . '%')
-                        ->orWhere('amount', 'like', '%' . $search . '%');
-                });
-
-                $expenses = $qry->get();
-
-                return response()->json(['expenses' => $expenses]);
+            if (!empty($query)) {
+                $expenses = $this->filterExpense($expenses, $filter, $query, $export = false);
             } else {
-                $expenses = $qry->paginate(5);
-                return response()->json(['expenses' => $expenses]);
+                $expenses = $this->filterExpense($expenses, $filter, $query, $export = false);
             }
+            return view('expenses.partial.search', compact('expenses'))->render();
         }
 
-        $expenses = $qry->paginate(5);
-        return view('expenses.index', compact('expenses'));
+        if ($filter == "all") {
+            $expenses = $expenses->paginate(10);
+        } else if (is_numeric($filter)) {
+            $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $filter)->paginate(10);
+        } else {
+            $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->paginate(10);
+        }
+
+        return view('expenses.index', compact('expenses', 'months'));
     }
 
     public function create()
@@ -121,11 +127,6 @@ class ExpenseController extends Controller
         return redirect()->route('expenses.index');
     }
 
-    // public function show()
-    // {
-    //     dd('show');
-    // }
-
     public function destroy(Expense $expense)
     {
         $this->removeImage($expense->img);
@@ -151,5 +152,60 @@ class ExpenseController extends Controller
         if (File::exists($imagePath)) {
             unlink(public_path($imagePath));
         }
+    }
+
+    public function export($format, $filter = null, $query = null)
+    {
+        $current_year = date('Y');
+        if ($filter == 'default') {
+            $month = date('F');
+        } else if ($filter == 'all') {
+            $month = 'All';
+        } else {
+            $month = date('F', mktime(0, 0, 0, $filter, 1));
+        }
+        // file name with current date time
+        $fileName = $current_year . '_' . $month . '_Expense.' . $format;
+        // get expense data by login user id
+        $user_id = auth()->user()->id;
+        // get expense data
+        $expenses = Expense::where('user_id', $user_id);
+        $expenses = $this->filterExpense($expenses, $filter, $query, $export = true);
+        // sum total amount to display in excel
+        $total_amount = $expenses->sum('amount');
+        if ($format == 'pdf') {
+            // return pdf format view
+            $pdf = LaravelMpdf::loadView('expenses.exports.pdf', compact('expenses', 'total_amount', 'month'));
+            // download pdf with current date time name
+            return $pdf->download($fileName);
+        }
+        $expenseExport = new ExpensesExport($expenses, $total_amount); // Pass $expenses and $total_amount to ExpenseExport
+        return Excel::download($expenseExport, $fileName);
+    }
+
+    /**
+     * Filters the expenses based on the specified filter criteria and search query.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $expenses The income query builder.
+     * @param string $filter The filter type ('current' for current month or 'all').
+     * @param string $query The search query to filter expenses by title.
+     * @param int $currentYear The current year to filter expenses.
+     * @param int $currentMonth The current month to filter expenses if 'current' filter is applied.
+     */
+    private function filterExpense($expenses, $filter, $query, $export)
+    {
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+        if ($filter == 'default') {
+            $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->where('name', 'LIKE', "%{$query}%");
+        } else if (is_numeric($filter)) {
+            $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $filter)->where('name', 'LIKE', "%{$query}%");
+        } else {
+            $expenses = $expenses->where('name', 'LIKE', "%{$query}%");
+        }
+        if ($export) {
+            return $expenses->get();
+        }
+        return $expenses->paginate(10);
     }
 }
