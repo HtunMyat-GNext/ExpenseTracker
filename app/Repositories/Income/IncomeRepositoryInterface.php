@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Income;
 
+use Illuminate\Http\Request;
+
 interface IncomeRepositoryInterface
 {
     /**
@@ -9,7 +11,12 @@ interface IncomeRepositoryInterface
      *
      * @return mixed
      */
-    public function index($request);
+    public function getAll($request);
+
+    /**
+     * Show the form for creating a new income record.
+     */
+    public function create();
 
     /**
      * Edit an income record by ID.
@@ -25,7 +32,7 @@ interface IncomeRepositoryInterface
      * @param array $data
      * @return mixed
      */
-    public function store(array $data);
+    public function store($request);
 
     /**
      * Update an existing income record by ID.
@@ -34,7 +41,7 @@ interface IncomeRepositoryInterface
      * @param array $data
      * @return mixed
      */
-    public function update($id, array $data);
+    public function update($request, $id);
 
     /**
      * Delete an income record by ID.
@@ -43,4 +50,9 @@ interface IncomeRepositoryInterface
      * @return mixed
      */
     public function delete($id);
+
+    /**
+     * Filter income records based on the specified filter criteria and search query.
+     */
+    public function filterIncome($request, $export);
 }

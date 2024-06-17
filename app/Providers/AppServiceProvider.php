@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(IncomeRepository::class, IncomeRepositoryInterface::class);
+        $this->app->bind(IncomeRepositoryInterface::class, IncomeRepository::class);
     }
 
     /**
