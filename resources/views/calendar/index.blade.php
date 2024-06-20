@@ -25,10 +25,10 @@
                             <strong>{{ __('Your event lists') }}</strong>
                         </p>
                         @foreach ($events as $event)
-                            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event m-2'
-                                style="background: {{ $event->color }};">
-                                <div data-event='{"id":"{{ $event->id }}","title": "{{ $event->title }}", "color": "{{ $event->color }}"}'
-                                    class='fc-event-main p-2 text-center'>{{ $event->title }}</div>
+                            <div id="fc-event" class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event m-2'
+                                style="background: {{ $event->color }};"
+                                data-event='{"id":"{{ $event->id }}","title": "{{ $event->title }}", "color": "{{ $event->color }}"}'>
+                                <div class='fc-event-main p-2 text-center'>{{ $event->title }}</div>
                             </div>
                         @endforeach
                     </div>
@@ -41,54 +41,119 @@
         </div>
     </div>
 
-    @push('scripts')
-        <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-            integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var Calendar = FullCalendar.Calendar;
-                var Draggable = FullCalendar.Draggable;
 
-                var containerEl = document.getElementById('external-events');
-                var calendarEl = document.getElementById('calendar');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var Calendar = FullCalendar.Calendar;
+            var Draggable = FullCalendar.Draggable;
+
+            var containerEl = document.getElementById('external-events');
+            var calendarEl = document.getElementById('calendar');
 
 
 
-                // initialize the external events
-                new Draggable(containerEl, {
-                    itemSelector: '.fc-event-main',
-                    eventData: function(eventEl) {
-                        var eventData = JSON.parse(eventEl.getAttribute('data-event'));
-                        return {
-                            // title: title,
-                            // color: color
-                        };
-                    }
-                });
-
-                // initialize the calendar
-                var calendar = new Calendar(calendarEl, {
-                    headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                    },
-                    editable: true,
-                    droppable: true, // allows things to be dropped onto the calendar
-                    eventReceive: function(draggedEl) {
-                        let calenData = draggedEl.draggedEl.dataset;
-                        console.log(calenData);
-
-
-                    }
-                });
-
-                calendar.render();
+            // initialize the external events
+            new Draggable(containerEl, {
+                itemSelector: '#fc-event',
+                eventData: function(eventEl) {
+                    var eventData = JSON.parse(eventEl.getAttribute('data-event'));
+                    return {
+                        title: eventData.title,
+                        color: eventData.color
+                    };
+                }
             });
-        </script>
-    @endpush
+
+            // initialize the calendar
+            var calendar = new Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: fetchEvents, // Fetch events from the server
+                editable: false,
+                droppable: true, // allows things to be dropped onto the calendar
+
+                // delete if event clicked
+                eventClick: function(calendar) {
+                    eventDelete(calendar.event.id);
+                },
+
+                // save data to calendar if event is dropped onto calendar
+                eventReceive: function(dropData) {
+                    // Event data
+                    let eventData = JSON.parse(dropData.draggedEl.dataset.event);
+                    let eventDate = dropData.event.startStr;
+
+                    // Remove the event immediately after it's dropped
+                    dropData.event.remove();
+
+                    // AJAX request to save event data
+                    saveEvent(eventData, eventDate, function() {
+                        calendar.refetchEvents();
+                    });
+
+                },
+            });
+
+            // fetch created events from the server
+            function fetchEvents(datas, successCallback, failureCallback) {
+                $.ajax({
+                    url: '{{ route('calendar.fetch') }}', // Adjust this to your route for fetching events
+                    type: 'GET',
+                    success: function(data) {
+                        successCallback(data);
+                    },
+                    error: function(xhr, status, error) {
+                        failureCallback(error);
+                    }
+                });
+            }
+
+
+            // Function to save event data
+            function saveEvent(eventData, date, refetch) {
+                $.ajax({
+                    url: '{{ route('calendar.store') }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        event_id: eventData.id,
+                        date: date
+                    },
+                    success: function(data) {
+                        console.log('Event saved successfully:', data);
+                        refetch();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('AJAX error: ' + status + ' : ' + error);
+                    }
+                });
+            }
+
+            // delete event
+            function eventDelete(eventId) {
+                var url = `{{ route('calendar.destroy', 'id') }}`;
+                url = url.replace('id', eventId);
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: eventId
+                    },
+                    success: function(data) {
+                        console.log('Event deleted successfully:', data);
+                        calendar.refetchEvents();
+
+                    },
+                    error: function(xhr, status, error) {
+                        failureCallback(error);
+                    }
+                })
+            }
+            calendar.render();
+        });
+    </script>
 </x-app-layout>
