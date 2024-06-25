@@ -41,8 +41,56 @@
         </div>
     </div>
 
+    <!-- Delete Confirmation Modal -->
+    <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="deleteEventModal">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+
+
+            <!-- This element is to trick the browser into centering the modal contents. -->
+            {{-- <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span> --}}
+
+            <div
+                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class=" bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+
+                        <div class="mt-3 text-lg font-medium text-gray-900 dark:text-gray-100">
+                            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                {{ __('Are you sure you want to delete this?') }}
+                            </h2>
+
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                {{ __('Once your event is deleted, all of its resources and data will be permanently deleted.') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button"
+                        class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ms-3"
+                        id="confirmDeleteBtn">
+                        Delete
+                    </button>
+                    <button type="button"
+                        class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150"
+                        data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
+        $(document).ready(function() {
+            $('#btnadd').click(function() {
+                $('#GFG_IMAGE').addClass('flip');
+            });
+            $('#deleteEventModal').click(function() {
+                $('#GFG_IMAGE').removeClass('flip');
+            });
+        });
         document.addEventListener('DOMContentLoaded', function() {
             var Calendar = FullCalendar.Calendar;
             var Draggable = FullCalendar.Draggable;
@@ -77,11 +125,26 @@
 
                 // delete if event clicked
                 eventClick: function(calendar) {
-                    eventDelete(calendar.event.id);
+
+                    // Show the delete event modal
+                    $('#deleteEventModal').removeClass('hidden');
+
+                    // Set up event deletion on confirmation
+                    $('#confirmDeleteBtn').on('click', () => {
+                        eventDelete(calendar.event.id);
+                        $('#deleteEventModal').addClass('hidden');
+                    });
+
+                    // Set up cancel action using jQuery
+                    $('[data-dismiss="modal"]').on('click', () => {
+                        $('#deleteEventModal').addClass('hidden');
+                    });
+
                 },
 
                 // save data to calendar if event is dropped onto calendar
                 eventReceive: function(dropData) {
+
                     // Event data
                     let eventData = JSON.parse(dropData.draggedEl.dataset.event);
                     let eventDate = dropData.event.startStr;
@@ -134,6 +197,7 @@
 
             // delete event
             function eventDelete(eventId) {
+
                 var url = `{{ route('calendar.destroy', 'id') }}`;
                 url = url.replace('id', eventId);
                 $.ajax({
@@ -153,6 +217,8 @@
                     }
                 })
             }
+
+            // delete confirmation dialog
             calendar.render();
         });
     </script>
