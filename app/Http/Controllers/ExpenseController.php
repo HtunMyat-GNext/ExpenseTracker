@@ -13,11 +13,17 @@ use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
+use App\Repositories\expense\ExpenseRepositoryInterface;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 
 class ExpenseController extends Controller
 {
+    public $test;
 
+    public function __construct(ExpenseRepositoryInterface $test)
+    {
+        $this->test = $test;
+    }
 
     public function index(Request $request)
     {
