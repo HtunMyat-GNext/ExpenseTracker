@@ -73,13 +73,12 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Select your Category')"></x-my-label>
-                        <x-my-select name="category_id" :placeholder="__('Category')">
+                        <x-my-select   name="category_id" :placeholder="__('Category')">
                             @foreach ($categories as $key => $category)
-                                <option value="{{ $key }}">{{ $category }}</option>
+                                <option value="{{ $key }}" {{ old('category_id') == $key ? 'selected' : '' }}>{{ $category }}</option>
                             @endforeach
                         </x-my-select>
                         <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
-
                     </div>
 
                     {{-- description --}}

@@ -18,16 +18,16 @@ use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 
 class ExpenseController extends Controller
 {
-    public $test;
+    public $expenseRepo;
 
-    public function __construct(ExpenseRepositoryInterface $test)
+    public function __construct(ExpenseRepositoryInterface $expenseRepo)
     {
-        $this->test = $test;
+        $this->expenseRepo = $expenseRepo;
     }
 
     public function index(Request $request)
     {
-        $user_id = auth()->user()->id;
+        $user_id = auth()->id();
         $expenses = Expense::with('category', 'user')->where('user_id', $user_id);
         $months = config('custom.months');
         $filter = $request->input('filter'); // filters
@@ -65,23 +65,23 @@ class ExpenseController extends Controller
     public function store(StoreExpenseRequest $request)
     {
 
-        $user_id = Auth::user()->id;
+        $user_id = Auth::id();
 
-        $imageName = '';
+        $imageName = $this->expenseRepo->store($request->all(), null);
+        // dd($imageName);
 
         // get image file and save in public/images dir
-
-        if ($request->has('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images/expenses/'), $imageName);
-        }
+        // if ($request->has('image')) {
+        //     $imageName = time() . '.' . $request->image->extension();
+        //     $request->image->move(public_path('images/expenses/'), $imageName);
+        // }
 
         Expense::create([
             'name'  =>  $request->name,
             'user_id'   => $user_id,
             'date'  => $request->date,
             'category_id' => $request->category_id,
-            'img' =>  $imageName != '' ? 'images/expenses/' . $imageName : '',
+            'img' => $imageName,
             'amount' => $request->amount,
             'description' => $request->description,
         ]);
@@ -100,6 +100,8 @@ class ExpenseController extends Controller
 
         $user_id = Auth::user()->id;
         $date = Carbon::parse($request->date)->format('Y-m-d');
+        $id = $expense->id;
+        $imageName = $this->expenseRepo->store($request->all(), $id);
 
         $expense->update([
             'name'  =>  $request->name,
@@ -107,35 +109,16 @@ class ExpenseController extends Controller
             'date'  => $date,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
+            'img' => $imageName != '' ? $imageName : $expense->img,
             'description' => $request->description,
         ]);
 
-
-        // if image is updated
-
-        if ($request->has('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images/expenses/'), $imageName);
-            $expense->update([
-                'img' => 'images/expenses/' . $imageName,
-            ]);
-        }
-
-        // when remove image in update
-        if ($request->remove_image  && $expense->img) {
-
-            $this->removeImage($expense->img);
-            // update image value to null
-            $expense->update([
-                'img' => ""
-            ]);
-        }
         return redirect()->route('expenses.index');
     }
 
     public function destroy(Expense $expense)
     {
-        $this->removeImage($expense->img);
+        $this->expenseRepo->destroy($expense->img);
         $expense->delete();
         return redirect()->route('expenses.index');
     }
@@ -144,21 +127,6 @@ class ExpenseController extends Controller
 
 
 
-
-    /**
-     * delete old image
-     *
-     * @param @string $image
-     */
-    private function removeImage($image)
-    {
-        // dd('hi');
-        $imagePath =  $image;
-        // dd($imagePath);
-        if (File::exists($imagePath)) {
-            unlink(public_path($imagePath));
-        }
-    }
 
     public function export($format, $filter = null, $query = null)
     {
