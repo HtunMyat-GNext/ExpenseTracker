@@ -42,7 +42,7 @@ class CategoryController extends Controller
             'type' => ['required', 'in:' . implode(',', $categoryTypes)],
             'color' => 'required|string',
         ]);
-        // dd(CategoryType::from($validatedData['type'])->name);
+
         Category::create([
             'user_id' => Auth::id(),
             'title' => $validatedData['title'],
@@ -66,10 +66,9 @@ class CategoryController extends Controller
             $search = $request->input('search');
             if ($search) {
                 $qry->where('title', 'like', '%' . $search . '%');
-                    // ->orWhere('type', 'like', '%' . $search . '%');
             }
-            $categories = $qry->paginate(10);
-            return response()->json(['categories' => $categories]);
+             $categories = $qry->paginate(10);
+             return response()->json(['categories' => $categories]);
         }
 
         $categories = $qry->paginate(10);
