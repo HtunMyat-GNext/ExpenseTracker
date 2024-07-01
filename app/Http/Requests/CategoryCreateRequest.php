@@ -23,7 +23,7 @@ class CategoryCreateRequest extends FormRequest
     {
         return [
             'title' => ['required'],
-            'is_income' => ['required'],
+            'type' => ['required'],
             'color' => ['required'],
         ];
     }
