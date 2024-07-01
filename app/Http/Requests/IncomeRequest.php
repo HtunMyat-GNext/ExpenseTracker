@@ -24,7 +24,8 @@ class IncomeRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'amount' => ['required', 'integer'],
-            'category_id' => ['required']
+            'image' => ['nullable', 'mimes:jpg,jpeg,png', 'max:2048'],
+            'category_id' => ['required', 'integer']
         ];
     }
 }

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -47,19 +48,28 @@ class User extends Authenticatable
         ];
     }
 
-    public function category() {
+    public function category()
+    {
         return $this->hasMany(Category::class);
     }
 
-    public function expense() {
+    public function expense()
+    {
         return $this->hasMany(Expense::class);
     }
 
-    public function income() {
+    public function income()
+    {
         return $this->hasMany(Income::class);
     }
 
-    public function event() {
+    public function event()
+    {
         return $this->hasMany(Event::class);
+    }
+
+    public static function getCurrentUserId(): ?int
+    {
+        return Auth::id();
     }
 }
