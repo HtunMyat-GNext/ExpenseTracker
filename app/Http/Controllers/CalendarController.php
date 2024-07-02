@@ -40,7 +40,7 @@ class CalendarController extends Controller
         return response()->json(['success' => true], 200);
     }
 
-    public function fetch()
+    public function fetchEvents()
     {
         $calendars = Calendar::where('user_id', Auth::id())->get();
 
