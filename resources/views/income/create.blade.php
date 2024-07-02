@@ -100,13 +100,19 @@
                 let output = $('#output');
                 let removeBtn = $('#remove-btn');
                 $('#image').on('change', function(event) {
-
+                    var file = event.target.files[0];
+                    const maxSize = 2048 * 1024;
+                    if (file.size > maxSize) {
+                        alert('File size must be less then 2048 KB!');
+                        $(this).val('');
+                        output.hide();
+                        removeBtn.hide();
+                        return;
+                    }
                     if (event.target.files && event.target.files[0]) {
-                        var file = event.target.files[0];
                         if (file.type.startsWith('image/')) {
                             var reader = new FileReader();
                             reader.onload = function(e) {
-                                console.log(e.target.result);
                                 output.attr('src', e.target.result);
                                 output.show();
                                 removeBtn.show();
