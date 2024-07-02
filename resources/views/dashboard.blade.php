@@ -189,7 +189,7 @@
                         },
                         colors: color,
                         legend: {
-                            show: false,
+                            show: true,
                         },
                     };
 
