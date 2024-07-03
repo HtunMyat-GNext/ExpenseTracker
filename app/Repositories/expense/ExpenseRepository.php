@@ -15,10 +15,10 @@ class ExpenseRepository implements ExpenseRepositoryInterface
      * @param @array $datas
      * @param @id $expense_id(only for update)
      */
-    public function store(array $request, ?int $id = null): string
+    public function store(array $request, ?int $id = null): ?string
     {
         $imageName = '';
-
+        // dd($request);
         if (isset($request['image'])) {
             $imageName = time() . '.' . $request['image']->extension();
 
@@ -30,9 +30,13 @@ class ExpenseRepository implements ExpenseRepositoryInterface
             }
 
             $request['image']->move(public_path('images/expenses'), $imageName);
-        }
 
-        return $imageName != '' ? 'images/expenses/' . $imageName : '';
+            return $imageName != '' ? 'images/expenses/' . $imageName : '';
+        } elseif (isset($request['original_img']) && $request['remove_image'] == true) {
+            $expense = Expense::findOrFail($id);
+            $this->removeImage($request['original_img']);
+        }
+        return $imageName;
     }
 
     public function destroy(string $path): void

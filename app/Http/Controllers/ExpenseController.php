@@ -102,14 +102,14 @@ class ExpenseController extends Controller
         $date = Carbon::parse($request->date)->format('Y-m-d');
         $id = $expense->id;
         $imageName = $this->expenseRepo->store($request->all(), $id);
-
+        // dd($imageName);
         $expense->update([
             'name'  =>  $request->name,
             'user_id'   => $user_id,
             'date'  => $date,
             'category_id' => $request->category_id,
             'amount' => $request->amount,
-            'img' => $imageName != '' ? $imageName : $expense->img,
+            'img' => $imageName ?? '',
             'description' => $request->description,
         ]);
 
