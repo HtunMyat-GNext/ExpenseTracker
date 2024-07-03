@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\CategoryType;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,22 +23,25 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $categoryTypes = array_column(CategoryType::cases(), 'value');
         return [
-            'title' => 'required',
-            'type' => 
+            'title' => 'required|string',
+            'type' => [
                 'required',
-                
-                function ($attribute, $value, $fail) {
-                    $exists = Category::where('title', $this->title)
-                        ->where('type', $value)
-                        ->where('id', '<>', $this->route('category'))
-                        ->exists();
-                    if ($exists) {
-                        $fail('This category with the same title and type already exists.Please create new category. ');
-                    }
-                },
-            
+                // 'in:' . implode(',', $categoryTypes),
+                // function ($attribute, $value, $fail) {
+                //     // dd($this->input('title'));
+                //     $exists = Category::where('title', $this->input('title'))
+                //         ->where('type', $value)
+                //         ->where('id', '<>', $this->route('category'))
+                //         ->exists();
+                //     if ($exists != false) {
+                //         $fail('This category with the same title and type already exists. Please create a new category.');
+                //     }
+                // },
+            ],
             'color' => 'required|string',
         ];
     }
 }
+

@@ -27,7 +27,7 @@ interface CategoryRepositoryInterface
      * Store category by ID
      * @param array $data
      */
-    public function store($request);
+    public function store($data);
     /**
      * Delete category by ID
      * @param int $id

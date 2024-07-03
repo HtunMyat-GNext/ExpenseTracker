@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Category;
 
+use App\Enums\CategoryType;
+use App\Http\Requests\StoreCategoryRequest;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -40,14 +42,25 @@ class CategoryRepository implements CategoryRepositoryInterface
         
     }
 
-    public function store($request)
+    /**
+     * Store Function
+     */
+
+    public function store( $data)
     {
+       
+        Category::create([
+            'user_id' => Auth::id(),
+            'title' => $data['title'],
+            'type' => CategoryType::from($data['type'])->value,
+            'color' => $data['color'],
+        ]);
     }
 
     public function update(array $data, $id)
     {
+        // dd('hello');
         $category = Category::findOrFail($id);
-        dd($data);
         $category->update($data);
         return $category;
 

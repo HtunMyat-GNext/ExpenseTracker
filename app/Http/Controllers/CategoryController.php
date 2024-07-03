@@ -35,14 +35,8 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $this->categoryRepository->store($request);
-       $validateData = $request->validated();
        
-       Category::create([
-        'user_id' => Auth::id(),
-            'title' => $validateData['title'],
-            'type' => CategoryType::from($validateData['type'])->value,
-            'color' => $validateData['color'],
-       ]);
+     
 
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
@@ -87,15 +81,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
-        
-       $validateData = $request->validate($id);
-
-
-        $category = Category::findOrFail($id);
-
-        // Update the category with the validated data
-        $category->update($validateData);
-
+        $this->categoryRepository->update($request->all(), $id);
         return redirect()->route('categories.index');
     }
+
+    
+    
 }
