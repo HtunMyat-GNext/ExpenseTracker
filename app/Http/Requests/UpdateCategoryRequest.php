@@ -26,21 +26,23 @@ class UpdateCategoryRequest extends FormRequest
         $categoryTypes = array_column(CategoryType::cases(), 'value');
         return [
             'title' => 'required|string',
+            
             'type' => [
                 'required',
-                // 'in:' . implode(',', $categoryTypes),
-                // function ($attribute, $value, $fail) {
-                //     // dd($this->input('title'));
-                //     $exists = Category::where('title', $this->input('title'))
-                //         ->where('type', $value)
-                //         ->where('id', '<>', $this->route('category'))
-                //         ->exists();
-                //     if ($exists != false) {
-                //         $fail('This category with the same title and type already exists. Please create a new category.');
-                //     }
-                // },
+                
+                 'in:' . implode(',', $categoryTypes),
+                 function ($attribute, $value, $fail) {
+                    // dd($this->input('title'));
+                    $exists = Category::where('title', $this->input('title'))
+                       ->where('type', $value)
+                      ->where('id', '<>', $this->route('category'))
+                       ->exists();
+                   if ($exists) {
+                       $fail('This category with the same title and type already exists. Please create a new category.');
+                   }
+                 },
             ],
-            'color' => 'required|string',
+            
         ];
     }
 }

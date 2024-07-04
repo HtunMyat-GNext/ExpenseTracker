@@ -81,6 +81,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
+        
         $this->categoryRepository->update($request->all(), $id);
         return redirect()->route('categories.index');
     }

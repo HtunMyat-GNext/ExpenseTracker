@@ -75,6 +75,7 @@
                                     {{ $category->title }}
                                 </th>
                                 {{-- @dd($category->type) --}}
+                                {{-- @dd($category->type) --}}
                                 <td class="px-6 py-4">
                                     {{ $category->type }}
                                 </td>
