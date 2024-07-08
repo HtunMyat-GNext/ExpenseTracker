@@ -19,7 +19,7 @@ class CategoryFactory extends Factory
         return [
             'user_id' => '1',
             'title' => $this->faker->words(3, true),
-            'is_income' => $this->faker->boolean,
+            'type' => "expense",
             'color' => $this->faker->hexColor,
         ];
     }

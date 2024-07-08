@@ -42,9 +42,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Image')"></x-my-label>
-                        <x-my-img type="file" class="block mt-1 w-full" id="img-upload" name="image"
-                            :db_image="$expense->img" />
-
+                        <x-my-img type="file" class="block mt-1 w-full" name="image" accept="image/*" />
 
                         <div class="mt-2 flex items-center">
                             <img src="{{ $expense->img ? asset($expense->img) : '' }}" alt="Current Image"
@@ -70,7 +68,7 @@
 
                     <div class="mb-5">
                         <x-my-label :value="__('Amount')"></x-my-label>
-                        <x-my-input type="number" :placeholder="__('Amount')" name="amount" :value="$expense->amount">
+                        <x-my-input type="number" :placeholder="__('Amount')" name="amount" :value="intval($expense->amount)">
                         </x-my-input>
                         <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                     </div>
@@ -139,6 +137,15 @@
         let removeImage = $('#remove-image')
 
         imgUpload.on('change', function(event) {
+            var file = event.target.files[0];
+            const maxSize = 2048 * 1024;
+            if (file.size > maxSize) {
+                alert('File size must be less then 2048 KB!');
+                $(this).val('');
+                output.hide();
+                removeBtn.hide();
+                return;
+            }
             if (event.target.files && event.target.files[0]) {
                 var file = event.target.files[0];
                 if (file.type.startsWith('image/')) {
