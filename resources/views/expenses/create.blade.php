@@ -65,6 +65,7 @@
                         <x-my-label :value="__('Amount')"></x-my-label>
                         <x-my-input type="number" :value="old('amount')" :placeholder="__('Amount')" name="amount">
                         </x-my-input>
+                        <span class="mt-1 text-xs text-gray-600 dark:text-gray-400">Avaliable Expense Amount: {{ $available_expense }}</span>
                         <x-input-error :messages="$errors->get('amount')" class="mt-2" />
 
                     </div>
