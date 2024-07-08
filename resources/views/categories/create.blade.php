@@ -57,7 +57,7 @@
                                            transition-all before:absolute before:top-2/4 before:left-2/4 before:block 
                                            before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full 
                                            before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-green-500 
-                                           checked:before:bg-green-500 hover:before:opacity-10" />
+                                           checked:before:bg-green-500 hover:before:opacity-10"  {{ old('type') == 'income' ? 'checked' : '' }}/>
                                     <span
                                         class="absolute text-green-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 
                                               -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
@@ -81,7 +81,7 @@
                                            transition-all before:absolute before:top-2/4 before:left-2/4 before:block 
                                            before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full 
                                            before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-red-500 
-                                           checked:before:bg-red-500 hover:before:opacity-10" />
+                                           checked:before:bg-red-500 hover:before:opacity-10" {{ old('type') == 'expense' ? 'checked' : '' }}/>
                                     <span
                                         class="absolute text-red-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 
                                               -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
@@ -105,7 +105,7 @@
                                            transition-all before:absolute before:top-2/4 before:left-2/4 before:block 
                                            before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full 
                                            before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 
-                                           checked:before:bg-blue-500 hover:before:opacity-10" />
+                                           checked:before:bg-blue-500 hover:before:opacity-10" {{ old('type') == 'others' ? 'checked' : '' }}/>
                                     <span
                                         class="absolute text-blue-500 transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 
                                               -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
@@ -121,6 +121,7 @@
                                 </label>
                             </div>
                         </div>
+                        <x-input-error :messages="$errors->get('type')" class="mt-2" />
                     </div>
 
                     {{-- Create Or Back Btn --}}

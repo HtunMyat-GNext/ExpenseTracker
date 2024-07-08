@@ -74,8 +74,6 @@
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $category->title }}
                                 </th>
-                                {{-- @dd($category->type) --}}
-                                {{-- @dd($category->type) --}}
                                 <td class="px-6 py-4">
                                     {{ $category->type }}
                                 </td>

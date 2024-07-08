@@ -23,16 +23,14 @@ class StoreCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $categoryTypes = array_column(CategoryType::cases(), 'value');
-
         return [
             'title' => [
                 'required',
                 function ($attribute, $value, $fail) {
                     $exists = Category::where('title', $value)
-                    ->where('type', $this->type)
-                    ->exists();
-                    if($exists) {
+                        ->where('type', $this->type)
+                        ->exists();
+                    if ($exists) {
                         $fail('This category with the same title and type already exists.');
                     }
                 },
@@ -42,5 +40,3 @@ class StoreCategoryRequest extends FormRequest
         ];
     }
 }
-
-

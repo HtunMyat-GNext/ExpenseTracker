@@ -24,8 +24,8 @@ class StoreExpenseRequest extends FormRequest
         return [
             'name' => 'required',
             'amount' => 'required',
-            'description' => 'required',
             'date'  => 'required',
+            'category_id' => 'required'
             // 'image' => 'required|i   mage|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }

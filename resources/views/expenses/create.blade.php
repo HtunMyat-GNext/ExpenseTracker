@@ -43,7 +43,7 @@
                     <div class="mb-5">
                         <x-my-label :value="__('Image')"></x-my-label>
                         <x-my-img id="image" type="file" :value="old('img')" class="block mt-1 w-full"
-                            name="image" />
+                            name="image" accept="image/*" />
                         <div class="mt-2 flex items-center justify-center">
                             <img src="" alt="Current Image" class="h-50 w-60 object-cover" id="output">
                             <div class="">
@@ -72,10 +72,10 @@
                     {{-- category --}}
 
                     <div class="mb-5">
-                        <x-my-label :value="__('Select your Category')"></x-my-label>
                         <x-my-select name="category_id" :placeholder="__('Category')">
                             @foreach ($categories as $key => $category)
-                                <option value="{{ $key }}">{{ $category }}</option>
+                                <option value="{{ $key }}" @selected(old('category_id') == $key)>{{ $category }}
+                                </option>
                             @endforeach
                         </x-my-select>
                         <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
@@ -97,12 +97,12 @@
                         <div>
                             <a onclick="goBack()"
                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800 cursor-pointer">
-                                {{__('Go Back')}}</a>
+                                {{ __('Go Back') }}</a>
                         </div>
                         <div>
                             <button type="submit"
                                 class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center  dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                {{__('Create Expense')}}
+                                {{ __('Create Expense') }}
                             </button>
                         </div>
                     </div>
@@ -127,6 +127,15 @@
         let output = $('#output');
         let removeBtn = $('#remove-btn');
         $('#img-upload').on('change', function(event) {
+            var file = event.target.files[0];
+            const maxSize = 2048 * 1024;
+            if (file.size > maxSize) {
+                alert('File size must be less then 2048 KB!');
+                $(this).val('');
+                output.hide();
+                removeBtn.hide();
+                return;
+            }
             if (event.target.files && event.target.files[0]) {
                 var file = event.target.files[0];
                 if (file.type.startsWith('image/')) {
@@ -142,7 +151,7 @@
                     // Clear the src attribute and hide the image if the file is not an image
                     output.attr('src', '').hide();
                     $('#imgErr').text("Please choose the correct file.").removeClass(
-                    'invisible'); // Show the error message
+                        'invisible'); // Show the error message
                     removeBtn.hide();
 
                 }

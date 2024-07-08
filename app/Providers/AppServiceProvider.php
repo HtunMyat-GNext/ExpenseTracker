@@ -2,10 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repositories\Category\CategorRepository;
-use App\Repositories\Category\CategorRepositoryInterface;
 use App\Repositories\Category\CategoryRepository;
 use App\Repositories\Category\CategoryRepositoryInterface;
+use App\Repositories\Dashboard\DashboardRepository;
+use App\Repositories\Dashboard\DashboardRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Income\IncomeRepository;
 use App\Repositories\Income\IncomeRepositoryInterface;
@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(IncomeRepositoryInterface::class, IncomeRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(DashboardRepositoryInterface::class, DashboardRepository::class);
     }
 
     /**
