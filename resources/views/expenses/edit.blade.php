@@ -20,11 +20,11 @@
                     @method('PUT')
 
                     {{-- name --}}
-
                     <div class="mb-5">
                         <x-my-label :value="__('Expense Title')"></x-my-label>
-                        <x-my-input :placeholder="__('Expense Title')" name="name" :value="old('name', $expense->name)">
+                        <x-my-input :placeholder="__('Expense Title')" name="name" :value="$expense->name">
                         </x-my-input>
+                        <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
                     {{-- date picker --}}
@@ -70,6 +70,7 @@
                         <x-my-label :value="__('Amount')"></x-my-label>
                         <x-my-input type="number" :placeholder="__('Amount')" name="amount" :value="intval($expense->amount)">
                         </x-my-input>
+                        <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                     </div>
 
                     {{-- category --}}
@@ -94,6 +95,7 @@
                         <x-my-label :value="__('Description')"></x-my-label>
                         <x-my-textarea type="text" :placeholder="__('Description')" name="description" :value="$expense->description">
                         </x-my-textarea>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
                     </div>
 
 

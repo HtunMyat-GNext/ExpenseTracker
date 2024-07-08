@@ -1,6 +1,6 @@
 <x-app-layout>
     @push('title')
-        ExpenseTrakcker | Calendar
+        ExpenseTracker | Calendar
     @endpush
     <x-slot name="header">
         <div class="flex">
@@ -10,7 +10,7 @@
             <div class="text-right ml-auto">
                 <a href="{{ route('events.index') }}"
                     class="text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
-                    {{__('See Calendar Events')}}
+                    {{ __('See Calendar Events') }}
                 </a>
             </div>
         </div>
@@ -18,15 +18,17 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-700 dark:text-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-700 dark:text-white overflow-hidden shadow-md sm:rounded-lg p-8">
                 <div class="grid grid-cols-5 gap-4">
                     <div id='external-events' class="col-span-1">
                         <p class="text-center p-4">
-                            <strong>{{__('Your event lists')}}</strong>
+                            <strong>{{ __('Your event lists') }}</strong>
                         </p>
                         @foreach ($events as $event)
-                            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event m-2'>
-                                <div class='fc-event-main p-2 text-center p-2'>{{ $event->title }}</div>
+                            <div id="fc-event" class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event m-2'
+                                style="background: {{ $event->color }};"
+                                data-event='{"id":"{{ $event->id }}","title": "{{ $event->title }}", "color": "{{ $event->color }}"}'>
+                                <div class='fc-event-main p-2 text-center'>{{ $event->title }}</div>
                             </div>
                         @endforeach
                     </div>
@@ -38,50 +40,186 @@
             </div>
         </div>
     </div>
-    @push('scripts')
-        <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-            integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var Calendar = FullCalendar.Calendar;
-                var Draggable = FullCalendar.Draggable;
 
-                var containerEl = document.getElementById('external-events');
-                var calendarEl = document.getElementById('calendar');
-                var checkbox = document.getElementById('drop-remove');
+    <!-- Delete Confirmation Modal -->
+    <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="deleteEventModal">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
-                // initialize the external events
-                // -----------------------------------------------------------------
 
-                new Draggable(containerEl, {
-                    itemSelector: '.fc-event',
-                    eventData: function(eventEl) {
-                        return {
-                            title: eventEl.innerText
-                        };
+            <!-- This element is to trick the browser into centering the modal contents. -->
+            {{-- <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span> --}}
+
+            <div
+                class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class=" bg-white dark:bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+
+                        <div class="mt-3 text-lg font-medium text-gray-900 dark:text-gray-100">
+                            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                {{ __('Are you sure you want to delete this?') }}
+                            </h2>
+
+                            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                                {{ __('Once your event is deleted, all of its resources and data will be permanently deleted.') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="button"
+                        class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 transition ease-in-out duration-150 ms-3"
+                        id="confirmDeleteBtn">
+                        Delete
+                    </button>
+                    <button type="button"
+                        class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-500 rounded-md font-semibold text-xs text-gray-700 dark:text-gray-300 uppercase tracking-widest shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 disabled:opacity-25 transition ease-in-out duration-150"
+                        data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#btnadd').click(function() {
+                $('#GFG_IMAGE').addClass('flip');
+            });
+            $('#deleteEventModal').click(function() {
+                $('#GFG_IMAGE').removeClass('flip');
+            });
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            var Calendar = FullCalendar.Calendar;
+            var Draggable = FullCalendar.Draggable;
+
+            var containerEl = document.getElementById('external-events');
+            var calendarEl = document.getElementById('calendar');
+
+
+
+            // initialize the external events
+            new Draggable(containerEl, {
+                itemSelector: '#fc-event',
+                eventData: function(eventEl) {
+                    var eventData = JSON.parse(eventEl.getAttribute('data-event'));
+                    return {
+                        title: eventData.title,
+                        color: eventData.color
+                    };
+                }
+            });
+
+            // initialize the calendar
+            var calendar = new Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: fetchEvents, // Fetch events from the server
+                editable: false,
+                droppable: true, // allows things to be dropped onto the calendar
+
+                // delete if event clicked
+                eventClick: function(calendar) {
+
+                    // Show the delete event modal
+                    $('#deleteEventModal').removeClass('hidden');
+
+                    // Set up event deletion on confirmation
+                    $('#confirmDeleteBtn').on('click', () => {
+                        eventDelete(calendar.event.id);
+                        $('#deleteEventModal').addClass('hidden');
+                    });
+
+                    // Set up cancel action using jQuery
+                    $('[data-dismiss="modal"]').on('click', () => {
+                        $('#deleteEventModal').addClass('hidden');
+                    });
+
+                },
+
+                // save data to calendar if event is dropped onto calendar
+                eventReceive: function(dropData) {
+
+                    // Event data
+                    let eventData = JSON.parse(dropData.draggedEl.dataset.event);
+                    let eventDate = dropData.event.startStr;
+
+                    // Remove the event immediately after it's dropped
+                    dropData.event.remove();
+
+                    // AJAX request to save event data
+                    saveEvent(eventData, eventDate, function() {
+                        calendar.refetchEvents();
+                    });
+
+                },
+            });
+
+            // fetch created events from the server
+            function fetchEvents(datas, successCallback, failureCallback) {
+                $.ajax({
+                    url: '{{ route('calendar.fetch') }}', // Adjust this to your route for fetching events
+                    type: 'GET',
+                    success: function(data) {
+                        successCallback(data);
+                    },
+                    error: function(xhr, status, error) {
+                        failureCallback(error);
                     }
                 });
+            }
 
-                // initialize the calendar
-                // -----------------------------------------------------------------
 
-                var calendar = new Calendar(calendarEl, {
-                    headerToolbar: {
-                        left: 'prev,next today',
-                        center: 'title',
-                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            // Function to save event data
+            function saveEvent(eventData, date, refetch) {
+                $.ajax({
+                    url: '{{ route('calendar.store') }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        event_id: eventData.id,
+                        date: date
                     },
-                    editable: true,
-                    droppable: true, // this allows things to be dropped onto the calendar
-                    eventColor: 'green'
+                    success: function(data) {
+                        console.log('Event saved successfully:', data);
+                        refetch();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('AJAX error: ' + status + ' : ' + error);
+                    }
                 });
+            }
 
-                calendar.render();
-            });
-        </script>
-    @endpush
+            // delete event
+            function eventDelete(eventId) {
+
+                var url = `{{ route('calendar.destroy', 'id') }}`;
+                url = url.replace('id', eventId);
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: eventId
+                    },
+                    success: function(data) {
+                        console.log('Event deleted successfully:', data);
+                        calendar.refetchEvents();
+
+                    },
+                    error: function(xhr, status, error) {
+                        failureCallback(error);
+                    }
+                })
+            }
+
+            // delete confirmation dialog
+            calendar.render();
+        });
+    </script>
 </x-app-layout>

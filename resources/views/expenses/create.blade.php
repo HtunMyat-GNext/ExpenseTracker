@@ -79,7 +79,6 @@
                             @endforeach
                         </x-my-select>
                         <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
-
                     </div>
 
                     {{-- description --}}

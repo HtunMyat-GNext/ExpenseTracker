@@ -42,15 +42,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/income/{filter?}', [IncomeController::class, 'index'])->name('income.index');
     Route::get('/income/export/{format?}/{filter?}/{query?}', [IncomeController::class, 'export'])->name('income.export');
 
-    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
 
     // expenses
     Route::resource('expenses', ExpenseController::class)->except('show', 'index');
     Route::get('/expenses/{filter?}', [ExpenseController::class, 'index'])->name('expenses.index');
     Route::get('/expenses/export/{format?}/{filter?}/{query?}', [ExpenseController::class, 'export'])->name('expenses.export');
-    
-    // events 
+
+    // events
     Route::resource('events', EventController::class);
+
+    // calendar
+    Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
+    Route::post('/calendar/store', [CalendarController::class, 'store'])->name('calendar.store');
+    Route::get('/calendar/events', [CalendarController::class, 'fetch'])->name('calendar.fetch');
+    Route::delete('/calendar/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
 });
 
 require __DIR__ . '/auth.php';
