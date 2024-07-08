@@ -26,6 +26,9 @@ class CategoryRepository implements CategoryRepositoryInterface
             $categories = $qry->paginate(10);
             return $categories;
         }
+        if (!empty($request->filter)) {
+            $qry = $this->filterCategory($qry, $request->filter);
+        }
         $categories = $qry->paginate(10);
         return $categories;
     }
@@ -73,5 +76,19 @@ class CategoryRepository implements CategoryRepositoryInterface
     {
         $category->delete();
         return;
+    }
+
+    private function filterCategory($qry, $filter)
+    {
+        if ($filter == 'income') {
+            $qry = $qry->where('type', CategoryType::INCOME);
+        } else if ($filter == 'expense') {
+            $qry = $qry->where('type', CategoryType::EXPENSE);
+        } else if ($filter == "others") {
+            $qry = $qry->where('type', CategoryType::OTHERS);
+        } else {
+            $qry = $qry;
+        }
+        return $qry;
     }
 }
