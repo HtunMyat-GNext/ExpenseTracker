@@ -2,49 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CategoryType;
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
+use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepository;
+
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
     /**
      * show create form
      */
     public function create()
     {
-        return view('categories.create');
+        $types = CategoryType::cases();
+        return view('categories.create', compact('types'));
     }
 
     /**
      * store function & Validation
      * Store a newly created category in the database with validation.
      */
-    public function store(Request $request)
+    public function store(StoreCategoryRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => [
-                'required',
-                function ($attribute, $value, $fail) use ($request) {
-                    $exists = \App\Models\Category::where('title', $value)
-                        ->where('is_income', $request->is_income)
-                        ->exists();
-                    if ($exists) {
-                        $fail('This category with the same title and type already exist.');
-                    }
-                },
-            ],
-            'is_income' => 'required|boolean',
-            'color' => 'required|string',
-        ]);
-
-        \App\Models\Category::create([
-            'user_id' => Auth::user()->id,
-            'title' => $validatedData['title'],
-            'is_income' => $validatedData['is_income'],
-            'color' => $validatedData['color'],
-        ]);
+        $this->categoryRepository->store($request);
 
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
@@ -55,20 +43,10 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $user_id = auth()->user()->id;
-        $qry = Category::where('user_id', $user_id);
-
+        $categories = $this->categoryRepository->getAll($request);
         if ($request->ajax()) {
-            $search = $request->input('search');
-            if ($search) {
-                $qry->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('is_income', 'like', '%' . $search . '%');
-            }
-            $categories = $qry->paginate(10);
             return response()->json(['categories' => $categories]);
         }
-
-        $categories = $qry->paginate(10);
         return view('categories.index', compact('categories'));
     }
 
@@ -78,7 +56,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $this->categoryRepository->delete($category);
         return redirect()->route('categories.index');
     }
 
@@ -89,7 +67,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::find($id);
+        $category = $this->categoryRepository->edit($id);
         return view('categories.edit', compact('category'));
     }
 
@@ -97,35 +75,10 @@ class CategoryController extends Controller
      * Update the specified category in the database.
      * @param $id
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoryRequest $request, $id)
     {
-        // Validate the incoming request data
-        $request->validate([
-            'title' => 'required|string',
-            'is_income' => [
-                'required',
-                'boolean',
-                function ($attribute, $value, $fail) use ($request, $id) {
 
-                    // Check for existing category
-                    $exists = Category::where('title', $request->title)
-                        ->where('is_income', $value)
-                        ->where('id', '<>', $id)
-                        ->exists();
-                    if ($exists) {
-                        $fail('This category with the same title and type already exists.Please create new category. ');
-                    }
-                },
-            ],
-            'color' => 'required',
-
-        ]);
-
-        $category = Category::findOrFail($id);
-
-        // Update the category with the validated data
-        $category->update($request->all());
-
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        $this->categoryRepository->update($request->all(), $id);
+        return redirect()->route('categories.index');
     }
 }
