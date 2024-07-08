@@ -8,8 +8,6 @@ use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Category;
 use App\Repositories\Category\CategoryRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -35,8 +33,6 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $this->categoryRepository->store($request);
-       
-     
 
         return redirect()->route('categories.index')->with('success', 'Category created successfully.');
     }
@@ -71,7 +67,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-       $category= $this->categoryRepository->edit($id);
+        $category = $this->categoryRepository->edit($id);
         return view('categories.edit', compact('category'));
     }
 
@@ -81,11 +77,8 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, $id)
     {
-        
+
         $this->categoryRepository->update($request->all(), $id);
         return redirect()->route('categories.index');
     }
-
-    
-    
 }

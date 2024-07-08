@@ -32,23 +32,22 @@ class CategoryRepository implements CategoryRepositoryInterface
 
     public function create($request)
     {
-        return Category::create($request);       
+        return Category::create($request);
     }
 
     public function edit($id)
     {
         $category = Category::find($id);
         return $category;
-        
     }
 
     /**
      * Store Function
      */
 
-    public function store( $data)
+    public function store($data)
     {
-       
+
         Category::create([
             'user_id' => Auth::id(),
             'title' => $data['title'],
@@ -63,7 +62,6 @@ class CategoryRepository implements CategoryRepositoryInterface
         $category = Category::findOrFail($id);
         $category->update($data);
         return $category;
-
     }
 
     /**
