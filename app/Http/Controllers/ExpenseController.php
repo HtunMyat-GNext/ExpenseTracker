@@ -7,12 +7,13 @@ use App\Models\Expense;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Exports\ExpensesExport;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
+use App\Models\Budget;
+use App\Models\Income;
+use App\Models\User;
 use App\Repositories\expense\ExpenseRepositoryInterface;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
 
@@ -34,7 +35,16 @@ class ExpenseController extends Controller
         $query = $request->input('search'); // search keyword
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
-
+        $total_expenses = Expense::where('user_id', $user_id)
+            ->whereYear('date', $currentYear)
+            ->whereMonth('date', $currentMonth)
+            ->sum('amount');
+        $budgets = Budget::where('user_id', $user_id)->first();
+        $budgets_amount = $budgets ? $budgets->amount : 0;
+        $total_income = Income::where('user_id', $user_id)
+            ->whereYear('date', $currentYear)
+            ->whereMonth('date', $currentMonth)
+            ->sum('amount');
         if ($request->ajax()) {
             if (!empty($query)) {
                 $expenses = $this->filterExpense($expenses, $filter, $query, $export = false);
@@ -52,16 +62,20 @@ class ExpenseController extends Controller
             $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->paginate(10);
         }
 
-        return view('expenses.index', compact('expenses', 'months'));
+        return view('expenses.index', compact('expenses', 'months', 'total_expenses', 'budgets_amount', 'total_income'));
     }
 
     public function create()
     {
-
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+        $user_id = User::getCurrentUserId();
+        $budgets = Budget::where('user_id', $user_id)->sum('amount');
+        $total_expense = Expense::where('user_id', $user_id)->whereMonth('date', $currentMonth)->whereYear('date', $currentYear)->sum('amount');
+        $available_expense = $budgets - $total_expense;
         $categories = Category::where([['user_id', Auth::id()]])->pluck('title', 'id');
-       
 
-        return view('expenses.create', compact('categories'));
+        return view('expenses.create', compact('categories', 'available_expense'));
     }
 
     public function store(StoreExpenseRequest $request)
@@ -70,13 +84,6 @@ class ExpenseController extends Controller
         $user_id = Auth::id();
 
         $imageName = $this->expenseRepo->store($request->all(), null);
-        // dd($imageName);
-
-        // get image file and save in public/images dir
-        // if ($request->has('image')) {
-        //     $imageName = time() . '.' . $request->image->extension();
-        //     $request->image->move(public_path('images/expenses/'), $imageName);
-        // }
 
         Expense::create([
             'name'  =>  $request->name,
@@ -92,7 +99,7 @@ class ExpenseController extends Controller
 
     public function edit(Expense $expense)
     {
-        $categories = Category::where([['user_id', Auth::id()], ['is_income', 0]])->pluck('title', 'id');
+        $categories = Category::where('user_id', Auth::user()->id)->pluck('title', 'id');
 
         return view('expenses.edit', compact('expense', 'categories'));
     }

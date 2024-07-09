@@ -68,6 +68,10 @@ class User extends Authenticatable
         return $this->hasMany(Event::class);
     }
 
+    public function budget() {
+        return $this->belongsTo(Budget::class);
+    }
+
     public static function getCurrentUserId(): ?int
     {
         return Auth::id();

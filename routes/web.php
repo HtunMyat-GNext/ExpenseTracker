@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\IncomeController;
@@ -9,19 +10,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SocialLoginController;
-
 
 Route::get('/', function () {
     return redirect('/dashboard');
 });
-
-// Social Login
-
-Route::get('/auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('/auth/google/callback', [SocialLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
-Route::get('/auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
-Route::get('/auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback'])->name('auth.facebook.callback');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
@@ -56,6 +48,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/calendar/store', [CalendarController::class, 'store'])->name('calendar.store');
     Route::get('/calendar/events', [CalendarController::class, 'fetch'])->name('calendar.fetch');
     Route::delete('/calendar/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
+
+    // buget
+    Route::post('/budget', [BudgetController::class, 'store'])->name('budget.store');
 });
 
 require __DIR__ . '/auth.php';
