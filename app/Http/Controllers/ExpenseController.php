@@ -35,10 +35,6 @@ class ExpenseController extends Controller
         $query = $request->input('search'); // search keyword
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
-        $total_expenses = Expense::where('user_id', $user_id)
-            ->whereYear('date', $currentYear)
-            ->whereMonth('date', $currentMonth)
-            ->sum('amount');
         $budgets = Budget::where('user_id', $user_id)->first();
         $budgets_amount = $budgets ? $budgets->amount : 0;
         $total_income = Income::where('user_id', $user_id)
@@ -62,7 +58,7 @@ class ExpenseController extends Controller
             $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->paginate(10);
         }
 
-        return view('expenses.index', compact('expenses', 'months', 'total_expenses', 'budgets_amount', 'total_income'));
+        return view('expenses.index', compact('expenses', 'months', 'budgets_amount', 'total_income'));
     }
 
     public function create()

@@ -65,7 +65,7 @@
                         <div class="text-sm text-gray-600 dark:text-gray-400 ml-4">
                             <span class="font-medium text-gray-900 dark:text-gray-100">Total Expenses:</span>
                             <span
-                                class="ml-2 bg-teal-400 text-black  font-medium  px-5 py-1 rounded-full dark:bg-indigo-900 dark:text-indigo-300">{{ intval($total_expenses) ?? '0' }}</span>
+                                class="ml-2 bg-teal-400 text-black  font-medium  px-5 py-1 rounded-full dark:bg-indigo-900 dark:text-indigo-300">{{ $expenses->sum('amount') }}</span>
                         </div>
                     </div>
                 </div>
