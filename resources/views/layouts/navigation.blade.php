@@ -27,6 +27,8 @@
                     </x-nav-link>
                     <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                         {{ __('Category') }}</x-nav-link>
+                    <x-nav-link :href="route('currency.exchange')" :active="request()->routeIs('currency.exchange')">
+                        {{ __('Currency Exchange') }}</x-nav-link>
                     <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                         {{ __('Calendar') }}
                     </x-nav-link>
@@ -232,6 +234,8 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.*')">
                 {{ __('Category') }}</x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('currency.exchange')" :active="request()->routeIs('currency.exchange')">
+                {{ __('Currency Exchange') }}</x-responsive-nav-link>
             <x-responsive-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
                 {{ __('Calendar') }}
             </x-responsive-nav-link>

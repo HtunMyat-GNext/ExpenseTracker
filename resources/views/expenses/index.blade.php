@@ -276,7 +276,7 @@
                             <input type="text" name="amount" id="budget"
                                 class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="set budget amount" />
-                            <span class="mt-4 text-xs text-gray-600 dark:text-gray-400">Total Income Amount: <span
+                            <span class="mt-4 text-xs text-gray-600 dark:text-teal-400">Total Income Amount: <span
                                     class="bg-teal-400 text-black  font-medium  px-5 py-1 rounded-full dark:bg-indigo-900 dark:text-indigo-300">{{ $total_income }}</span>
                                 (Budget amount can't exceed Total Income)</span>
                         </div>
