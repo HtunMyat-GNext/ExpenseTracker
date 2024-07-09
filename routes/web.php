@@ -10,19 +10,10 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SocialLoginController;
-use App\Models\Budget;
 
 Route::get('/', function () {
     return redirect('/dashboard');
 });
-
-// Social Login
-
-Route::get('/auth/google', [SocialLoginController::class, 'redirectToGoogle'])->name('auth.google');
-Route::get('/auth/google/callback', [SocialLoginController::class, 'handleGoogleCallback'])->name('auth.google.callback');
-Route::get('/auth/facebook', [SocialLoginController::class, 'redirectToFacebook'])->name('auth.facebook');
-Route::get('/auth/facebook/callback', [SocialLoginController::class, 'handleFacebookCallback'])->name('auth.facebook.callback');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard");
