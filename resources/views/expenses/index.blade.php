@@ -34,8 +34,6 @@
                             class="block px-10 py-2  text-sm border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             id="search">
                         </x-my-input>
-
-
                     </div>
                     <div class="ml-2">
                         <select id="expense_filter"
@@ -258,7 +256,7 @@
         </form>
     </x-modal>
 
-    <x-modal name="budget-modal" :show="$errors->expenseDeletion->isNotEmpty()" focusable>
+    <x-modal name="budget-modal" focusable>
         <form method="POST" :action="`{{ route('budget.store', '') }}`" class="p-6">
             @csrf
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -278,7 +276,9 @@
                             <input type="text" name="amount" id="budget"
                                 class="mb-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                 placeholder="set budget amount" />
-                                <span class="mt-4 text-xs text-gray-600 dark:text-gray-400">Total Income Amount: <span class="bg-teal-400 text-black  font-medium  px-5 py-1 rounded-full dark:bg-indigo-900 dark:text-indigo-300">{{ $total_income }}</span> (Budget amount can't exceed Total Income)</span>
+                            <span class="mt-4 text-xs text-gray-600 dark:text-gray-400">Total Income Amount: <span
+                                    class="bg-teal-400 text-black  font-medium  px-5 py-1 rounded-full dark:bg-indigo-900 dark:text-indigo-300">{{ $total_income }}</span>
+                                (Budget amount can't exceed Total Income)</span>
                         </div>
                         <button type="submit"
                             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -293,6 +293,15 @@
 </x-app-layout>
 <script>
     $(document).ready(function() {
+
+        // Prevent budget-modal from closing on validation errors
+        $('x-modal[name="budget-modal"]').on('close', function(event) {
+            console.log("HELLO");
+            if ($(this).find('.is-invalid').length > 0) {
+                event.preventDefault();
+            }
+        });
+
 
         // filter expense data with all and current month
         $('#expense_filter').change(function() {

@@ -8,9 +8,11 @@ The Expense Tracker application is designed to help individuals manage their fin
 -   Social Login ( Facebook, Gmail )
 -   Income management
 -   Expense management
+-   Set budget and Saving Goals
 -   Category management
--   Event management
+-   Event management with FullCalendar (Google Calendar)
 -   Reporting and analytics
+-   Income & Expense download (Excel, PDF)
 -   Unit testing
 -   Responsive design
 
@@ -40,31 +42,31 @@ cp .env.example .env
 ### Build and start the containers
 
 ```sh
-docker-compose up -d --build
+make build
 ```
 
 ### Install dependencies
 
 ```sh
-docker-compose exec expense_tracker composer install
+make composer install
 ```
 
 ### Generate application key
 
 ```sh
-docker-compose exec expense_tracker php artisan key:generate
+make key generate
 ```
 
 ### Run database migrations
 
 ```sh
-docker-compose exec expense_tracker php artisan migrate
+make migrate
 ```
 
 ### Seed the database
 
 ```sh
-docker-compose exec expense_tracker php artisan db:seed
+make seed
 ```
 
 ### Install NPM in project directory
@@ -100,7 +102,7 @@ Once the installation steps are complete, you can access the application at `htt
 To stop the running containers:
 
 ```sh
-docker-compose down
+make down
 ```
 
 ### Rebuilding the containers
@@ -108,7 +110,7 @@ docker-compose down
 If you make changes to the Dockerfile or `docker-compose.yml`, you may need to rebuild the containers:
 
 ```sh
-docker-compose up -d --build
+make build
 ```
 
 ## Testing
@@ -116,5 +118,5 @@ docker-compose up -d --build
 To run the test suite, use the following command:
 
 ```sh
-docker-compose exec expense_tracker php artisan test
+make test
 ```
