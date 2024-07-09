@@ -8,7 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var containerEl = document.getElementById("external-events");
     var calendarEl = document.getElementById("calendar");
 
-    // Initialize the external events
+    const userEmail = window.userEmail;
+
+    // console.log("Calendar Data from PHP:", calendarData); // Initialize the external events
+
     new Draggable(containerEl, {
         itemSelector: "#fc-event",
         eventData: function (eventEl) {
@@ -19,7 +22,6 @@ document.addEventListener("DOMContentLoaded", function () {
             };
         },
     });
-
     // Initialize the calendar
     var calendar = new Calendar(calendarEl, {
         plugins: [
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 editable: false,
             },
             {
-                googleCalendarId: "gnext.yanmyoaung@gmail.com",
+                googleCalendarId: userEmail,
                 className: "gcal-event", // an option!
                 googleCalendarApiKey: "AIzaSyCnhOppCfntsZgJbt5BcEfXfx-MNHcxju0",
                 format: "json",
@@ -49,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ],
         editable: false, // disabled draggable on calendar events
         droppable: true, // Allows things to be dropped onto the calendar
+        eventOverlap: false,
 
         // Delete if event clicked
         eventClick: function (info) {

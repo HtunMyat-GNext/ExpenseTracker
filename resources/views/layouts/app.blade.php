@@ -34,7 +34,7 @@
 
     {{-- full calendar --}}
 
-
+{{-- 
     <script type='importmap'>
       {
         "imports": {
@@ -42,7 +42,7 @@
           "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.14"
         }
       }
-    </script>
+    </script> --}}
 
     {{-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js'></script> --}}
 
@@ -54,7 +54,7 @@
 
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js', './resources/js/calendar.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite('resources/css/style.css')
 
 

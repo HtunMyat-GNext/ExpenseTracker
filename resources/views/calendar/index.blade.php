@@ -34,7 +34,14 @@
                     </div>
 
                     <div id='calendar-container' class="col-span-4">
-                        <div id='calendar'></div>
+                        <div id='calendar' class="pb-6"></div>
+                        <p class="my-6 group text-xs font-semibold pb-1 text-red-700 ">
+                            {{ __('To sync google-calendar datas,You need to check Make available to public in your google-calendar ') }}
+                            <a href="https://calendar.google.com/calendar/u/0/r/settings?pli=1" target="__blank">
+                                <span
+                                    class=" group-hover:text-red-600 group-hover:font-extrabold transition-all border-b-red-800 group-hover:border-b-2 group-hover:border-b-red-800">{{ __('setting') }}</span>
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -42,7 +49,8 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="deleteEventModal">
+    <div class="fixed
+                            z-10 inset-0 overflow-y-auto hidden" id="deleteEventModal">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
 
@@ -82,8 +90,22 @@
     </div>
 
 
+
+    {{-- calendar import --}}
+    @vite(['./resources/js/calendar.js'])
+    <script type='importmap'>
+      {
+        "imports": {
+          "@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.14",
+          "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.14"
+        }
+      }
+    </script>
+
     {{-- calendar --}}
     <script>
+        // Pass the PHP variable to JavaScript
+        window.userEmail = @json($email);
         // Global object to pass URLs to the calendar.js file
         window.calendarUrls = {
             fetchEvents: '{{ route('calendar.fetch_events') }}',
