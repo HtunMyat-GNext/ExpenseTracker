@@ -10,6 +10,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ExchangeController;
 
 Route::get('/', function () {
     return redirect('/dashboard');
@@ -51,6 +52,9 @@ Route::middleware('auth')->group(function () {
 
     // buget
     Route::post('/budget', [BudgetController::class, 'store'])->name('budget.store');
+
+    // Curreny Exchange
+    Route::get('/currency-exchange', [ExchangeController::class, 'index'])->name('currency.exchange');
 });
 
 require __DIR__ . '/auth.php';

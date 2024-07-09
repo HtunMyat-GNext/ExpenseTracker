@@ -5,6 +5,7 @@ namespace App\View\Components;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Cache;
 
 class ExchangeRate extends Component
 {
@@ -27,7 +28,10 @@ class ExchangeRate extends Component
 
     private function getExchangeRate()
     {
-        $exchangeRate = file_get_contents('https://forex.cbm.gov.mm/api/latest');
+        $cacheKey = 'exchange_rates';
+        $exchangeRate = Cache::remember($cacheKey, now()->addHours(8), function () {
+            return file_get_contents('https://forex.cbm.gov.mm/api/latest');
+        });
         $exchangeRate = json_decode($exchangeRate, true);
         return $exchangeRate['rates'];
     }
