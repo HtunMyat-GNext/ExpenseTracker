@@ -48,6 +48,7 @@
 $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
     :class="{ 'dark text-bodydark bg-boxdark-2': darkMode === true }">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <x-exchange-rate/>
         @include('layouts.navigation')
 
         <!-- Page Heading -->
