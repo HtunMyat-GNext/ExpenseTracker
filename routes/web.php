@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     // calendar
     Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar');
     Route::post('/calendar/store', [CalendarController::class, 'store'])->name('calendar.store');
-    Route::get('/calendar/events', [CalendarController::class, 'fetch'])->name('calendar.fetch');
+    Route::get('/calendar/events', [CalendarController::class, 'fetchEvents'])->name('calendar.fetch_events');
     Route::delete('/calendar/{id}', [CalendarController::class, 'destroy'])->name('calendar.destroy');
 
     // buget

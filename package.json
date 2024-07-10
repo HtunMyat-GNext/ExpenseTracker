@@ -16,8 +16,14 @@
         "vite": "^5.0"
     },
     "dependencies": {
+        "@fullcalendar/core": "^6.1.14",
+        "@fullcalendar/daygrid": "^6.1.14",
+        "@fullcalendar/google-calendar": "^6.1.14",
+        "@fullcalendar/interaction": "^6.1.14",
+        "@fullcalendar/list": "^6.1.14",
+        "@fullcalendar/timegrid": "^6.1.14",
         "@material-tailwind/html": "^2.2.2",
-        "fullcalendar": "^6.1.11",
+        "fullcalendar": "^6.1.14",
         "jquery": "^3.7.1"
     }
 }

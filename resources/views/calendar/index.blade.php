@@ -34,7 +34,14 @@
                     </div>
 
                     <div id='calendar-container' class="col-span-4">
-                        <div id='calendar'></div>
+                        <div id='calendar' class="pb-6"></div>
+                        <p class="my-6 group text-xs font-semibold pb-1 text-red-700 ">
+                            {{ __('To sync google-calendar datas,You need to check Make available to public in your google-calendar ') }}
+                            <a href="https://calendar.google.com/calendar/u/0/r/settings?pli=1" target="__blank">
+                                <span
+                                    class=" group-hover:text-red-600 group-hover:font-extrabold transition-all border-b-red-800 group-hover:border-b-2 group-hover:border-b-red-800">{{ __('setting') }}</span>
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
@@ -42,7 +49,8 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div class="fixed z-10 inset-0 overflow-y-auto hidden" id="deleteEventModal">
+    <div class="fixed
+                            z-10 inset-0 overflow-y-auto hidden" id="deleteEventModal">
         <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
 
@@ -82,144 +90,28 @@
     </div>
 
 
+
+    {{-- calendar import --}}
+    @vite(['./resources/js/calendar.js'])
+    <script type='importmap'>
+      {
+        "imports": {
+          "@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.14",
+          "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.14"
+        }
+      }
+    </script>
+
+    {{-- calendar --}}
     <script>
-        $(document).ready(function() {
-            $('#btnadd').click(function() {
-                $('#GFG_IMAGE').addClass('flip');
-            });
-            $('#deleteEventModal').click(function() {
-                $('#GFG_IMAGE').removeClass('flip');
-            });
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            var Calendar = FullCalendar.Calendar;
-            var Draggable = FullCalendar.Draggable;
-
-            var containerEl = document.getElementById('external-events');
-            var calendarEl = document.getElementById('calendar');
-
-
-
-            // initialize the external events
-            new Draggable(containerEl, {
-                itemSelector: '#fc-event',
-                eventData: function(eventEl) {
-                    var eventData = JSON.parse(eventEl.getAttribute('data-event'));
-                    return {
-                        title: eventData.title,
-                        color: eventData.color
-                    };
-                }
-            });
-
-            // initialize the calendar
-            var calendar = new Calendar(calendarEl, {
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                events: fetchEvents, // Fetch events from the server
-                editable: false,
-                droppable: true, // allows things to be dropped onto the calendar
-
-                // delete if event clicked
-                eventClick: function(calendar) {
-
-                    // Show the delete event modal
-                    $('#deleteEventModal').removeClass('hidden');
-
-                    // Set up event deletion on confirmation
-                    $('#confirmDeleteBtn').on('click', () => {
-                        eventDelete(calendar.event.id);
-                        $('#deleteEventModal').addClass('hidden');
-                    });
-
-                    // Set up cancel action using jQuery
-                    $('[data-dismiss="modal"]').on('click', () => {
-                        $('#deleteEventModal').addClass('hidden');
-                    });
-
-                },
-
-                // save data to calendar if event is dropped onto calendar
-                eventReceive: function(dropData) {
-
-                    // Event data
-                    let eventData = JSON.parse(dropData.draggedEl.dataset.event);
-                    let eventDate = dropData.event.startStr;
-
-                    // Remove the event immediately after it's dropped
-                    dropData.event.remove();
-
-                    // AJAX request to save event data
-                    saveEvent(eventData, eventDate, function() {
-                        calendar.refetchEvents();
-                    });
-
-                },
-            });
-
-            // fetch created events from the server
-            function fetchEvents(datas, successCallback, failureCallback) {
-                $.ajax({
-                    url: '{{ route('calendar.fetch') }}', // Adjust this to your route for fetching events
-                    type: 'GET',
-                    success: function(data) {
-                        successCallback(data);
-                    },
-                    error: function(xhr, status, error) {
-                        failureCallback(error);
-                    }
-                });
-            }
-
-
-            // Function to save event data
-            function saveEvent(eventData, date, refetch) {
-                $.ajax({
-                    url: '{{ route('calendar.store') }}',
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        event_id: eventData.id,
-                        date: date
-                    },
-                    success: function(data) {
-                        console.log('Event saved successfully:', data);
-                        refetch();
-                    },
-                    error: function(xhr, status, error) {
-                        console.log('AJAX error: ' + status + ' : ' + error);
-                    }
-                });
-            }
-
-            // delete event
-            function eventDelete(eventId) {
-
-                var url = `{{ route('calendar.destroy', 'id') }}`;
-                url = url.replace('id', eventId);
-                $.ajax({
-                    url: url,
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id: eventId
-                    },
-                    success: function(data) {
-                        console.log('Event deleted successfully:', data);
-                        calendar.refetchEvents();
-
-                    },
-                    error: function(xhr, status, error) {
-                        failureCallback(error);
-                    }
-                })
-            }
-
-            // delete confirmation dialog
-            calendar.render();
-        });
+        // Pass the PHP variable to JavaScript
+        window.userEmail = @json($email);
+        // Global object to pass URLs to the calendar.js file
+        window.calendarUrls = {
+            fetchEvents: '{{ route('calendar.fetch_events') }}',
+            storeEvent: '{{ route('calendar.store') }}',
+            deleteEvent: '{{ route('calendar.destroy', 'id') }}',
+            csrfToken: '{{ csrf_token() }}'
+        };
     </script>
 </x-app-layout>

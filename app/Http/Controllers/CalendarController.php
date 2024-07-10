@@ -19,13 +19,13 @@ class CalendarController extends Controller
         $user_id = auth()->user()->id;
         $events = Event::where('user_id', $user_id)->get();
         $calendarData = Calendar::where('user_id', Auth::id())->get();
-
+        $email = Auth::user()->email;
         // Return JSON data
         if (request()->wantsJson()) {
             return response()->json($calendarData);
         }
 
-        return view('calendar.index', compact('events'));
+        return view('calendar.index', compact('events', 'email'));
     }
 
     public function store(Request $request)
@@ -40,7 +40,7 @@ class CalendarController extends Controller
         return response()->json(['success' => true], 200);
     }
 
-    public function fetch()
+    public function fetchEvents()
     {
         $calendars = Calendar::where('user_id', Auth::id())->get();
 
