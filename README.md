@@ -12,7 +12,8 @@ The Expense Tracker application is designed to help individuals manage their fin
 -   Category management
 -   Event management with FullCalendar (Google Calendar)
 -   Reporting and analytics
--   Income & Expense download (Excel, PDF)
+-   Export Income & Expense datas (Excel, PDF)
+-   Curreny Exchange (CBM rates)
 -   Unit testing
 -   Responsive design
 
