@@ -34,10 +34,10 @@ class CategoryTest extends TestCase
      */
     public function test_category_create_render()
     {
-        $this->actingAs($this->user);
-        $this->withSession(['_token' => csrf_token()]);
-        $response = $this->post(route('categories.store'), [
-            '_token' => csrf_token(),
+       // $this->actingAs($this->user);
+       // $this->withSession(['_token' => csrf_token()]);
+        $response = $this->actingAs($this->user)->post(route('categories.store'), [
+            // '_token' => csrf_token(),
             'title' => 'test category',
             'type' => 'expense',
             'color' => '#863c3b',
@@ -56,15 +56,15 @@ class CategoryTest extends TestCase
      */
     public function test_category_update_render()
     {
-        $this->actingAs($this->user);
+       // $this->actingAs($this->user);
         $category = Category::factory()->create([
             'user_id' => $this->user->id, 
             'title' => 'test category',
             'type' => 'expense',
             'color' => '#863c3b',
         ]);
-        $response = $this->put(route('categories.update', $category->id), [
-            '_token' => csrf_token(),
+        $response = $this->actingAs($this->user)->put(route('categories.update', $category->id), [
+            //'_token' => csrf_token(),
             'title' => 'Book Update',
             'type' => 'expense',
             'color' => '#863c3e',
@@ -83,12 +83,12 @@ class CategoryTest extends TestCase
      */
     public function test_category_delete_render()
     {
-        $this->actingAs($this->user);
+       // $this->actingAs($this->user);
         $category = Category::factory()->create([
             'user_id' => $this->user->id,
         ]);
 
-        $response = $this->delete(route('categories.destroy', $category->id));
+        $response = $this->actingAs($this->user)->delete(route('categories.destroy', $category->id));
         $response->assertRedirect(route('categories.index'));
         $this->assertDatabaseMissing('categories', [
             'id' => $category->id,
