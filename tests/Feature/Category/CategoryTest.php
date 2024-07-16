@@ -20,7 +20,7 @@ class CategoryTest extends TestCase
     }
 
     /**
-     * A basic feature test example.
+     * category page render.
      */
     public function test_categories_index_page_render()
     {
