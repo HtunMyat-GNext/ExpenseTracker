@@ -142,14 +142,16 @@
                     </div>
                 </div>
                 <!-- start pic chart section !-->
-                <div
-                    class="relative flex flex-col rounded-xl bg-white dark:bg-gray-800 bg-clip-border text-gray-700 shadow-md">
-                    <div class="py-6 mt-4 grid place-items-center px-2">
-                        <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 mx-auto">
-                            <div id="pie-chart" class="h-auto"></div>
+                @if (count($categories_data) > 0)
+                    <div
+                        class="relative flex flex-col rounded-xl bg-white dark:bg-gray-800 bg-clip-border text-gray-700 shadow-md">
+                        <div class="py-6 mt-4 grid place-items-center px-2">
+                            <div class="w-full md:w-3/4 lg:w-1/2 xl:w-1/3 mx-auto">
+                                <div id="pie-chart" class="h-auto"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
                 <!-- end pic chart section !-->
             </div>
         </div>
@@ -163,7 +165,6 @@
                     });
                     // set up piechart
                     const categories = @json($categories_data);
-                    console.log(categories);
                     //category total amounts
                     const amounts = categories.map((category) => parseInt(category.total));
                     //labels for

@@ -293,7 +293,10 @@
 </x-app-layout>
 <script>
     $(document).ready(function() {
-
+        Echo.channel('budget-channel')
+            .listen('.set-budget', (e) => {
+                console.log('Budget set event received:', e.amount); // Log the event data
+            });
         // Prevent budget-modal from closing on validation errors
         $('x-modal[name="budget-modal"]').on('close', function(event) {
             console.log("HELLO");
@@ -301,8 +304,6 @@
                 event.preventDefault();
             }
         });
-
-
         // filter expense data with all and current month
         $('#expense_filter').change(function() {
             var filterValue = $(this).val();

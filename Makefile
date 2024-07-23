@@ -40,3 +40,7 @@ key generate:
 # Run test code
 test:
 	docker exec -it expense_tracker php artisan test
+
+# Open app directory 
+bash:
+	docker exec -it expense_tracker bash

@@ -16,6 +16,8 @@ use App\Models\Income;
 use App\Models\User;
 use App\Repositories\expense\ExpenseRepositoryInterface;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf;
+use App\Events\SetBudget;
+// use App\Models\Event;
 
 class ExpenseController extends Controller
 {
@@ -42,6 +44,7 @@ class ExpenseController extends Controller
             ->whereMonth('date', $currentMonth)
             ->sum('amount');
         if ($request->ajax()) {
+            event(new SetBudget('10000'));
             if (!empty($query)) {
                 $expenses = $this->filterExpense($expenses, $filter, $query, $export = false);
             } else {
@@ -57,7 +60,6 @@ class ExpenseController extends Controller
         } else {
             $expenses = $expenses->whereYear('date', $currentYear)->whereMonth('date', $currentMonth)->paginate(10);
         }
-
         return view('expenses.index', compact('expenses', 'months', 'budgets_amount', 'total_income'));
     }
 
