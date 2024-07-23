@@ -226,7 +226,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5">
+                <div class="no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5" id="messageContainer">
                     <div class="max-w-125">
                         <p class="mb-2 text-sm font-medium">Andri Thomas</p>
                         <div class="mb-2 rounded-2xl rounded-tl-none bg-gray px-5 py-3 dark:bg-boxdark-2">
@@ -296,7 +296,7 @@
                     class="sticky bottom-0 border-t border-stroke bg-white px-6 py-5 dark:border-strokedark dark:bg-boxdark">
                     <div class="flex items-center justify-between space-x-4.5">
                         <div class="relative w-full">
-                            <input type="text" placeholder="Type something here"
+                            <input type="text" placeholder="Type something here" id="message"
                                 class="h-13 w-full rounded-md border border-stroke bg-gray pl-5 pr-19 font-medium text-black placeholder-body outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2 dark:text-white" />
                             <div
                                 class="absolute right-5 top-1/2 inline-flex -translate-y-1/2 items-center justify-end space-x-4">
@@ -320,7 +320,7 @@
                                 </button>
                             </div>
                         </div>
-                        <a href="#"
+                        <button onclick="addMessage()"
                             class="flex p-2 h-13 w-20 ml-2 items-center justify-center rounded-md bg-primary text-white hover:bg-opacity-90">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -329,11 +329,25 @@
                                 <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round" />
                             </svg>
-                        </a>
+                        </button>
                     </div>
                 </div>
                 <!-- ====== Chat Box End -->
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            function addMessage() {
+                const messageContainer = document.getElementById('messageContainer');
+                const newMessage = document.createElement('div');
+                let message = $('#message').val();
+                newMessage.innerHTML =
+                    '<p class="mb-2 text-sm font-medium">Andri Thomas</p><div class="mb-2 rounded-2xl rounded-tl-none bg-gray px-5 py-3 dark:bg-boxdark-2"><p class="font-medium">' +
+                    message + '</p></div><p class="text-xs font-medium mb-2">2:00pm</p>';
+                messageContainer.appendChild(newMessage);
+                $('#message').val('');
+            }
+        </script>
+    @endpush
 </x-app-layout>
