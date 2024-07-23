@@ -55,6 +55,10 @@ Route::middleware('auth')->group(function () {
 
     // Curreny Exchange
     Route::get('/currency-exchange', [ExchangeController::class, 'index'])->name('currency.exchange');
+
+    Route::get('/chat', function () {
+        return view('chat.index');
+    })->name('chat');
 });
 
 require __DIR__ . '/auth.php';

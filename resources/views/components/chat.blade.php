@@ -34,7 +34,7 @@
         <ul class="flex h-auto flex-col overflow-y-auto">
             <li>
                 <a class="flex gap-4 border-t border-stroke px-4 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                    href="#">
+                    href="{{ route('chat') }}">
                     <div class="h-12 w-12 rounded-full">
                         <img src="{{ asset('user-02.png') }}" alt="User" />
                     </div>
@@ -50,7 +50,7 @@
             </li>
             <li>
                 <a class="flex gap-4 border-t border-stroke px-4 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                    href="#">
+                    href="{{ route('chat') }}">
                     <div class="h-12 w-12 rounded-full">
                         <img src="{{ asset('user-01.png') }}" alt="User" />
                     </div>
@@ -66,7 +66,7 @@
             </li>
             <li>
                 <a class="flex gap-4 border-t border-stroke px-4 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                    href="#">
+                    href="{{ route('chat') }}">
                     <div class="h-12 w-12 rounded-full">
                         <img src="{{ asset('user-03.png') }}" alt="User" />
                     </div>
@@ -82,7 +82,7 @@
             </li>
             <li>
                 <a class="flex gap-4 border-t border-stroke px-4 py-3 hover:bg-gray-2 dark:border-strokedark dark:hover:bg-meta-4"
-                    href="#">
+                    href="{{ route('chat') }}">
                     <div class="h-12 w-12 rounded-full">
                         <img src="{{ asset('user-01.png') }}" alt="User" />
                     </div>
