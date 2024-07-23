@@ -24,6 +24,8 @@
         "@fullcalendar/timegrid": "^6.1.14",
         "@material-tailwind/html": "^2.2.2",
         "fullcalendar": "^6.1.14",
-        "jquery": "^3.7.1"
+        "jquery": "^3.7.1",
+        "laravel-echo": "^1.16.1",
+        "pusher-js": "^8.4.0-rc2"
     }
 }

@@ -2,35 +2,24 @@
     display: none;
 }
 
-/* #external-events {
-    position: fixed;
-    z-index: 2;
-    top: 272px;
-    left: 120px;
-    width: 185px;
-    padding: 0 10px;
-    border: 1px solid #ccc;
-    background: #eee;
+.notify {
+    background-color: red;
 }
 
-#external-events .fc-event {
-    cursor: move;
-    margin: 3px 0;
+img {
+    max-width: 100%;
 }
 
-#calendar-container {
-    position: relative;
-    z-index: 1;
-    margin-left: 200px;
+.h-90 {
+    height: 22.5rem;
 }
-
-#calendar {
-    max-width: 1100px;
-    margin: 20px auto;
-} */
 
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
         transform: translateY(0);
     }
     40% {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SetBudget;
 use App\Models\Budget;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ class BudgetController extends Controller
                 'amount' => $request->amount
             ]);
         }
+        event(new SetBudget($request->ammount));
         return redirect()->route('expenses.index');
     }
 }
