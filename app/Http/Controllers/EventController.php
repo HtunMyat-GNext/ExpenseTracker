@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Notifications\EventNotification;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -49,7 +52,7 @@ class EventController extends Controller
         $event->title = $request->title;
         $event->color = $request->color;
         $event->save();
-
+        auth()->user()->notify(new EventNotification($event->title));
         return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
 

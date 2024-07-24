@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\SetBudget;
 use App\Models\Budget;
 use App\Models\User;
+use App\Notifications\SetBudgetNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use phpseclib3\Crypt\EC;
@@ -28,7 +29,8 @@ class BudgetController extends Controller
                 'amount' => $request->amount
             ]);
         }
-        event(new SetBudget($request->ammount));
+        // event(new SetBudget($request->ammount));
+        auth()->user()->notify(new SetBudgetNotification($request->amount));
         return redirect()->route('expenses.index');
     }
 }

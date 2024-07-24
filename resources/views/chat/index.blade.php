@@ -13,7 +13,7 @@
     </x-slot>
     <div class="py-12 px-4 md:px-0">
         <div
-            class="p-6 flex max-w-7xl mx-auto sm:px-6 lg:px-8 h-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark xl:flex">
+            class="p-6 flex max-w-7xl mx-auto sm:px-6 lg:px-8 h-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-gray-800 xl:flex">
             <div class="hidden h-full flex-col xl:flex xl:w-1/4">
                 <!-- ====== Chat List Start -->
                 <div class="sticky border-b border-stroke px-6 py-7.5 dark:border-strokedark">
@@ -27,7 +27,7 @@
                 <div class="flex max-h-full flex-col overflow-auto p-5">
                     <form class="sticky mb-7">
                         <input type="text"
-                            class="w-full rounded border border-stroke bg-gray-2 py-2.5 pl-5 pr-10 text-sm outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                             placeholder="Search..." />
                         <button class="absolute right-4 top-1/2 -translate-y-1/2">
                             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -55,7 +55,7 @@
                                 <h5 class="text-sm font-medium text-black dark:text-white">
                                     Henry Dholi
                                 </h5>
-                                <p class="text-sm font-medium">
+                                <p class="text-sm font-medium dark:text-white">
                                     I cam across your profile and...
                                 </p>
                             </div>
@@ -73,7 +73,7 @@
                                 <h5 class="text-sm font-medium text-black dark:text-white">
                                     Mariya Desoja
                                 </h5>
-                                <p class="text-sm font-medium">
+                                <p class="text-sm font-medium dark:text-white">
                                     I like your confidence 💪
                                 </p>
                             </div>
@@ -91,7 +91,7 @@
                                 <h5 class="text-sm font-medium text-black dark:text-white">
                                     Robert Jhon
                                 </h5>
-                                <p class="text-sm font-medium">
+                                <p class="text-sm font-mediumn dark:text-white">
                                     Can you share your offer?
                                 </p>
                             </div>
@@ -109,7 +109,7 @@
                                 <h5 class="text-sm font-medium text-black dark:text-white">
                                     Cody Fisher
                                 </h5>
-                                <p class="text-sm font-medium">
+                                <p class="text-sm font-medium dark:text-white">
                                     I'm waiting for you response!
                                 </p>
                             </div>
@@ -127,7 +127,7 @@
                                 <h5 class="text-sm font-medium text-black dark:text-white">
                                     Jenny Wilson
                                 </h5>
-                                <p class="text-sm font-medium">
+                                <p class="text-sm font-medium dark:text-white">
                                     I'm waiting for you response!
                                 </p>
                             </div>
@@ -145,7 +145,7 @@
                                 <h5 class="text-sm font-medium text-black dark:text-white">
                                     Marcus Siphron
                                 </h5>
-                                <p class="text-sm font-medium">Hello, how are you?</p>
+                                <p class="text-sm font-medium dark:text-white">Hello, how are you?</p>
                             </div>
                         </div>
                     </div>
@@ -165,14 +165,15 @@
                             <h5 class="font-medium text-black dark:text-white">
                                 Henry Dholi
                             </h5>
-                            <p class="text-sm font-medium">Reply to message</p>
+                            <p class="text-sm font-medium dark:text-white">Reply to message</p>
                         </div>
                     </div>
                     <div>
                         <div x-data="{ openDropDown: false }" class="relative">
                             <button @click="openDropDown = !openDropDown">
-                                <svg class="fill-current" width="16" height="16" viewBox="0 0 16 16"
-                                    fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg class="fill-current" :color="darkMode ? '#ffffff' : '#000000'" width="16"
+                                    height="16" viewBox="0 0 16 16" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M2 10C3.10457 10 4 9.10457 4 8C4 6.89543 3.10457 6 2 6C0.89543 6 0 6.89543 0 8C0 9.10457 0.89543 10 2 10Z"
                                         fill="" />
@@ -185,7 +186,7 @@
                                 </svg>
                             </button>
                             <div x-show="openDropDown" @click.outside="openDropDown = false"
-                                class="absolute right-0 top-full z-40 w-40 space-y-1 rounded-sm border border-stroke bg-white p-1.5 shadow-default dark:border-strokedark dark:bg-boxdark">
+                                class="absolute right-0 top-full z-40 w-60 space-y-1 rounded-sm border border-stroke bg-white p-1.5 shadow-default dark:border-strokedark dark:bg-boxdark">
                                 <button
                                     class="flex w-full items-center gap-2 rounded-sm px-4 py-1.5 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
                                     <svg class="fill-current" width="16" height="16" viewBox="0 0 16 16"
@@ -201,7 +202,7 @@
                                             </clipPath>
                                         </defs>
                                     </svg>
-                                    Edit
+                                    Edit Nickname
                                 </button>
                                 <button
                                     class="flex w-full items-center gap-2 rounded-sm px-4 py-1.5 text-left text-sm hover:bg-gray dark:hover:bg-meta-4">
@@ -220,7 +221,7 @@
                                             d="M5.97497 8.60004C5.67497 8.62504 5.42497 8.90004 5.44997 9.20004L5.62497 11.4C5.64997 11.7 5.89997 11.925 6.17497 11.925C6.19997 11.925 6.19997 11.925 6.22497 11.925C6.52497 11.9 6.77497 11.625 6.74997 11.325L6.57497 9.12504C6.57497 8.80004 6.29997 8.57504 5.97497 8.60004Z"
                                             fill="" />
                                     </svg>
-                                    Delete
+                                    Delete Conservation
                                 </button>
                             </div>
                         </div>
@@ -228,14 +229,14 @@
                 </div>
                 <div class="no-scrollbar max-h-full space-y-3.5 overflow-auto px-6 py-7.5" id="messageContainer">
                     <div class="max-w-125">
-                        <p class="mb-2 text-sm font-medium">Andri Thomas</p>
+                        <p class="mb-2 text-sm font-medium dark:text-white">Andri Thomas</p>
                         <div class="mb-2 rounded-2xl rounded-tl-none bg-gray px-5 py-3 dark:bg-boxdark-2">
                             <p class="font-medium">
                                 I want to make an appointment tomorrow from 2:00 to
                                 5:00pm?
                             </p>
                         </div>
-                        <p class="text-xs font-medium">1:55pm</p>
+                        <p class="text-xs font-medium dark:text-white">1:55pm</p>
                     </div>
                     <div class="ml-auto max-w-125">
                         <div class="mb-2 rounded-2xl rounded-br-none bg-primary px-5 py-3">
@@ -244,30 +245,30 @@
                                 you
                             </p>
                         </div>
-                        <p class="text-right text-xs font-medium">1:55pm</p>
+                        <p class="text-right text-xs font-medium dark:text-white">1:55pm</p>
                     </div>
                     <div class="max-w-125">
-                        <p class="mb-2 text-sm font-medium">Andri Thomas</p>
+                        <p class="mb-2 text-sm font-medium dark:text-white">Andri Thomas</p>
                         <div class="mb-2 rounded-2xl rounded-tl-none bg-gray px-5 py-3 dark:bg-boxdark-2">
                             <p class="font-medium">Ok, Thanks for your reply.</p>
                         </div>
-                        <p class="text-xs font-medium">1:55pm</p>
+                        <p class="text-xs font-medium dark:text-white">1:55pm</p>
                     </div>
                     <div class="ml-auto max-w-125">
                         <div class="mb-2 rounded-2xl rounded-br-none bg-primary px-5 py-3">
                             <p class="font-medium text-white">You are welcome!</p>
                         </div>
-                        <p class="text-right text-xs font-medium">1:55pm</p>
+                        <p class="text-right text-xs font-medium dark:text-white">1:55pm</p>
                     </div>
                     <div class="max-w-125">
-                        <p class="mb-2 text-sm font-medium">Andri Thomas</p>
+                        <p class="mb-2 text-sm font-medium dark:text-white">Andri Thomas</p>
                         <div class="mb-2 rounded-2xl rounded-tl-none bg-gray px-5 py-3 dark:bg-boxdark-2">
                             <p class="font-medium">
                                 I want to make an appointment tomorrow from 2:00 to
                                 5:00pm?
                             </p>
                         </div>
-                        <p class="text-xs font-medium">1:55pm</p>
+                        <p class="text-xs font-medium dark:text-white">1:55pm</p>
                     </div>
                     <div class="ml-auto max-w-125">
                         <div class="mb-2 rounded-2xl rounded-br-none bg-primary px-5 py-3">
@@ -276,38 +277,38 @@
                                 you
                             </p>
                         </div>
-                        <p class="text-right text-xs font-medium">1:55pm</p>
+                        <p class="text-right text-xs font-medium dark:text-white">1:55pm</p>
                     </div>
                     <div class="max-w-125">
-                        <p class="mb-2 text-sm font-medium">Andri Thomas</p>
+                        <p class="mb-2 text-sm font-medium dark:text-white">Andri Thomas</p>
                         <div class="mb-2 rounded-2xl rounded-tl-none bg-gray px-5 py-3 dark:bg-boxdark-2">
                             <p class="font-medium">Ok, Thanks for your reply.</p>
                         </div>
-                        <p class="text-xs font-medium">1:55pm</p>
+                        <p class="text-xs font-medium dark:text-white">1:55pm</p>
                     </div>
                     <div class="ml-auto max-w-125">
                         <div class="mb-2 rounded-2xl rounded-br-none bg-primary px-5 py-3">
                             <p class="font-medium text-white">You are welcome!</p>
                         </div>
-                        <p class="text-right text-xs font-medium">1:55pm</p>
+                        <p class="text-right text-xs font-medium dark:text-white">1:55pm</p>
                     </div>
                 </div>
                 <div
-                    class="sticky bottom-0 border-t border-stroke bg-white px-6 py-5 dark:border-strokedark dark:bg-boxdark">
+                    class="sticky bottom-0 border-t border-stroke bg-white px-6 py-5 dark:border-strokedark dark:bg-gray-800">
                     <div class="flex items-center justify-between space-x-4.5">
                         <div class="relative w-full">
                             <input type="text" placeholder="Type something here" id="message"
-                                class="h-13 w-full rounded-md border border-stroke bg-gray pl-5 pr-19 font-medium text-black placeholder-body outline-none focus:border-primary dark:border-strokedark dark:bg-boxdark-2 dark:text-white" />
+                                class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" />
                             <div
                                 class="absolute right-5 top-1/2 inline-flex -translate-y-1/2 items-center justify-end space-x-4">
                                 <button class="hover:text-primary">
-                                    <svg width="18" height="18" viewBox="0 0 18 18" class="fill-current">
+                                    <svg width="18" height="18" viewBox="0 0 18 18" class="fill-current" :color="darkMode ? '#ffffff' : '#000000'">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M11.835 1.79102C11.2378 1.79102 10.6651 2.02824 10.2428 2.45051L3.3503 9.34302C2.64657 10.0467 2.25122 11.0012 2.25122 11.9964C2.25122 12.9917 2.64657 13.9461 3.3503 14.6499C4.05403 15.3536 5.0085 15.7489 6.00372 15.7489C6.99895 15.7489 7.95341 15.3536 8.65714 14.6499L15.5496 7.75736C15.8425 7.46446 16.3174 7.46446 16.6103 7.75736C16.9032 8.05025 16.9032 8.52512 16.6103 8.81802L9.7178 15.7105C8.73277 16.6956 7.39677 17.2489 6.00372 17.2489C4.61067 17.2489 3.27468 16.6956 2.28964 15.7105C1.30461 14.7255 0.751221 13.3895 0.751221 11.9964C0.751221 10.6034 1.30461 9.26739 2.28964 8.28236L9.18214 1.38985C9.88572 0.686279 10.84 0.291016 11.835 0.291016C12.83 0.291016 13.7842 0.686279 14.4878 1.38985C15.1914 2.09343 15.5866 3.04768 15.5866 4.04268C15.5866 5.03769 15.1914 5.99194 14.4878 6.69552L7.5878 13.588C7.16569 14.0101 6.59318 14.2473 5.99622 14.2473C5.39926 14.2473 4.82676 14.0101 4.40464 13.588C3.98253 13.1659 3.74539 12.5934 3.74539 11.9964C3.74539 11.3995 3.98253 10.827 4.40464 10.4049L10.7725 4.04454C11.0655 3.75182 11.5404 3.7521 11.8331 4.04517C12.1258 4.33823 12.1256 4.81311 11.8325 5.10583L5.4653 11.4655C5.32469 11.6063 5.24539 11.7974 5.24539 11.9964C5.24539 12.1956 5.32449 12.3865 5.4653 12.5274C5.60611 12.6682 5.79709 12.7473 5.99622 12.7473C6.19535 12.7473 6.38633 12.6682 6.52714 12.5274L13.4271 5.63486C13.8492 5.21261 14.0866 4.63973 14.0866 4.04268C14.0866 3.4455 13.8494 2.87278 13.4271 2.45051C13.0049 2.02824 12.4321 1.79102 11.835 1.79102Z" />
                                     </svg>
                                 </button>
-                                <button class="hover:text-primary">
-                                    <svg width="19" height="18" viewBox="0 0 19 18" class="fill-current">
+                                <button class="hover:text-primary" id="emoji-button">
+                                    <svg width="19" height="18" viewBox="0 0 19 18" class="fill-current" :color="darkMode ? '#ffffff' : '#000000'">
                                         <path fill-rule="evenodd" clip-rule="evenodd"
                                             d="M9.5 2.25C5.77208 2.25 2.75 5.27208 2.75 9C2.75 12.7279 5.77208 15.75 9.5 15.75C13.2279 15.75 16.25 12.7279 16.25 9C16.25 5.27208 13.2279 2.25 9.5 2.25ZM1.25 9C1.25 4.44365 4.94365 0.75 9.5 0.75C14.0564 0.75 17.75 4.44365 17.75 9C17.75 13.5564 14.0564 17.25 9.5 17.25C4.94365 17.25 1.25 13.5564 1.25 9Z" />
                                         <path fill-rule="evenodd" clip-rule="evenodd"
@@ -331,23 +332,39 @@
                             </svg>
                         </button>
                     </div>
+                    <div id="emoji-list"
+                        class="emoji-list grid grid-cols-6 gap-2 mt-2 p-2 border rounded-lg bg-white shadow-lg absolute top-12 right-0 z-10">
+                    </div>
+                    <!-- ====== Chat Box End -->
                 </div>
-                <!-- ====== Chat Box End -->
             </div>
         </div>
-    </div>
-    @push('scripts')
-        <script>
-            function addMessage() {
-                const messageContainer = document.getElementById('messageContainer');
-                const newMessage = document.createElement('div');
-                let message = $('#message').val();
-                newMessage.innerHTML =
-                    '<p class="mb-2 text-sm font-medium">Andri Thomas</p><div class="mb-2 rounded-2xl rounded-tl-none bg-gray px-5 py-3 dark:bg-boxdark-2"><p class="font-medium">' +
-                    message + '</p></div><p class="text-xs font-medium mb-2">2:00pm</p>';
-                messageContainer.appendChild(newMessage);
-                $('#message').val('');
-            }
-        </script>
-    @endpush
+        @push('scripts')
+            <script>
+                const emojiList = document.getElementById('emoji-list'); // Use native JS to get the element
+                const emojis = ['😊', '😂', '😍', '🥺', '😢', '😎', '🤔', '🤗', '😇', '😡', '😱', '👍'];
+
+                emojis.forEach(emoji => {
+                    const emojiItem = document.createElement('button');
+                    emojiItem.classList.add('emoji-item', 'text-2xl');
+                    emojiItem.textContent = emoji;
+                    emojiList.appendChild(emojiItem);
+                });
+
+                $('#emoji-button').on('click', function() {
+                    emojiList.classList.toggle('open');
+                })
+
+                function addMessage() {
+                    const messageContainer = document.getElementById('messageContainer');
+                    const newMessage = document.createElement('div');
+                    let message = $('#message').val();
+                    newMessage.innerHTML =
+                        '<p class="mb-2 text-sm font-medium">Andri Thomas</p><div class="mb-2 rounded-2xl rounded-tl-none bg-gray px-5 py-3 dark:bg-boxdark-2"><p class="font-medium">' +
+                        message + '</p></div><p class="text-xs font-medium mb-2">2:00pm</p>';
+                    messageContainer.appendChild(newMessage);
+                    $('#message').val('');
+                }
+            </script>
+        @endpush
 </x-app-layout>

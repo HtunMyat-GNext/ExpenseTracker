@@ -18,6 +18,9 @@ export default {
                 primary: '#3C50E0',
                 secondary: '#80CAEE',
                 stroke: '#E2E8F0',
+            },
+            spacing: {
+                62.5: '15.625rem',
             }
         },
     },

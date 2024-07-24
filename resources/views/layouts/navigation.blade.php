@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
+<nav x-data="{ open: false }" class="sticky top-0 z-50 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 w-full z-10">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -47,33 +47,10 @@
                 <!-- Chat Notification Area -->
                 <x-chat />
                 <!-- Chat Notification Area -->
-                <div x-data="{ open: false }" @keydown.escape="open = false" class="relative">
-                    <button @click="open = !open" class="px-4 py-2">
-                        <svg width="20" height="20" viewBox="0 0 24 24" role="img"
-                            xmlns="http://www.w3.org/2000/svg" aria-labelledby="languageIconTitle"
-                            :stroke="darkMode ? '#ffffff' : '#000000'" stroke-width="1" stroke-linecap="square"
-                            stroke-linejoin="miter" fill="none" :color="darkMode ? '#ffffff' : '#000000'">
-                            <title id="languageIconTitle">Language</title>
-                            <circle cx="12" cy="12" r="10" />
-                            <path stroke-linecap="round"
-                                d="M12,22 C14.6666667,19.5757576 16,16.2424242 16,12 C16,7.75757576 14.6666667,4.42424242 12,2 C9.33333333,4.42424242 8,7.75757576 8,12 C8,16.2424242 9.33333333,19.5757576 12,22 Z" />
-                            <path stroke-linecap="round" d="M2.5 9L21.5 9M2.5 15L21.5 15" />
-                        </svg>
-                    </button>
-                    <div x-show="open" @click.away="open = false"
-                        class="absolute right-0 mt-2 w-30 bg-white dark:bg-gray-800 rounded-md shadow-lg z-10">
-                        <a href="{{ route('language.switch', ['locale' => 'en']) }}"
-                            class="block px-4 py-2 hover:bg-gray-100 text-sm font-md"> <img
-                                src="{{ asset('logo/en.png') }}" alt=""></a>
-                        <a href="{{ route('language.switch', ['locale' => 'ja']) }}"
-                            class="block px-4 py-2 hover:bg-gray-100 text-sm font-md"> <img
-                                src="{{ asset('logo/jp.png') }}" alt=""></a>
-                        <!-- Add more language options as needed -->
-                    </div>
-                </div>
                 <!-- Start Language switch -->
                 <x-language />
                 <!-- End Language switch -->
+                <x-profile />
             </div>
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -86,16 +63,7 @@
                 <!-- switch language in moble ! -->
                 <x-language />
                 <!-- switch language in moble ! -->
-                <button @click="open = ! open"
-                    class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
-                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
+                <x-profile />
             </div>
         </div>
     </div>

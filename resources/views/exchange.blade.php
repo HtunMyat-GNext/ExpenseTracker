@@ -15,13 +15,13 @@
                     <div class="mb-4">
                         <label for="amount" class="block text-gray-700 dark:text-gray-200">Amount</label>
                         <input type="number" id="amount"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                             placeholder="Enter amount">
                     </div>
                     <div class="mb-4">
                         <label for="from-currency" class="block text-gray-700 dark:text-gray-200">From</label>
                         <select id="from-currency"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                             <option value="USD">USD</option>
                             <option value="JPY">JPY</option>
                             <option value="SGD">SGD</option>
@@ -36,7 +36,7 @@
                     <div class="mb-4">
                         <label for="to-currency" class="block text-gray-700 dark:text-gray-200">To</label>
                         <select id="to-currency"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                             <option value="MMK">MMK</option>
                             <!-- Add more currencies as needed -->
                         </select>
@@ -44,7 +44,7 @@
                     <div class="mb-4">
                         <label for="result" class="block text-gray-700 dark:text-gray-200">Result</label>
                         <input type="text" id="result"
-                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
                             placeholder="Result" readonly>
                         <span class="mt-4 text-xs text-rose-800 dark:text-teal-400">
                             ⁂ Reference Exchange Rate From CBM

@@ -1,14 +1,12 @@
-<div class="relative ml-2" x-data="{ dropdownOpen: false, notifying: true }" @click.outside="dropdownOpen = false">
-    <a class="relative flex h-8.5 w-8.5 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white"
-        href="#" @click.prevent="dropdownOpen = ! dropdownOpen; notifying = false">
-        <span :class="!notifying && 'hidden'"
-            class="notify absolute -right-0.5 -top-0.5 z-1 h-2 w-2 rounded-full bg-meta-1">
+<div class="relative ml-2">
+    <a class="relative flex h-8.5 w-8.5 items-center justify-center hover:text-primary" href="{{ route('chat') }}">
+        <span class="notify absolute -right-0.5 -top-0.5 z-1 h-2 w-2 rounded-full bg-meta-1">
             <span
                 class="notify absolute -z-1 inline-flex h-full w-full animate-ping rounded-full bg-meta-1 opacity-75"></span>
         </span>
 
-        <svg class="fill-current duration-300 ease-in-out" width="18" height="18" viewBox="0 0 18 18"
-            fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="fill-current duration-300 ease-in-out" :color="darkMode ? '#ffffff' : '#000000'" width="18"
+            height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
                 d="M10.9688 1.57495H7.03135C3.43135 1.57495 0.506348 4.41558 0.506348 7.90308C0.506348 11.3906 2.75635 13.8375 8.26885 16.3125C8.40947 16.3687 8.52197 16.3968 8.6626 16.3968C8.85947 16.3968 9.02822 16.3406 9.19697 16.2281C9.47822 16.0593 9.64697 15.75 9.64697 15.4125V14.2031H10.9688C14.5688 14.2031 17.522 11.3625 17.522 7.87495C17.522 4.38745 14.5688 1.57495 10.9688 1.57495ZM10.9688 12.9937H9.3376C8.80322 12.9937 8.35322 13.4437 8.35322 13.9781V15.0187C3.6001 12.825 1.74385 10.8 1.74385 7.9312C1.74385 5.14683 4.10635 2.8687 7.03135 2.8687H10.9688C13.8657 2.8687 16.2563 5.14683 16.2563 7.9312C16.2563 10.7156 13.8657 12.9937 10.9688 12.9937Z"
                 fill="" />
@@ -25,10 +23,10 @@
     </a>
 
     <!-- Dropdown Start -->
-    <div x-show="dropdownOpen"
-        class="absolute -right-16 mt-2 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80 z-50">
+    {{-- <div x-show="dropdownOpen"
+        class="absolute -right-16 mt-2 flex h-90 w-75 flex-col rounded-sm border border-stroke bg-white dark:bg-gray-800 darK:text-white shadow-default dark:border-strokedark dark:bg-boxdark sm:right-0 sm:w-80 z-50">
         <div class="px-4 py-3">
-            <h5 class="text-sm font-medium text-bodydark2">Messages</h5>
+            <h5 class="text-sm font-medium text-bodydark2 dark:text-white">Messages</h5>
         </div>
 
         <ul class="flex h-auto flex-col overflow-y-auto">
@@ -39,8 +37,8 @@
                         <img src="{{ asset('user-02.png') }}" alt="User" />
                     </div>
 
-                    <div>
-                        <h6 class="text-sm font-medium text-black dark:text-white">
+                    <div class="text-black dark:text-white">
+                        <h6 class="text-sm font-medium">
                             Moe Hay Ko
                         </h6>
                         <p class="text-sm">I like your confidence 💪</p>
@@ -55,8 +53,8 @@
                         <img src="{{ asset('user-01.png') }}" alt="User" />
                     </div>
 
-                    <div>
-                        <h6 class="text-sm font-medium text-black dark:text-white">
+                    <div class="text-black dark:text-white">
+                        <h6 class="text-sm font-medium">
                             Khin Wint Wah
                         </h6>
                         <p class="text-sm">Nice to meet you</p>
@@ -71,8 +69,8 @@
                         <img src="{{ asset('user-03.png') }}" alt="User" />
                     </div>
 
-                    <div>
-                        <h6 class="text-sm font-medium text-black dark:text-white">
+                    <div class="text-black dark:text-white">
+                        <h6 class="text-sm font-medium">
                             Flex
                         </h6>
                         <p class="text-sm">Good Bye!</p>
@@ -87,8 +85,8 @@
                         <img src="{{ asset('user-01.png') }}" alt="User" />
                     </div>
 
-                    <div>
-                        <h6 class="text-sm font-medium text-black dark:text-white">
+                    <div class="text-black dark:text-white">
+                        <h6 class="text-sm font-medium">
                             Mariya Desoja
                         </h6>
                         <p class="text-sm">Greate Content</p>
@@ -97,6 +95,6 @@
                 </a>
             </li>
         </ul>
-    </div>
+    </div> --}}
     <!-- Dropdown End -->
 </div>
