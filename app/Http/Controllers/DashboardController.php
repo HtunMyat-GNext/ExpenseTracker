@@ -34,4 +34,32 @@ class DashboardController
         $events = $data['events'];
         return view('dashboard', compact('incomes', 'expenses', 'categories', 'categories_data', 'events'));
     }
+
+    /**
+     * Mark a notification as read by its ID.
+     * 
+     * @param int $id The ID of the notification to mark as read.
+     * @return \Illuminate\Http\Response
+     */
+    public function makeasread($id)
+    {
+        auth()->user()->notifications->where('id', $id)->markAsRead();
+        return back();
+    }
+
+    /**
+     * Mark all notifications as read.
+     * 
+     * This method iterates through all unread notifications of the authenticated user and marks them as read.
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function makeallread()
+    {
+        foreach (auth()->user()->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+
+        return back();
+    }
 }

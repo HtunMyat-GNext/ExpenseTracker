@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/chat', function () {
         return view('chat.index');
     })->name('chat');
+
+    Route::get('/makeasread/{id}', [DashboardController::class, 'makeasread'])->name('makeasread');
+    Route::get('/makeallread', [DashboardController::class, 'makeallread'])->name('makeallread');
 });
 
 require __DIR__ . '/auth.php';
