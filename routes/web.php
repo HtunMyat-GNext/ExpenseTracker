@@ -41,5 +41,4 @@ Route::middleware('auth')->group(function () {
     // Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
 });
 
-// test git credentials
 require __DIR__ . '/auth.php';
