@@ -14,11 +14,21 @@ class BudgetController extends Controller
 {
     public function store(Request $request)
     {
-        $user_id = User::getCurrentUserId();
-        $request->validate([
-            'amount' => 'required|integer'
-        ]);
+        $user_id = $this->getUser_id($request);
         $budget = Budget::where('user_id', $user_id)->first();
+        $this->saveBudget($budget, $request, $user_id);
+        auth()->user()->notify(new SetBudgetNotification($request->amount));
+        return redirect()->route('expenses.index');
+    }
+
+    /**
+     * @param $budget
+     * @param Request $request
+     * @param int|null $user_id
+     * @return void
+     */
+    public function saveBudget($budget, Request $request, ?int $user_id): void
+    {
         if ($budget) {
             $budget->update([
                 'amount' => $request->amount
@@ -29,8 +39,18 @@ class BudgetController extends Controller
                 'amount' => $request->amount
             ]);
         }
-        // event(new SetBudget($request->ammount));
-        auth()->user()->notify(new SetBudgetNotification($request->amount));
-        return redirect()->route('expenses.index');
+    }
+
+    /**
+     * @param Request $request
+     * @return int|null
+     */
+    public function getUser_id(Request $request): ?int
+    {
+        $user_id = User::getCurrentUserId();
+        $request->validate([
+            'amount' => 'required|integer'
+        ]);
+        return $user_id;
     }
 }

@@ -164,14 +164,14 @@
                         // "locale": "jp"
                     });
                     // set up piechart
-                    const categories = @json($categories_data);
+                    let categories = @json($categories_data);
                     //category total amounts
-                    const amounts = categories.map((category) => parseInt(category.total));
+                    let amounts = categories.map((category) => parseInt(category.total));
                     //labels for
-                    const labels = categories.map((category) => category.name);
-                    const datas = categories.map((category) => category.count);
-                    const color = categories.map((category) => category.color);
-                    const chartConfig = {
+                    let labels = categories.map((category) => category.name);
+                    let datas = categories.map((category) => category.count);
+                    let color = categories.map((category) => category.color);
+                    let chartConfig = {
                         // series: percentage,
                         chart: {
                             type: "pie",
